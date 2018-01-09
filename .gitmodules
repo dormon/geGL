@@ -1,0 +1,3 @@
+[submodule "CMakeLibrary"]
+	path = CMakeLibrary
+	url = git@github.com:dormon/CMakeLibrary.git
