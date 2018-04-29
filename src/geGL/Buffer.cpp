@@ -3,6 +3,7 @@
 #include<geGL/OpenGLUtil.h>
 #include<cassert>
 #include<vector>
+#include<algorithm>
 
 using namespace ge::gl;
 

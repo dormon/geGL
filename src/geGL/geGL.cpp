@@ -1,6 +1,7 @@
 #include<geGL/OpenGL.h>
 #include<geGL/DefaultLoader.h>
 #include<cassert>
+#include<string>
 
 namespace ge{
   namespace gl{
