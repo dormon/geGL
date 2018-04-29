@@ -57,8 +57,7 @@ void VertexArray::addAttrib(
     enum AttribPointerType       apt              ){
   assert(this!=nullptr);
   if(buffer==nullptr){
-    throw std::invalid_argument("buffer is nullptr");
-    //ge::core::printError(GE_CORE_FCENAME,"buffer is nullptr!",buffer,index,nofComponents,type,stride,offset,normalized,divisor,apt);
+    throw std::invalid_argument("geGL: VertexArray::addAttrib - buffer is nullptr");
     return;
   }
   //std::cout<<this<<"->addAttrib("<<buffer<<","<<index<<","<<nofComponents<<","<<type<<","<<stride<<","<<offset<<","<<normalized<<","<<divisor<<","<<apt<<")"<<std::endl;

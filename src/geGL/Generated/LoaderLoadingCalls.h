@@ -5713,7 +5713,6 @@ MEMBER_FUNCTION_POINTER const functionPointers[] = {
   (MEMBER_FUNCTION_POINTER)(&LoaderTableDecorator::m_glDrawArraysInstancedBaseInstance_impl),
   (MEMBER_FUNCTION_POINTER)(&LoaderTableDecorator::m_glIsPointInStrokePathNV_impl),
 };
-
 FUNCTION_POINTER *baseFunctions = (FUNCTION_POINTER*)&this->FunctionTable::m_glMultiDrawArraysIndirectBindlessCountNV;
 for(size_t i=0;i<GE_GL_NOF_OPENGL_FUNCTIONS;++i)
   baseFunctions[i] = this->m_functionLoader->load(functionNames[i]);

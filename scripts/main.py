@@ -6,8 +6,8 @@ glHeader     = "/usr/include/GL/gl.h"
 glextHeader  = "/usr/include/GL/glext.h"
 glcoreHeader = "/usr/include/GL/glcorearb.h"
 
-geGLIncludeDir = "../include/GPUEngine/geGL/"
-geGLSrcDir     = "../src/"
+geGLIncludeDir = "../src/geGL/"
+geGLSrcDir     = "../src/geGL/"
 outputDir      = geGLIncludeDir+"Generated/"
 
 subscriptsDir = "subscripts/"

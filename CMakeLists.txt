@@ -55,8 +55,6 @@ set(INCLUDES
   src/${LIB_NAME}/DebugMessage.h
   src/${LIB_NAME}/OpenGLObject.h
   src/${LIB_NAME}/geGL.h
-  src/${LIB_NAME}/ConvertTo.h
-  src/${LIB_NAME}/OpenGLCommands.h
   src/${LIB_NAME}/OpenGLFunctionTable.h
   src/${LIB_NAME}/OpenGLContext.h
   src/${LIB_NAME}/OpenGLCapabilities.h

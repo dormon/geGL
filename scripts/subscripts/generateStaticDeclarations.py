@@ -24,7 +24,7 @@ def printContextDeclaration(data):
     params2 = map(lambda x:re.sub(r"\[.*\]","",x),params);
     print "    GEGL_EXPORT "+params[0]+" "+params[1]+"("+args+");"
 
-print "#include<GPUEngine/geGL/OpenGL.h>"
+print "#include<geGL/OpenGL.h>"
 print "namespace ge{"
 print "  namespace gl{"
 for x in data0:

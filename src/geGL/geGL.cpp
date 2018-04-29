@@ -39,10 +39,10 @@ namespace ge{
             this->_triedToLoadGetProcAddress = true;
             if (this->_openglLib)
               this->_wglGetProcAddress = (WGLGETPROCADDRESS)GetProcAddress(this->_openglLib, TEXT(getProcAddressName.c_str()));
-            else ge::core::printError(GE_CORE_FCENAME, "cannot open " + libName);
+            else throw std::runtime_error(std::string("geGL::OpenGLFunctionLoader::operator() - cannot open ") + libName);
           }
           if (!this->_wglGetProcAddress){
-            ge::core::printError(GE_CORE_FCENAME, "cannot load " + getProcAddressName);
+            throw std::runtime_error(std::string("geGL::OpenGLFunctionLoader::operator() - cannot load ") + getProcAddressName);
             return nullptr;
           }
           auto ret = (void*)this->_wglGetProcAddress(name);
@@ -76,10 +76,10 @@ namespace ge{
             this->_triedToLoadGetProcAddress = true;
             if(this->openglLib)
               reinterpret_cast<void*&>(this->_glXGetProcAddress) = dlsym(this->openglLib,getProcAddressName.c_str());
-            else throw std::runtime_error("cannot open "+libName);
+            else throw std::runtime_error("geGL::OpenGLFunctionLoader::operator() - cannot open "+libName);
           }
           if(!this->_glXGetProcAddress){
-            throw std::runtime_error("cannot load " + getProcAddressName);
+            throw std::runtime_error("geGL::OpenGLFunctionLoader::operator() - cannot load " + getProcAddressName);
             return nullptr;
           }
           return (void*)this->_glXGetProcAddress((uint8_t const*)(name));

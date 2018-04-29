@@ -24,8 +24,8 @@ def printContextCall(data):
     params2 = map(lambda x:re.sub(r"\[.*\]","",x),params);
     print params[0]+" "+"ge::gl::"+params[1]+"("+args+"){"+getReturn(params[0])+"ge::gl::getDefaultContext()->"+params[1]+"("+",".join(params2[3::2])+");}"
 
-print "#include<GPUEngine/geGL/StaticCalls.h>"
-print "#include<GPUEngine/geGL/OpenGLContext.h>"
+print "#include<geGL/StaticCalls.h>"
+print "#include<geGL/OpenGLContext.h>"
 
 for x in data0:
     printContextCall(x)

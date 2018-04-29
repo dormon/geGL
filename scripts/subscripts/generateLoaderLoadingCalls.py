@@ -41,9 +41,12 @@ for line in data0:
     print "  (MEMBER_FUNCTION_POINTER)(&LoaderTableDecorator::m_"+line.split(",")[1]+"_impl),"
 print "};"
 
-print "for(size_t i=0;i<GE_GL_NOF_OPENGL_FUNCTIONS;++i)"
-print "  this->baseFunctions[i] = this->m_functionLoader->load(functionNames[i]);"
+firstFunction = data0[0].split(",")[1]
 
+print "FUNCTION_POINTER *baseFunctions = (FUNCTION_POINTER*)&this->FunctionTable::m_"+firstFunction+";"
 print "for(size_t i=0;i<GE_GL_NOF_OPENGL_FUNCTIONS;++i)"
-print "  if(this->baseFunctions[i])this->memberFunctions[i] = functionPointers[i];"
-print "  else this->memberFunctions[i] = nullptr;"
+print "  baseFunctions[i] = this->m_functionLoader->load(functionNames[i]);"
+print "MEMBER_FUNCTION_POINTER *memberFunctions = (MEMBER_FUNCTION_POINTER*)&this->FunctionTable::m_ptr_"+firstFunction+";"
+print "for(size_t i=0;i<GE_GL_NOF_OPENGL_FUNCTIONS;++i)"
+print "  if(baseFunctions[i])memberFunctions[i] = functionPointers[i];"
+print "  else memberFunctions[i] = nullptr;"
