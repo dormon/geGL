@@ -11,7 +11,6 @@ using namespace ge::gl;
  * @brief Creates empty vertex array object
  */
 ge::gl::VertexArray::VertexArray (){
-  assert(!this);
   this->_gl.glCreateVertexArrays(1,&this->_id);
 }
 
