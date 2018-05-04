@@ -74,7 +74,9 @@ set(INCLUDES
   src/${PROJECT_NAME}/Generated/TrapImplementation.h
   )
 
-add_library(${PROJECT_NAME} SHARED ${SOURCES} ${INCLUDES})
+option(BUILD_SHARED_LIBS "build this library as shared")
+
+add_library(${PROJECT_NAME} ${SOURCES} ${INCLUDES})
 add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 
 target_include_directories(${PROJECT_NAME} PUBLIC $<INSTALL_INTERFACE:include>)
