@@ -49,8 +49,8 @@ Framebuffer::~Framebuffer(){
 }
 
 void Framebuffer::attachRenderbuffer(
-    GLenum                             attachment  ,
-    std::shared_ptr<Renderbuffer>const&renderbuffer){
+    GLenum       attachment  ,
+    Renderbuffer*renderbuffer){
   assert(this!=nullptr);
   auto ii = this->_renderbufferAttachments.find(attachment);
   if(ii!=this->_renderbufferAttachments.end()){
@@ -68,7 +68,13 @@ void Framebuffer::attachRenderbuffer(
   this->_gl.glNamedFramebufferRenderbuffer(this->_id,attachment,GL_RENDERBUFFER,renderbuffer->getId());
 }
 
-void Framebuffer::attachTexture(GLenum attachment,std::shared_ptr<Texture>const&texture,GLint level,GLint layer){
+void Framebuffer::attachRenderbuffer(
+    GLenum                             attachment  ,
+    std::shared_ptr<Renderbuffer>const&renderbuffer){
+  attachRenderbuffer(attachment,&*renderbuffer);
+}
+
+void Framebuffer::attachTexture(GLenum attachment,Texture*texture,GLint level,GLint layer){
   assert(this!=nullptr);
   auto ii = this->_textureAttachments.find(attachment);
   if(ii!=this->_textureAttachments.end()){
@@ -89,6 +95,10 @@ void Framebuffer::attachTexture(GLenum attachment,std::shared_ptr<Texture>const&
     this->_gl.glNamedFramebufferTexture(this->_id,attachment,texture->getId(),level);
   else
     this->_gl.glNamedFramebufferTextureLayer(this->_id,attachment,texture->getId(),level,layer);
+}
+
+void Framebuffer::attachTexture(GLenum attachment,std::shared_ptr<Texture>const&texture,GLint level,GLint layer){
+  attachTexture(attachment,&*texture,level,layer);
 }
 
 void Framebuffer::bind  (GLenum target)const{

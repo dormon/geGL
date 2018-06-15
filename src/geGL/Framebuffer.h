@@ -22,9 +22,17 @@ class GEGL_EXPORT ge::gl::Framebuffer: public OpenGLObject{
       std::shared_ptr<Texture>const&texture    = nullptr,
       GLint                         level      = 0      ,
       GLint                         layer      = -1     );
+  void attachTexture(
+      GLenum  attachment          ,
+      Texture*texture    = nullptr,
+      GLint   level      = 0      ,
+      GLint   layer      = -1     );
   void attachRenderbuffer(
       GLenum                             attachment            ,
       std::shared_ptr<Renderbuffer>const&renderbuffer = nullptr);
+  void attachRenderbuffer(
+      GLenum       attachment            ,
+      Renderbuffer*renderbuffer = nullptr);
   bool check()const;
   void drawBuffer(GLenum buffer)const;
   void drawBuffers(GLsizei n,const GLenum *buffers)const;
@@ -84,7 +92,7 @@ class GEGL_EXPORT ge::gl::Framebuffer: public OpenGLObject{
   inline GLint getParam(GLenum pname);
   inline void  setParam(GLenum pname,GLint);
   inline GLint getAttachmentParam(GLenum attachment,GLenum pname);
-  std::map<GLenum,std::shared_ptr<Texture>>_textureAttachments;
-  std::map<GLenum,std::shared_ptr<Renderbuffer>>_renderbufferAttachments;
+  std::map<GLenum,Texture*>_textureAttachments;
+  std::map<GLenum,Renderbuffer*>_renderbufferAttachments;
 };
 
