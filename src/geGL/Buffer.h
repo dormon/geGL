@@ -3,6 +3,7 @@
 #include<geGL/OpenGLObject.h>
 #include<iostream>
 #include<set>
+#include<vector>
 
 class GEGL_EXPORT ge::gl::Buffer:
   public OpenGLObject,
@@ -26,6 +27,15 @@ class GEGL_EXPORT ge::gl::Buffer:
         GLsizeiptr                const&size                  ,
         GLvoid              const*const&data  = nullptr       ,
         GLbitfield                const&flags = GL_STATIC_DRAW);
+    template<typename T>
+    Buffer(
+        std::vector<T>const&data                  ,
+        GLbitfield    const&flags = GL_STATIC_DRAW);
+    template<typename T>
+    Buffer(
+        FunctionTablePointer const&table                 ,
+        std::vector<T>       const&data                  ,
+        GLbitfield           const&flags = GL_STATIC_DRAW);
     virtual ~Buffer();
     void alloc(
         GLsizeiptr       const&size                  ,
@@ -110,3 +120,13 @@ class GEGL_EXPORT ge::gl::Buffer:
     friend class VertexArray;
 };
 
+template<typename T>
+ge::gl::Buffer::Buffer(
+    std::vector<T>const&data ,
+    GLbitfield    const&flags):Buffer(data.size()*sizeof(T),data.data(),flags){}
+
+template<typename T>
+ge::gl::Buffer::Buffer(
+    FunctionTablePointer const&table,
+    std::vector<T>       const&data ,
+    GLbitfield           const&flags):Buffer(table,data.size()*sizeof(T),data.data(),flags){}
