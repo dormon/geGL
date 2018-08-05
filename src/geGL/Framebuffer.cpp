@@ -48,15 +48,24 @@ Framebuffer::~Framebuffer(){
   this->_gl.glDeleteFramebuffers(1,&this->_id);
 }
 
+void Framebuffer::removeLinktoAttachedRenderbuffer(GLenum attachment){
+  if(_renderbufferAttachments.count(attachment)>0){
+    auto buf = _renderbufferAttachments.at(attachment);
+    size_t counter = 0;
+    for(auto const&x:_renderbufferAttachments)
+      if(x.second == buf)
+        counter++;
+    if(counter == 1)
+      buf->_framebuffers.erase(this);
+  }
+  this->_renderbufferAttachments.erase(attachment);
+}
+
 void Framebuffer::attachRenderbuffer(
     GLenum       attachment  ,
     Renderbuffer*renderbuffer){
   assert(this!=nullptr);
-  auto ii = this->_renderbufferAttachments.find(attachment);
-  if(ii!=this->_renderbufferAttachments.end()){
-    ii->second->_framebuffers.erase(this);
-  }
-  this->_renderbufferAttachments.erase(attachment);
+  removeLinktoAttachedRenderbuffer(attachment);
 
   if(!renderbuffer){
     this->_gl.glNamedFramebufferRenderbuffer(this->_id,attachment,GL_RENDERBUFFER,0);
@@ -65,6 +74,7 @@ void Framebuffer::attachRenderbuffer(
 
   this->_renderbufferAttachments[attachment] = renderbuffer;
   renderbuffer->_framebuffers.insert(this);
+
   this->_gl.glNamedFramebufferRenderbuffer(this->_id,attachment,GL_RENDERBUFFER,renderbuffer->getId());
 }
 
@@ -74,13 +84,23 @@ void Framebuffer::attachRenderbuffer(
   attachRenderbuffer(attachment,&*renderbuffer);
 }
 
-void Framebuffer::attachTexture(GLenum attachment,Texture*texture,GLint level,GLint layer){
-  assert(this!=nullptr);
-  auto ii = this->_textureAttachments.find(attachment);
-  if(ii!=this->_textureAttachments.end()){
-    ii->second->_framebuffers.erase(this);
+void Framebuffer::removeLinkToAttachedTexture(GLenum attachment){
+  if(_textureAttachments.count(attachment)>0){
+    auto tex = _textureAttachments.at(attachment);
+    size_t counter = 0;
+    for(auto const&x:_textureAttachments)
+      if(x.second == tex)
+        counter++;
+    if(counter == 1)
+      tex->_framebuffers.erase(this);
   }
   this->_textureAttachments.erase(attachment);
+}
+
+void Framebuffer::attachTexture(GLenum attachment,Texture*texture,GLint level,GLint layer){
+  assert(this!=nullptr);
+
+  removeLinkToAttachedTexture(attachment);
 
   if(!texture){
     if(layer==-1)
@@ -91,6 +111,8 @@ void Framebuffer::attachTexture(GLenum attachment,Texture*texture,GLint level,GL
   }
 
   this->_textureAttachments[attachment] = texture;
+  texture->_framebuffers.insert(this);
+
   if(layer==-1)
     this->_gl.glNamedFramebufferTexture(this->_id,attachment,texture->getId(),level);
   else

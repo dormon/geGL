@@ -169,6 +169,6 @@ class GEGL_EXPORT ge::gl::Texture: public OpenGLObject{
   GLenum  _target;
   GLenum  _format;
   std::set<Framebuffer*>_framebuffers;
-
+  friend class Framebuffer;
 };
 

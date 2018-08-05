@@ -1,4 +1,6 @@
 #include<geGL/Renderbuffer.h>
+#include<geGL/Framebuffer.h>
+#include<vector>
 
 using namespace ge::gl;
 
@@ -67,6 +69,15 @@ void Renderbuffer::setStorage(
  */
 Renderbuffer::~Renderbuffer(){
   assert(this!=nullptr);
+  auto fs = _framebuffers;
+  for(auto const&f:fs){
+    std::vector<GLenum>attachments;
+    for(auto const&a:f->_renderbufferAttachments)
+      if(a.second == this)
+        attachments.push_back(a.first);
+    for(auto const&a:attachments)
+      f->attachRenderbuffer(a,nullptr);
+  }
   this->_gl.glDeleteRenderbuffers(1,&this->_id);
 }
 

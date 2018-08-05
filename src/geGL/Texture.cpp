@@ -1,4 +1,5 @@
 #include<geGL/Texture.h>
+#include<geGL/Framebuffer.h>
 #include<geGL/OpenGLUtil.h>
 #include<sstream>
 
@@ -137,6 +138,15 @@ Texture::Texture(
  */
 Texture::~Texture(){
   assert(this!=nullptr);
+  auto fs = _framebuffers;
+  for(auto const&f:fs){
+    std::vector<GLenum>attachments;
+    for(auto const&a:f->_textureAttachments)
+      if(a.second == this)
+        attachments.push_back(a.first);
+    for(auto const&a:attachments)
+      f->attachTexture(a,nullptr);
+  }
   this->_gl.glDeleteTextures(1,&this->_id);
 }
 

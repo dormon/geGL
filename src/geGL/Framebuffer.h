@@ -94,5 +94,9 @@ class GEGL_EXPORT ge::gl::Framebuffer: public OpenGLObject{
   inline GLint getAttachmentParam(GLenum attachment,GLenum pname);
   std::map<GLenum,Texture*>_textureAttachments;
   std::map<GLenum,Renderbuffer*>_renderbufferAttachments;
+  void removeLinkToAttachedTexture(GLenum attachment);
+  void removeLinktoAttachedRenderbuffer(GLenum attachment);
+  friend class Texture;
+  friend class Renderbuffer;
 };
 
