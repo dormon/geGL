@@ -5,7 +5,7 @@
 #include<set>
 #include<vector>
 
-class GEGL_EXPORT ge::gl::Buffer:
+class ge::gl::Buffer:
   public OpenGLObject,
   public std::enable_shared_from_this<Buffer>
 {
@@ -15,14 +15,14 @@ class GEGL_EXPORT ge::gl::Buffer:
       KEEP_ID    = 1u<<0u,
       KEEP_DATA  = 1u<<1u,
     };
-    Buffer();
-    Buffer(
+	GEGL_EXPORT Buffer();
+	GEGL_EXPORT Buffer(
         GLsizeiptr       const&size                  ,
         GLvoid     const*const&data  = nullptr       ,
         GLbitfield       const&flags = GL_STATIC_DRAW);
-    Buffer(
+	GEGL_EXPORT Buffer(
         FunctionTablePointer const&table);
-    Buffer(
+	GEGL_EXPORT Buffer(
         FunctionTablePointer      const&table,
         GLsizeiptr                const&size                  ,
         GLvoid              const*const&data  = nullptr       ,
@@ -36,76 +36,76 @@ class GEGL_EXPORT ge::gl::Buffer:
         FunctionTablePointer const&table                 ,
         std::vector<T>       const&data                  ,
         GLbitfield           const&flags = GL_STATIC_DRAW);
-    virtual ~Buffer();
-    void alloc(
+	GEGL_EXPORT virtual ~Buffer();
+	GEGL_EXPORT void alloc(
         GLsizeiptr       const&size                  ,
         GLvoid     const*const&data  = nullptr       ,
         GLbitfield       const&flags = GL_STATIC_DRAW);
-    GLvoid*map(
+	GEGL_EXPORT GLvoid*map(
         GLbitfield const&access = GL_MAP_READ_BIT|GL_MAP_WRITE_BIT)const;
-    GLvoid*map(
+	GEGL_EXPORT GLvoid*map(
         GLintptr   const&offset                                   ,
         GLsizeiptr const&size                                     ,
         GLbitfield const&access = GL_MAP_READ_BIT|GL_MAP_WRITE_BIT)const;
-    void unmap()const;
-    void setData(
+	GEGL_EXPORT void unmap()const;
+	GEGL_EXPORT void setData(
         GLvoid     const*const&data      ,
         GLsizeiptr       const&size   = 0,
         GLintptr         const&offset = 0)const;
-    void getData(
+	GEGL_EXPORT void getData(
         GLvoid*    const&data      ,
         GLsizeiptr const&size   = 0,
         GLintptr   const&offset = 0)const;
-    void bind       (
+	GEGL_EXPORT void bind       (
         GLenum const&target)const;
-    void bindRange  (
+	GEGL_EXPORT void bindRange  (
         GLenum     const&target,
         GLuint     const&index ,
         GLintptr   const&offset,
         GLsizeiptr const&size  )const;
-    void bindBase   (
+	GEGL_EXPORT void bindBase   (
         GLenum const&target,
         GLuint const&index)const;
-    void unbind     (
+	GEGL_EXPORT void unbind     (
         GLenum const&target)const;
-    void unbindRange(
+	GEGL_EXPORT void unbindRange(
         GLenum const&target,
         GLuint const&index)const;
-    void unbindBase (
+	GEGL_EXPORT void unbindBase (
         GLenum const&target,
         GLuint const&index )const;
-    bool realloc(
+	GEGL_EXPORT bool realloc(
         GLsizeiptr   const&newSize             ,
         ReallocFlags const&flags   = NEW_BUFFER);
-    void copy(
+	GEGL_EXPORT void copy(
         Buffer const&buffer)const;
-    void flushMapped(
+	GEGL_EXPORT void flushMapped(
         GLsizeiptr const&size   = 0,
         GLintptr   const&offset = 0)const;
-    void invalidate(
+	GEGL_EXPORT void invalidate(
         GLsizeiptr const&size   = 0,
         GLintptr   const&offset = 0)const;
-    void clear(
+	GEGL_EXPORT void clear(
         GLenum       const&internalFormat          ,
         GLenum       const&format                  ,
         GLenum       const&type                    ,
         GLvoid const*const&Data           = nullptr)const;
-    void clear(
+	GEGL_EXPORT void clear(
         GLenum           const&internalFormat          ,
         GLintptr         const&offset                  ,
         GLsizeiptr       const&size                    ,
         GLenum           const&format                  ,
         GLenum           const&type                    ,
         GLvoid     const*const&Data           = nullptr)const;
-    GLsizeiptr getSize       ()const;
-    GLbitfield getUsage      ()const;
-    GLenum     getAccess     ()const;
-    GLbitfield getAccessFlags()const;
-    GLboolean  isMapped      ()const;
-    GLintptr   getMapOffset  ()const;
-    GLsizeiptr getMapSize    ()const;
-    GLvoid*    getMapPointer ()const;
-    GLboolean  isImmutable   ()const;
+	GEGL_EXPORT GLsizeiptr getSize       ()const;
+	GEGL_EXPORT GLbitfield getUsage      ()const;
+	GEGL_EXPORT GLenum     getAccess     ()const;
+	GEGL_EXPORT GLbitfield getAccessFlags()const;
+	GEGL_EXPORT GLboolean  isMapped      ()const;
+	GEGL_EXPORT GLintptr   getMapOffset  ()const;
+	GEGL_EXPORT GLsizeiptr getMapSize    ()const;
+	GEGL_EXPORT GLvoid*    getMapPointer ()const;
+	GEGL_EXPORT GLboolean  isImmutable   ()const;
   private:
     GLint   _getBufferParameter(
         GLenum const&pname)const;

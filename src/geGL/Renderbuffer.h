@@ -3,38 +3,38 @@
 #include<geGL/OpenGLObject.h>
 #include<set>
 
-class GEGL_EXPORT ge::gl::Renderbuffer: public OpenGLObject{
+class ge::gl::Renderbuffer: public OpenGLObject{
   public:
-    Renderbuffer();
-    Renderbuffer(
+    GEGL_EXPORT Renderbuffer();
+	GEGL_EXPORT Renderbuffer(
         GLenum  const&internalFormat    ,
         GLsizei const&width             ,
         GLsizei const&height            ,
         GLsizei const&samples        = 0);
-    Renderbuffer(
+	GEGL_EXPORT Renderbuffer(
         FunctionTablePointer const&table             ,
         GLenum               const&internalFormat    ,
         GLsizei              const&width             ,
         GLsizei              const&height            ,
         GLsizei              const&samples        = 0);
-    ~Renderbuffer();
-    void setStorage(
+	GEGL_EXPORT ~Renderbuffer();
+	GEGL_EXPORT void setStorage(
         GLenum  const&internalFormat    ,
         GLsizei const&width             ,
         GLsizei const&height            ,
         GLsizei const&samples        = 0)const;
-    void   bind             ()const;
-    void   unbind           ()const;
-    GLint  getWidth         ()const;
-    GLint  getHeight        ()const;
-    GLenum getInternalFormat()const;
-    GLint  getSamples       ()const;
-    GLint  getRedSize       ()const;
-    GLint  getGreenSize     ()const;
-    GLint  getBlueSize      ()const;
-    GLint  getAlphaSize     ()const;
-    GLint  getDepthSize     ()const;
-    GLint  getStencilSize   ()const;
+	GEGL_EXPORT void   bind             ()const;
+	GEGL_EXPORT void   unbind           ()const;
+	GEGL_EXPORT GLint  getWidth         ()const;
+	GEGL_EXPORT GLint  getHeight        ()const;
+	GEGL_EXPORT GLenum getInternalFormat()const;
+	GEGL_EXPORT GLint  getSamples       ()const;
+	GEGL_EXPORT GLint  getRedSize       ()const;
+	GEGL_EXPORT GLint  getGreenSize     ()const;
+	GEGL_EXPORT GLint  getBlueSize      ()const;
+	GEGL_EXPORT GLint  getAlphaSize     ()const;
+	GEGL_EXPORT GLint  getDepthSize     ()const;
+	GEGL_EXPORT GLint  getStencilSize   ()const;
     enum InternalFormat{
       RED                = GL_RED               ,
       RG                 = GL_RG                ,

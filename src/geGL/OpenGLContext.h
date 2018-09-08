@@ -3,10 +3,10 @@
 #include<geGL/OpenGL.h>
 #include<cassert>
 
-class GEGL_EXPORT ge::gl::Context{
+class ge::gl::Context{
   public:
-    Context(FunctionTablePointer const&t = nullptr);
-    ~Context(){}
+    GEGL_EXPORT Context(FunctionTablePointer const&t = nullptr);
+	GEGL_EXPORT ~Context(){}
     FunctionTablePointer const&getFunctionTable()const{
       assert(this!=nullptr);
       return this->m_table;

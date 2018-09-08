@@ -2,19 +2,19 @@
 
 #include<geGL/OpenGLObject.h>
 
-class GEGL_EXPORT ge::gl::ProgramPipeline: public OpenGLObject{
+class ge::gl::ProgramPipeline: public OpenGLObject{
   public:
-    ProgramPipeline();
-    ProgramPipeline(FunctionTablePointer const&table);
-    ~ProgramPipeline();
-    void bind()const;
-    void unbind()const;
-    void useProgramStages(GLbitfield stages,GLuint program)const;
-    void useVertexStage    (GLuint program)const;
-    void useControlStage   (GLuint program)const;
-    void useEvaluationStage(GLuint program)const;
-    void useGeometryStage  (GLuint program)const;
-    void useFragmentStage  (GLuint program)const;
-    void useComputeStage   (GLuint program)const;
+    GEGL_EXPORT ProgramPipeline();
+	GEGL_EXPORT ProgramPipeline(FunctionTablePointer const&table);
+	GEGL_EXPORT ~ProgramPipeline();
+	GEGL_EXPORT void bind()const;
+	GEGL_EXPORT void unbind()const;
+	GEGL_EXPORT void useProgramStages(GLbitfield stages,GLuint program)const;
+	GEGL_EXPORT void useVertexStage    (GLuint program)const;
+	GEGL_EXPORT void useControlStage   (GLuint program)const;
+	GEGL_EXPORT void useEvaluationStage(GLuint program)const;
+	GEGL_EXPORT void useGeometryStage  (GLuint program)const;
+	GEGL_EXPORT void useFragmentStage  (GLuint program)const;
+	GEGL_EXPORT void useComputeStage   (GLuint program)const;
 };
 

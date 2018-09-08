@@ -4,49 +4,49 @@
 #include<iostream>
 #include<set>
 
-class GEGL_EXPORT ge::gl::Texture: public OpenGLObject{
+class ge::gl::Texture: public OpenGLObject{
   friend class Framebuffer;
   public:
-  Texture();
-  void create(
+  GEGL_EXPORT Texture();
+  GEGL_EXPORT void create(
       GLenum  target            ,
       GLenum  internalFormat    ,
       GLsizei levels            ,
       GLsizei width             ,
       GLsizei height         = 0,
       GLsizei depth          = 0);
-  Texture(
+  GEGL_EXPORT Texture(
       GLenum  target        ,
       GLenum  internalFormat,
       GLsizei levels        ,
       GLsizei width         );
-  Texture(
+  GEGL_EXPORT Texture(
       GLenum  target        ,
       GLenum  internalFormat,
       GLsizei levels        ,
       GLsizei width         ,
       GLsizei height        );
-  Texture(
+  GEGL_EXPORT Texture(
       GLenum  target        ,
       GLenum  internalFormat,
       GLsizei levels        ,
       GLsizei width         ,
       GLsizei height        ,
       GLsizei depth         );
-  Texture(
+  GEGL_EXPORT Texture(
       FunctionTablePointer const&table,
       GLenum  target        ,
       GLenum  internalFormat,
       GLsizei levels        ,
       GLsizei width         );
-  Texture(
+  GEGL_EXPORT Texture(
       FunctionTablePointer const&table,
       GLenum  target        ,
       GLenum  internalFormat,
       GLsizei levels        ,
       GLsizei width         ,
       GLsizei height        );
-  Texture(
+  GEGL_EXPORT Texture(
       FunctionTablePointer const&table,
       GLenum  target        ,
       GLenum  internalFormat,
@@ -54,24 +54,24 @@ class GEGL_EXPORT ge::gl::Texture: public OpenGLObject{
       GLsizei width         ,
       GLsizei height        ,
       GLsizei depth         );
-  ~Texture();
-  void bind     (GLuint unit)const;
-  void unbind   (GLuint unit)const;
-  void bindImage(
+  GEGL_EXPORT ~Texture();
+  GEGL_EXPORT void bind     (GLuint unit)const;
+  GEGL_EXPORT void unbind   (GLuint unit)const;
+  GEGL_EXPORT void bindImage(
       GLuint    unit                   ,
       GLint     level   = 0            ,
       GLenum    format  = 0            ,
       GLenum    access  = GL_READ_WRITE,
       GLboolean layered = GL_FALSE     ,
       GLint     layer   = 0            )const;
-  void setData1D(
+  GEGL_EXPORT void setData1D(
       const GLvoid*data                      ,
       GLenum       format  = GL_RGBA         ,
       GLenum       type    = GL_UNSIGNED_BYTE,
       GLint        level   = 0               ,
       GLint        xoffset = 0               ,
       GLsizei      width   = 0               )const;
-  void setData2D(
+  GEGL_EXPORT void setData2D(
       const GLvoid*data                        ,
       GLenum       format    = GL_RGBA         ,
       GLenum       type      = GL_UNSIGNED_BYTE,
@@ -82,7 +82,7 @@ class GEGL_EXPORT ge::gl::Texture: public OpenGLObject{
       GLsizei      width     = 0               ,
       GLsizei      height    = 0               ,
       GLint        rowLength = 0               )const;
-  void setData3D(
+  GEGL_EXPORT void setData3D(
       const GLvoid*data                        ,
       GLenum       format    = GL_RGBA         ,
       GLenum       type      = GL_UNSIGNED_BYTE,
@@ -98,69 +98,69 @@ class GEGL_EXPORT ge::gl::Texture: public OpenGLObject{
       GLint        imgHeight = 0               )const;
 
 
-  void    generateMipmap()const;
-  void    clear(
+  GEGL_EXPORT void    generateMipmap()const;
+  GEGL_EXPORT void    clear(
       GLint        level           ,
       GLenum       format          ,
       GLenum       type            ,
       GLvoid const*data   = nullptr);
-  void    texParameteri (GLenum pname,GLint    params)const;
-  void    texParameterfv(GLenum pname,GLfloat *params)const;
-  GLenum  getFormat()const;
-  bool      hasHeight()const;
-  bool      hasDepth ()const;
-  GLuint    getWidth                 (GLint level)const;
-  GLuint    getHeight                (GLint level)const;
-  GLuint    getDepth                 (GLint level)const;
-  GLuint    getSamples               (GLint level)const;
-  GLboolean getFixedSampleLocation   (GLint level)const;
-  GLenum    getInternalFormat        (GLint level)const;
-  GLuint    getRedSize               (GLint level)const;
-  GLuint    getGreenSize             (GLint level)const;
-  GLuint    getBlueSize              (GLint level)const;
-  GLuint    getAlphaSize             (GLint level)const;
-  GLuint    getDepthSize             (GLint level)const;
-  GLuint    getStencilSize           (GLint level)const;
-  GLuint    getSharedSize            (GLint level)const;
-  GLenum    getRedType               (GLint level)const;
-  GLenum    getGreenType             (GLint level)const;
-  GLenum    getBlueType              (GLint level)const;
-  GLenum    getAlphaType             (GLint level)const;
-  GLenum    getDepthType             (GLint level)const;
-  GLboolean getCompressed            (GLint level)const;
-  GLuint    getCompressedImageSize   (GLint level)const;
-  GLuint    getBufferDataStoreBinding(GLint level)const;
-  GLint     getBufferOffset          (GLint level)const;
-  GLint     getBufferSize            (GLint level)const;
-  GLenum    getSwizzleR                    (             )const;
-  GLenum    getSwizzleG                    (             )const;
-  GLenum    getSwizzleB                    (             )const;
-  GLenum    getSwizzleA                    (             )const;
-  void      getBorderColor                 (GLfloat*color)const;
-  GLenum    getMinFilter                   (             )const;
-  GLenum    getMagFilter                   (             )const;
-  GLenum    getWrapS                       (             )const;
-  GLenum    getWrapT                       (             )const;
-  GLenum    getWrapR                       (             )const;
-  GLenum    getTarget                      (             )const;
-  GLfloat   getMinLod                      (             )const;
-  GLfloat   getMaxLod                      (             )const;
-  GLuint    getBaseLevel                   (             )const;
-  GLuint    getMaxLevel                    (             )const;
-  GLfloat   getLodBias                     (             )const;
-  GLenum    getDepthStencilTextureMode     (             )const;
-  GLenum    getCompareMode                 (             )const;
-  GLenum    getCompareFunc                 (             )const;
-  GLenum    getImageFormatCompatibilityType(             )const;
-  GLboolean getImmutableFormat             (             )const;
-  GLuint    getImmutableLevels             (             )const;
-  GLuint    getViewMinLevel                (             )const;
-  GLuint    getViewNumLevels               (             )const;
-  GLuint    getViewMinLayer                (             )const;
-  GLuint    getViewNumLayers               (             )const;
-  std::string getInfo()const;
-  unsigned long long getSize()const;
-  unsigned long long getLevelSize(GLint level)const;
+  GEGL_EXPORT void    texParameteri (GLenum pname,GLint    params)const;
+  GEGL_EXPORT void    texParameterfv(GLenum pname,GLfloat *params)const;
+  GEGL_EXPORT GLenum  getFormat()const;
+  GEGL_EXPORT bool      hasHeight()const;
+  GEGL_EXPORT bool      hasDepth ()const;
+  GEGL_EXPORT GLuint    getWidth                 (GLint level)const;
+  GEGL_EXPORT GLuint    getHeight                (GLint level)const;
+  GEGL_EXPORT GLuint    getDepth                 (GLint level)const;
+  GEGL_EXPORT GLuint    getSamples               (GLint level)const;
+  GEGL_EXPORT GLboolean getFixedSampleLocation   (GLint level)const;
+  GEGL_EXPORT GLenum    getInternalFormat        (GLint level)const;
+  GEGL_EXPORT GLuint    getRedSize               (GLint level)const;
+  GEGL_EXPORT GLuint    getGreenSize             (GLint level)const;
+  GEGL_EXPORT GLuint    getBlueSize              (GLint level)const;
+  GEGL_EXPORT GLuint    getAlphaSize             (GLint level)const;
+  GEGL_EXPORT GLuint    getDepthSize             (GLint level)const;
+  GEGL_EXPORT GLuint    getStencilSize           (GLint level)const;
+  GEGL_EXPORT GLuint    getSharedSize            (GLint level)const;
+  GEGL_EXPORT GLenum    getRedType               (GLint level)const;
+  GEGL_EXPORT GLenum    getGreenType             (GLint level)const;
+  GEGL_EXPORT GLenum    getBlueType              (GLint level)const;
+  GEGL_EXPORT GLenum    getAlphaType             (GLint level)const;
+  GEGL_EXPORT GLenum    getDepthType             (GLint level)const;
+  GEGL_EXPORT GLboolean getCompressed            (GLint level)const;
+  GEGL_EXPORT GLuint    getCompressedImageSize   (GLint level)const;
+  GEGL_EXPORT GLuint    getBufferDataStoreBinding(GLint level)const;
+  GEGL_EXPORT GLint     getBufferOffset          (GLint level)const;
+  GEGL_EXPORT GLint     getBufferSize            (GLint level)const;
+  GEGL_EXPORT GLenum    getSwizzleR                    (             )const;
+  GEGL_EXPORT GLenum    getSwizzleG                    (             )const;
+  GEGL_EXPORT GLenum    getSwizzleB                    (             )const;
+  GEGL_EXPORT GLenum    getSwizzleA                    (             )const;
+  GEGL_EXPORT void      getBorderColor                 (GLfloat*color)const;
+  GEGL_EXPORT GLenum    getMinFilter                   (             )const;
+  GEGL_EXPORT GLenum    getMagFilter                   (             )const;
+  GEGL_EXPORT GLenum    getWrapS                       (             )const;
+  GEGL_EXPORT GLenum    getWrapT                       (             )const;
+  GEGL_EXPORT GLenum    getWrapR                       (             )const;
+  GEGL_EXPORT GLenum    getTarget                      (             )const;
+  GEGL_EXPORT GLfloat   getMinLod                      (             )const;
+  GEGL_EXPORT GLfloat   getMaxLod                      (             )const;
+  GEGL_EXPORT GLuint    getBaseLevel                   (             )const;
+  GEGL_EXPORT GLuint    getMaxLevel                    (             )const;
+  GEGL_EXPORT GLfloat   getLodBias                     (             )const;
+  GEGL_EXPORT GLenum    getDepthStencilTextureMode     (             )const;
+  GEGL_EXPORT GLenum    getCompareMode                 (             )const;
+  GEGL_EXPORT GLenum    getCompareFunc                 (             )const;
+  GEGL_EXPORT GLenum    getImageFormatCompatibilityType(             )const;
+  GEGL_EXPORT GLboolean getImmutableFormat             (             )const;
+  GEGL_EXPORT GLuint    getImmutableLevels             (             )const;
+  GEGL_EXPORT GLuint    getViewMinLevel                (             )const;
+  GEGL_EXPORT GLuint    getViewNumLevels               (             )const;
+  GEGL_EXPORT GLuint    getViewMinLayer                (             )const;
+  GEGL_EXPORT GLuint    getViewNumLayers               (             )const;
+  GEGL_EXPORT std::string getInfo()const;
+  GEGL_EXPORT unsigned long long getSize()const;
+  GEGL_EXPORT unsigned long long getLevelSize(GLint level)const;
   private:
   inline GLint _getTexLevelParameter(GLint level,GLenum pname)const;
   inline GLint _getTexParameter (GLenum pname)const;

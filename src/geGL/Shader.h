@@ -7,47 +7,47 @@
 #include<memory>
 #include<cassert>
 
-class GEGL_EXPORT ge::gl::Shader:public OpenGLObject{
+class ge::gl::Shader:public OpenGLObject{
   friend class Program;
   public:
   using Source  = std::string;
   using Sources = std::vector<Source>;
-  Shader();
-  Shader(GLenum type,Sources const& sources = {});
-  Shader(FunctionTablePointer const&table);
-  Shader(
+  GEGL_EXPORT Shader();
+  GEGL_EXPORT Shader(GLenum type,Sources const& sources = {});
+  GEGL_EXPORT Shader(FunctionTablePointer const&table);
+  GEGL_EXPORT Shader(
       FunctionTablePointer const&table       ,
       GLenum               const&type        ,
       Sources              const&sources = {});
-  virtual ~Shader();
-  void        create(GLenum type);
-  void        setSource(Sources const& sources = {});
-  void        compile  (Sources const& sources = {});
-  GLboolean   isShader        ()const;
-  GLenum      getType         ()const;
-  GLboolean   getDeleteStatus ()const;
-  GLboolean   getCompileStatus()const;
-  GLuint      getInfoLogLength()const;
-  GLuint      getSourceLength ()const;
-  std::string getInfoLog      ()const;
-  Source      getSource       ()const;
-  static std::string define(std::string const&name);
-  static std::string define(std::string const&name,uint32_t value);
-  static std::string define(std::string const&name,uint32_t value0,uint32_t value1);
-  static std::string define(std::string const&name,uint32_t value0,uint32_t value1,uint32_t value2);
-  static std::string define(std::string const&name,uint32_t value0,uint32_t value1,uint32_t value2,uint32_t value3);
-  static std::string define(std::string const&name,uint32_t vectorSize,uint32_t const*values);
-  static std::string define(std::string const&name,int32_t value);
-  static std::string define(std::string const&name,int32_t value0,int32_t value1);
-  static std::string define(std::string const&name,int32_t value0,int32_t value1,int32_t value2);
-  static std::string define(std::string const&name,int32_t value0,int32_t value1,int32_t value2,int32_t value3);
-  static std::string define(std::string const&name,uint32_t vectorSize,int32_t const*values);
-  static std::string define(std::string const&name,float value);
-  static std::string define(std::string const&name,float value0,float value1);
-  static std::string define(std::string const&name,float value0,float value1,float value2);
-  static std::string define(std::string const&name,float value0,float value1,float value2,float value3);
-  static std::string define(std::string const&name,uint32_t vectorSize,float const*values);
-  static std::string define(std::string const&name,std::string const&value);
+  GEGL_EXPORT virtual ~Shader();
+  GEGL_EXPORT void        create(GLenum type);
+  GEGL_EXPORT void        setSource(Sources const& sources = {});
+  GEGL_EXPORT void        compile  (Sources const& sources = {});
+  GEGL_EXPORT GLboolean   isShader        ()const;
+  GEGL_EXPORT GLenum      getType         ()const;
+  GEGL_EXPORT GLboolean   getDeleteStatus ()const;
+  GEGL_EXPORT GLboolean   getCompileStatus()const;
+  GEGL_EXPORT GLuint      getInfoLogLength()const;
+  GEGL_EXPORT GLuint      getSourceLength ()const;
+  GEGL_EXPORT std::string getInfoLog      ()const;
+  GEGL_EXPORT Source      getSource       ()const;
+  GEGL_EXPORT static std::string define(std::string const&name);
+  GEGL_EXPORT static std::string define(std::string const&name,uint32_t value);
+  GEGL_EXPORT static std::string define(std::string const&name,uint32_t value0,uint32_t value1);
+  GEGL_EXPORT static std::string define(std::string const&name,uint32_t value0,uint32_t value1,uint32_t value2);
+  GEGL_EXPORT static std::string define(std::string const&name,uint32_t value0,uint32_t value1,uint32_t value2,uint32_t value3);
+  GEGL_EXPORT static std::string define(std::string const&name,uint32_t vectorSize,uint32_t const*values);
+  GEGL_EXPORT static std::string define(std::string const&name,int32_t value);
+  GEGL_EXPORT static std::string define(std::string const&name,int32_t value0,int32_t value1);
+  GEGL_EXPORT static std::string define(std::string const&name,int32_t value0,int32_t value1,int32_t value2);
+  GEGL_EXPORT static std::string define(std::string const&name,int32_t value0,int32_t value1,int32_t value2,int32_t value3);
+  GEGL_EXPORT static std::string define(std::string const&name,uint32_t vectorSize,int32_t const*values);
+  GEGL_EXPORT static std::string define(std::string const&name,float value);
+  GEGL_EXPORT static std::string define(std::string const&name,float value0,float value1);
+  GEGL_EXPORT static std::string define(std::string const&name,float value0,float value1,float value2);
+  GEGL_EXPORT static std::string define(std::string const&name,float value0,float value1,float value2,float value3);
+  GEGL_EXPORT static std::string define(std::string const&name,uint32_t vectorSize,float const*values);
+  GEGL_EXPORT static std::string define(std::string const&name,std::string const&value);
   template<typename...ARGS>
     Shader(GLenum type,ARGS...args);
   template<typename...ARGS>

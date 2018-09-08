@@ -5,7 +5,7 @@
 #include<vector>
 #include<memory>
 
-class GEGL_EXPORT ge::gl::VertexArray: public OpenGLObject{
+class ge::gl::VertexArray: public OpenGLObject{
   friend class Buffer;
   public:
   enum AttribPointerType{
@@ -13,10 +13,10 @@ class GEGL_EXPORT ge::gl::VertexArray: public OpenGLObject{
     I,
     L
   };
-  VertexArray ();
-  VertexArray (FunctionTablePointer const&table);
-  ~VertexArray();
-  void addAttrib(
+  GEGL_EXPORT VertexArray ();
+  GEGL_EXPORT VertexArray (FunctionTablePointer const&table);
+  GEGL_EXPORT ~VertexArray();
+  GEGL_EXPORT void addAttrib(
       std::shared_ptr<Buffer>const&buffer                      ,
       GLuint                       index                       ,
       GLint                        nofComponentsa              ,
@@ -26,26 +26,26 @@ class GEGL_EXPORT ge::gl::VertexArray: public OpenGLObject{
       GLboolean                    normalized        = GL_FALSE,  
       GLuint                       divisor           = 0       ,
       enum AttribPointerType       attribPointerType = NONE    );
-  void addElementBuffer(
+  GEGL_EXPORT void addElementBuffer(
       std::shared_ptr<Buffer>const&buffer);
-  void bind  ()const;
-  void unbind()const;
-  GLuint    getAttribBufferBinding (GLuint index)const;
-  GLboolean isAttribEnabled        (GLuint index)const;
-  GLint     getAttribSize          (GLuint index)const;
-  GLsizei   getAttribStride        (GLuint index)const;
-  GLenum    getAttribType          (GLuint index)const;
-  GLboolean isAttribNormalized     (GLuint index)const;
-  GLboolean isAttribInteger        (GLuint index)const;
-  GLboolean isAttribLong           (GLuint index)const;
-  GLuint    getAttribDivisor       (GLuint index)const;
-  GLuint    getAttribBinding       (GLuint index)const;
-  GLuint    getAttribRelativeOffset(GLuint index)const;
-  GLuint    getElementBuffer()const;
-  std::string getInfo()const;
-  std::shared_ptr<Buffer>const&getElement()const;
-  std::shared_ptr<Buffer>const&getBuffer(GLuint index)const;
-  size_t getNofBuffers()const;
+  GEGL_EXPORT void bind  ()const;
+  GEGL_EXPORT void unbind()const;
+  GEGL_EXPORT GLuint    getAttribBufferBinding (GLuint index)const;
+  GEGL_EXPORT GLboolean isAttribEnabled        (GLuint index)const;
+  GEGL_EXPORT GLint     getAttribSize          (GLuint index)const;
+  GEGL_EXPORT GLsizei   getAttribStride        (GLuint index)const;
+  GEGL_EXPORT GLenum    getAttribType          (GLuint index)const;
+  GEGL_EXPORT GLboolean isAttribNormalized     (GLuint index)const;
+  GEGL_EXPORT GLboolean isAttribInteger        (GLuint index)const;
+  GEGL_EXPORT GLboolean isAttribLong           (GLuint index)const;
+  GEGL_EXPORT GLuint    getAttribDivisor       (GLuint index)const;
+  GEGL_EXPORT GLuint    getAttribBinding       (GLuint index)const;
+  GEGL_EXPORT GLuint    getAttribRelativeOffset(GLuint index)const;
+  GEGL_EXPORT GLuint    getElementBuffer()const;
+  GEGL_EXPORT std::string getInfo()const;
+  GEGL_EXPORT std::shared_ptr<Buffer>const&getElement()const;
+  GEGL_EXPORT std::shared_ptr<Buffer>const&getBuffer(GLuint index)const;
+  GEGL_EXPORT size_t getNofBuffers()const;
   protected:
   size_t _getNofBufferUsages(std::shared_ptr<Buffer>const&buffer)const;
   std::vector<std::shared_ptr<Buffer>>_buffers;

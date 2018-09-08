@@ -2,7 +2,7 @@
 
 #include<geGL/OpenGLObject.h>
 
-class GEGL_EXPORT ge::gl::AsynchronousQuery: public OpenGLObject{
+class ge::gl::AsynchronousQuery: public OpenGLObject{
   public:
     enum ResultSize{
       INT32 ,
@@ -10,36 +10,36 @@ class GEGL_EXPORT ge::gl::AsynchronousQuery: public OpenGLObject{
       INT64 ,
       UINT64,
     };
-    AsynchronousQuery();
-    void create(
+	GEGL_EXPORT AsynchronousQuery();
+	GEGL_EXPORT void create(
         GLenum     const&target     ,
         GLenum     const&waitingType,
         ResultSize const&resultSize );
-    AsynchronousQuery(
+	GEGL_EXPORT AsynchronousQuery(
         GLenum     const&target     ,
         GLenum     const&waitingType,
         ResultSize const&resultSize );
-    AsynchronousQuery(
+	GEGL_EXPORT AsynchronousQuery(
         AsynchronousQuery const*const&existingQuery);
-    AsynchronousQuery(
+	GEGL_EXPORT AsynchronousQuery(
         FunctionTablePointer const&table      ,
         GLenum               const&target     ,
         GLenum               const&waitingType,
         ResultSize           const&resultSize );
-    AsynchronousQuery(
+	GEGL_EXPORT AsynchronousQuery(
         FunctionTablePointer       const&table        ,
         AsynchronousQuery    const*const&existingQuery);
-    ~AsynchronousQuery();
-    void begin();
-    void end  ();
-    void begin(GLuint const&index);
-    void end  (GLuint const&index);
-    GLuint64 getui64       ()const;
-    GLint64  geti64        ()const;
-    GLuint   getui         ()const;
-    GLint    geti          ()const;
-    GLenum   getTarget     ()const;
-    GLenum   getWaitingType()const;
+	GEGL_EXPORT ~AsynchronousQuery();
+	GEGL_EXPORT void begin();
+	GEGL_EXPORT void end  ();
+	GEGL_EXPORT void begin(GLuint const&index);
+	GEGL_EXPORT void end  (GLuint const&index);
+	GEGL_EXPORT GLuint64 getui64       ()const;
+	GEGL_EXPORT GLint64  geti64        ()const;
+	GEGL_EXPORT GLuint   getui         ()const;
+	GEGL_EXPORT GLint    geti          ()const;
+	GEGL_EXPORT GLenum   getTarget     ()const;
+	GEGL_EXPORT GLenum   getWaitingType()const;
   protected:
     /**
      * @brief 
