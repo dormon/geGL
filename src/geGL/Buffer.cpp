@@ -56,7 +56,11 @@ Buffer::Buffer(FunctionTablePointer const &table,
 /**
  * @brief destructor
  */
-Buffer::~Buffer() { getContext().glDeleteBuffers(1, &getId()); }
+Buffer::~Buffer()
+{
+  getContext().glDeleteBuffers(1, &getId());
+  delete impl;
+}
 
 /**
  * @brief allocates buffer, this function can only be used on empty buffer
