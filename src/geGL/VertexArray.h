@@ -17,6 +17,18 @@ class ge::gl::VertexArray: public OpenGLObject{
   GEGL_EXPORT VertexArray (FunctionTablePointer const&table);
   GEGL_EXPORT ~VertexArray();
   GEGL_EXPORT void addAttrib(
+    Buffer*                buffer,
+    GLuint                 index,
+    GLint                  nofComponentsa,
+    GLenum                 type,
+    GLsizei                stride = 0,
+    GLintptr               offset = 0,
+    GLboolean              normalized = GL_FALSE,
+    GLuint                 divisor = 0,
+    enum AttribPointerType attribPointerType = NONE);
+  GEGL_EXPORT void addElementBuffer(
+    Buffer*buffer);
+  GEGL_EXPORT void addAttrib(
       std::shared_ptr<Buffer>const&buffer                      ,
       GLuint                       index                       ,
       GLint                        nofComponentsa              ,
@@ -43,13 +55,13 @@ class ge::gl::VertexArray: public OpenGLObject{
   GEGL_EXPORT GLuint    getAttribRelativeOffset(GLuint index)const;
   GEGL_EXPORT GLuint    getElementBuffer()const;
   GEGL_EXPORT std::string getInfo()const;
-  GEGL_EXPORT std::shared_ptr<Buffer>const&getElement()const;
-  GEGL_EXPORT std::shared_ptr<Buffer>const&getBuffer(GLuint index)const;
+  GEGL_EXPORT Buffer*getElement()const;
+  GEGL_EXPORT Buffer*getBuffer(GLuint index)const;
   GEGL_EXPORT size_t getNofBuffers()const;
   protected:
-  size_t _getNofBufferUsages(std::shared_ptr<Buffer>const&buffer)const;
-  std::vector<std::shared_ptr<Buffer>>_buffers;
-  std::shared_ptr<Buffer>_elementBuffer = nullptr;
+  VertexArrayImpl*impl = nullptr;
+  size_t _getNofBufferUsages(Buffer const*buffer)const;
   GLint _getAttrib(GLuint index,GLenum pname)const;
+  friend class BufferImpl;
 };
 

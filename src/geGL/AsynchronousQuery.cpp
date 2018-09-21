@@ -6,7 +6,7 @@ using namespace ge::gl;
 
 AsynchronousQuery::AsynchronousQuery(){
   assert(this!=nullptr);
-  this->_gl.glGenQueries(1,&this->_id);
+  this->getContext().glGenQueries(1,&this->getId());
 }
 
 void AsynchronousQuery::create(
@@ -31,7 +31,7 @@ AsynchronousQuery::AsynchronousQuery(
     GLenum     const&waitingType,
     ResultSize const&resultSize ){
   assert(this!=nullptr);
-  this->_gl.glGenQueries(1,&this->_id);
+  this->getContext().glGenQueries(1,&this->getId());
   this->_target      = target;
   this->_waitingType = waitingType;
   this->_resultSize  = resultSize;
@@ -45,7 +45,7 @@ AsynchronousQuery::AsynchronousQuery(
 AsynchronousQuery::AsynchronousQuery(
     AsynchronousQuery const*const&existingQuery){
   assert(this!=nullptr);
-  this->_gl.glGenQueries(1,&this->_id);
+  this->getContext().glGenQueries(1,&this->getId());
   this->_target      = existingQuery->_target;
   this->_waitingType = existingQuery->_waitingType;
   this->_resultSize  = existingQuery->_resultSize;
@@ -57,7 +57,7 @@ AsynchronousQuery::AsynchronousQuery(
     GLenum               const&waitingType,
     ResultSize           const&resultSize ):OpenGLObject(table){
   assert(this!=nullptr);
-  this->_gl.glGenQueries(1,&this->_id);
+  this->getContext().glGenQueries(1,&this->getId());
   this->_target      = target;
   this->_waitingType = waitingType;
   this->_resultSize  = resultSize;
@@ -67,7 +67,7 @@ AsynchronousQuery::AsynchronousQuery(
     FunctionTablePointer       const&table        ,
     AsynchronousQuery    const*const&existingQuery):OpenGLObject(table){
   assert(this!=nullptr);
-  this->_gl.glGenQueries(1,&this->_id);
+  this->getContext().glGenQueries(1,&this->getId());
   this->_target      = existingQuery->_target;
   this->_waitingType = existingQuery->_waitingType;
   this->_resultSize  = existingQuery->_resultSize;
@@ -78,7 +78,7 @@ AsynchronousQuery::AsynchronousQuery(
  */
 AsynchronousQuery::~AsynchronousQuery(){
   assert(this!=nullptr);
-  this->_gl.glDeleteQueries(1,&this->_id);
+  this->getContext().glDeleteQueries(1,&this->getId());
 }
 
 /**
@@ -86,7 +86,7 @@ AsynchronousQuery::~AsynchronousQuery(){
  */
 void AsynchronousQuery::begin(){
   assert(this!=nullptr);
-  this->_gl.glBeginQuery(this->_target,this->_id);
+  this->getContext().glBeginQuery(this->_target,this->getId());
 }
 
 /**
@@ -94,19 +94,19 @@ void AsynchronousQuery::begin(){
  */
 void AsynchronousQuery::end(){
   assert(this!=nullptr);
-  this->_gl.glEndQuery(this->_target);
+  this->getContext().glEndQuery(this->_target);
   switch(this->_resultSize){
     case INT32:
-      this->_gl.glGetQueryObjectiv   (this->_id,this->_waitingType,&this->_datai32);
+      this->getContext().glGetQueryObjectiv   (this->getId(),this->_waitingType,&this->_datai32);
       break;
     case UINT32:
-      this->_gl.glGetQueryObjectuiv  (this->_id,this->_waitingType,&this->_dataui32);
+      this->getContext().glGetQueryObjectuiv  (this->getId(),this->_waitingType,&this->_dataui32);
       break;
     case INT64:
-      this->_gl.glGetQueryObjecti64v (this->_id,this->_waitingType,&this->_datai64);
+      this->getContext().glGetQueryObjecti64v (this->getId(),this->_waitingType,&this->_datai64);
       break;
     case UINT64:
-      this->_gl.glGetQueryObjectui64v(this->_id,this->_waitingType,&this->_dataui64);
+      this->getContext().glGetQueryObjectui64v(this->getId(),this->_waitingType,&this->_dataui64);
       break;
   }
 }
@@ -118,7 +118,7 @@ void AsynchronousQuery::end(){
  */
 void AsynchronousQuery::begin(GLuint const&index){
   assert(this!=nullptr);
-  this->_gl.glBeginQueryIndexed(this->_target,index,this->_id);
+  this->getContext().glBeginQueryIndexed(this->_target,index,this->getId());
 }
 
 /**
@@ -128,7 +128,7 @@ void AsynchronousQuery::begin(GLuint const&index){
  */
 void AsynchronousQuery::end(GLuint const&index){
   assert(this!=nullptr);
-  this->_gl.glEndQueryIndexed(this->_target,index);
+  this->getContext().glEndQueryIndexed(this->_target,index);
 }
 
 /**

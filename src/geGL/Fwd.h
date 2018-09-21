@@ -11,11 +11,16 @@ namespace ge{
     class Context;
     using ContextPointer = std::shared_ptr<Context>;
     class OpenGLObject;
+    class OpenGLObjectImpl;
     class Buffer;
+    class BufferImpl;
     class Program;
+    class ProgramImpl;
     class Shader;
+    class ShaderImpl;
     class Texture;
     class VertexArray;
+    class VertexArrayImpl;
     class AsynchronousQuery;
     class Framebuffer;
     class ProgramPipeline;

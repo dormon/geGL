@@ -1,6 +1,8 @@
 #include<geGL/Program.h>
+#include<geGL/ShaderImpl.h>
 #include<geGL/OpenGLUtil.h>
 #include<geGL/Buffer.h>
+#include<geGL/ProgramImpl.h>
 #include<iostream>
 #include<string>
 #include<limits>
@@ -10,6 +12,8 @@
 using namespace ge::gl;
 
 static bool printUniformWarnings = true;
+
+std::shared_ptr<ProgramInfo> const&Program::getInfo()const { return this->impl->info; }
 
 /**
  * @brief sets warning for setting non existing uniform 
@@ -32,7 +36,7 @@ bool Program::isNonexistingUniformWarningEnabled(){
 GLint Program::_getParam(GLenum pname)const{
   assert(this!=nullptr);
   GLint params;
-  this->_gl.glGetProgramiv(this->getId(),pname,&params);
+  this->getContext().glGetProgramiv(this->getId(),pname,&params);
   return params;
 }
 
@@ -41,9 +45,10 @@ GLint Program::_getParam(GLenum pname)const{
  *
  * @param shaders vector of compiled shaders
  */
-Program::Program(ShaderPointers const&shaders){
+Program::Program(ShaderPointers const&shaders):OpenGLObject(nullptr){
   assert(this!=nullptr);
-  this->_info = std::make_shared<ProgramInfo>();
+  impl = new ProgramImpl();
+  this->impl->info = std::make_shared<ProgramInfo>();
   if(shaders.size()==0)return;
   this->link(shaders);
 }
@@ -58,7 +63,8 @@ Program::Program(
     FunctionTablePointer const&table  ,
     ShaderPointers       const&shaders):OpenGLObject(table){
   assert(this!=nullptr);
-  this->_info = std::make_shared<ProgramInfo>();
+  impl = new ProgramImpl();
+  this->impl->info = std::make_shared<ProgramInfo>();
   if(shaders.size()==0)return;
   this->link(shaders);
 }
@@ -68,8 +74,8 @@ Program::Program(
  */
 void Program::create(){
   assert(this!=nullptr);
-  if(this->_id != 0)return;
-  this->_id = this->_gl.glCreateProgram();
+  if(this->getId() != 0)return;
+  this->getId() = this->getContext().glCreateProgram();
 }
 
 /**
@@ -78,9 +84,9 @@ void Program::create(){
 Program::~Program(){
   assert(this!=nullptr);
   std::vector<ShaderPointer>forDeletion;
-  for(auto const&x:this->_shaders)forDeletion.push_back(x);
+  for(auto const&x:this->impl->shaders)forDeletion.push_back(x);
   this->detachShaders(forDeletion);
-  this->_gl.glDeleteProgram(this->_id);
+  this->getContext().glDeleteProgram(this->getId());
 }
 
 /**
@@ -90,7 +96,7 @@ Program::~Program(){
  */
 GLboolean Program::isProgram()const{
   assert(this!=nullptr);
-  return this->_gl.glIsProgram(this->_id);
+  return this->getContext().glIsProgram(this->getId());
 }
 
 /**
@@ -102,9 +108,9 @@ void Program::attachShaders(ShaderPointers const&shaders){
   assert(this!=nullptr);
   this->create();
   for(auto const&x:shaders){
-    this->_gl.glAttachShader(this->_id,x->getId());
-    this->_shaders.insert(x);
-    x->_programs.insert(this);
+    this->getContext().glAttachShader(this->getId(),x->getId());
+    this->impl->shaders.insert(x);
+    x->impl->programs.insert(this);
   }
 }
 
@@ -116,9 +122,9 @@ void Program::attachShaders(ShaderPointers const&shaders){
 void Program::detachShaders(ShaderPointers const&shaders){
   assert(this!=nullptr);
   for(auto const&x:shaders){
-    this->_gl.glDetachShader(this->_id,x->getId());
-    this->_shaders.erase(x);
-    x->_programs.erase(this);
+    this->getContext().glDetachShader(this->getId(),x->getId());
+    this->impl->shaders.erase(x);
+    x->impl->programs.erase(this);
   }
 }
 
@@ -130,7 +136,7 @@ void Program::detachShaders(ShaderPointers const&shaders){
 void Program::link(ShaderPointers const&shaders){
   assert(this!=nullptr);
   this->attachShaders(shaders);
-  this->_gl.glLinkProgram(this->_id);
+  this->getContext().glLinkProgram(this->getId());
   if(!this->getLinkStatus()){
     std::cerr<<this->getInfoLog()<<std::endl;
   }
@@ -142,7 +148,7 @@ void Program::link(ShaderPointers const&shaders){
  */
 void Program::use()const{
   assert(this!=nullptr);
-  this->_gl.glUseProgram(this->_id);
+  this->getContext().glUseProgram(this->getId());
 }
 
 /**
@@ -150,7 +156,7 @@ void Program::use()const{
  */
 void Program::validate()const{
   assert(this!=nullptr);
-  this->_gl.glValidateProgram(this->_id);
+  this->getContext().glValidateProgram(this->getId());
 }
 
 /**
@@ -162,7 +168,7 @@ void Program::validate()const{
  */
 GLint Program::getUniformLocation(std::string const&name)const{
   assert(this!=nullptr);
-  return this->_gl.glGetUniformLocation(this->_id,name.c_str());
+  return this->getContext().glGetUniformLocation(this->getId(),name.c_str());
 }
 
 /**
@@ -174,7 +180,7 @@ GLint Program::getUniformLocation(std::string const&name)const{
  */
 GLint Program::getAttribLocation (std::string const&name)const{
   assert(this!=nullptr);
-  return this->_gl.glGetAttribLocation(this->_id,name.c_str());
+  return this->getContext().glGetAttribLocation(this->getId(),name.c_str());
 }
 
 /**
@@ -294,7 +300,7 @@ GLuint    Program::getBinaryLength()const{
  */
 void      Program::getComputeWorkGroupSize(GLint*x)const{
   assert(this!=nullptr);
-  this->_gl.glGetProgramiv(this->getId(),GL_COMPUTE_WORK_GROUP_SIZE,x);
+  this->getContext().glGetProgramiv(this->getId(),GL_COMPUTE_WORK_GROUP_SIZE,x);
 }
 
 /**
@@ -367,15 +373,15 @@ std::string Program::getInfoLog()const{
   GLuint length = this->getInfoLogLength();
   if(!length)return"";
   std::string info(length,' ');
-  this->_gl.glGetProgramInfoLog(this->getId(),length,NULL,(GLchar*)info.c_str());
+  this->getContext().glGetProgramInfoLog(this->getId(),length,NULL,(GLchar*)info.c_str());
   return info;
 }
 
 GLint Program::getInterfaceParam(GLenum interf,GLenum pname)const{
   assert(this!=nullptr);
   GLint params;
-  this->_gl.glGetProgramInterfaceiv(
-      this->_id,
+  this->getContext().glGetProgramInterfaceiv(
+      this->getId(),
       interf,
       pname,
       &params);
@@ -387,8 +393,8 @@ std::string Program::getResourceName(GLenum interf,GLuint index)const{
   GLuint maxLength = this->getInterfaceParam(interf,GL_MAX_NAME_LENGTH);
   char*buffer = new char[maxLength];
   assert(buffer!=nullptr);
-  this->_gl.glGetProgramResourceName(
-      this->_id,
+  this->getContext().glGetProgramResourceName(
+      this->getId(),
       interf,
       index,
       maxLength,
@@ -402,8 +408,8 @@ std::string Program::getResourceName(GLenum interf,GLuint index)const{
 GLint Program::getResourceParam(GLenum interf,GLenum pname,GLuint index)const{
   assert(this!=nullptr);
   GLint param;
-  this->_gl.glGetProgramResourceiv(
-      this->_id,
+  this->getContext().glGetProgramResourceiv(
+      this->getId(),
       interf,
       index,
       1,
@@ -418,72 +424,72 @@ GLint Program::getResourceParam(GLenum interf,GLenum pname,GLuint index)const{
 
 #define GE_GL_PROGRAM_SET(fce,type,...)\
   assert(this!=nullptr);\
-  auto ii = this->_info->uniforms.find(name);\
-  if(ii==this->_info->uniforms.end()){\
+  auto ii = this->impl->info->uniforms.find(name);\
+  if(ii==this->impl->info->uniforms.end()){\
     if(printUniformWarnings)\
       throw std::invalid_argument("there is no such uniform: "+name);\
     return this;\
   }\
-  assert(std::get<ProgramInfo::TYPE>(this->_info->uniforms[name]) == type);\
+  assert(std::get<ProgramInfo::TYPE>(this->impl->info->uniforms[name]) == type);\
   std::get<ProgramInfo::LOCATION>(ii->second);\
-  this->_gl.fce(this->_id,std::get<ProgramInfo::LOCATION>(ii->second),__VA_ARGS__);\
+  this->getContext().fce(this->getId(),std::get<ProgramInfo::LOCATION>(ii->second),__VA_ARGS__);\
   return this
 
 #define GE_GL_PROGRAM_SETI(fce,type0,type1,...)\
   assert(this!=nullptr);\
-  auto ii = this->_info->uniforms.find(name);\
-  if(ii==this->_info->uniforms.end()){\
+  auto ii = this->impl->info->uniforms.find(name);\
+  if(ii==this->impl->info->uniforms.end()){\
     if(printUniformWarnings)\
       throw std::invalid_argument("there is no such uniform: "+name);\
     return this;\
   }\
   assert(\
-      std::get<ProgramInfo::TYPE>(this->_info->uniforms[name]) == type0 ||\
-      std::get<ProgramInfo::TYPE>(this->_info->uniforms[name]) == type1);\
+      std::get<ProgramInfo::TYPE>(this->impl->info->uniforms[name]) == type0 ||\
+      std::get<ProgramInfo::TYPE>(this->impl->info->uniforms[name]) == type1);\
   std::get<ProgramInfo::LOCATION>(ii->second);\
-  this->_gl.fce(this->_id,std::get<ProgramInfo::LOCATION>(ii->second),__VA_ARGS__);\
+  this->getContext().fce(this->getId(),std::get<ProgramInfo::LOCATION>(ii->second),__VA_ARGS__);\
   return this
 
 #define GE_GL_PROGRAM_SETV(fce,type)\
   assert(this!=nullptr);\
-  auto ii = this->_info->uniforms.find(name);\
-  if(ii==this->_info->uniforms.end()){\
+  auto ii = this->impl->info->uniforms.find(name);\
+  if(ii==this->impl->info->uniforms.end()){\
     if(printUniformWarnings)\
       throw std::invalid_argument("there is no such uniform: "+name);\
     return this;\
   }\
-  assert(std::get<ProgramInfo::TYPE>(this->_info->uniforms[name]) == type);\
-  assert(count<=std::get<ProgramInfo::SIZE>(this->_info->uniforms[name]));\
-  this->_gl.fce(this->_id,std::get<ProgramInfo::LOCATION>(ii->second),count,v0);\
+  assert(std::get<ProgramInfo::TYPE>(this->impl->info->uniforms[name]) == type);\
+  assert(count<=std::get<ProgramInfo::SIZE>(this->impl->info->uniforms[name]));\
+  this->getContext().fce(this->getId(),std::get<ProgramInfo::LOCATION>(ii->second),count,v0);\
   return this
 
 #define GE_GL_PROGRAM_SETIV(fce,type0,type1)\
   assert(this!=nullptr);\
-  auto ii = this->_info->uniforms.find(name);\
-  if(ii==this->_info->uniforms.end()){\
+  auto ii = this->impl->info->uniforms.find(name);\
+  if(ii==this->impl->info->uniforms.end()){\
     if(printUniformWarnings)\
       throw std::invalid_argument("there is no such uniform: "+name);\
     return this;\
   }\
   assert(\
-      std::get<ProgramInfo::TYPE>(this->_info->uniforms[name]) == type0 ||\
-      std::get<ProgramInfo::TYPE>(this->_info->uniforms[name]) == type1);\
-  assert(count<=std::get<ProgramInfo::SIZE>(this->_info->uniforms[name]));\
-  this->_gl.fce(this->_id,std::get<ProgramInfo::LOCATION>(ii->second),count,v0);\
+      std::get<ProgramInfo::TYPE>(this->impl->info->uniforms[name]) == type0 ||\
+      std::get<ProgramInfo::TYPE>(this->impl->info->uniforms[name]) == type1);\
+  assert(count<=std::get<ProgramInfo::SIZE>(this->impl->info->uniforms[name]));\
+  this->getContext().fce(this->getId(),std::get<ProgramInfo::LOCATION>(ii->second),count,v0);\
   return this
 
 
 #define GE_GL_PROGRAM_SETMATRIX(fce,type)\
   assert(this!=nullptr);\
-  auto ii = this->_info->uniforms.find(name);\
-  if(ii==this->_info->uniforms.end()){\
+  auto ii = this->impl->info->uniforms.find(name);\
+  if(ii==this->impl->info->uniforms.end()){\
     if(printUniformWarnings)\
       throw std::invalid_argument("there is no such uniform: "+name);\
     return this;\
   }\
-  assert(std::get<ProgramInfo::TYPE>(this->_info->uniforms[name]) == type);\
-  assert(count<=std::get<ProgramInfo::SIZE>(this->_info->uniforms[name]));\
-  this->_gl.fce(this->_id,std::get<ProgramInfo::LOCATION>(ii->second),count,transpose,v0);\
+  assert(std::get<ProgramInfo::TYPE>(this->impl->info->uniforms[name]) == type);\
+  assert(count<=std::get<ProgramInfo::SIZE>(this->impl->info->uniforms[name]));\
+  this->getContext().fce(this->getId(),std::get<ProgramInfo::LOCATION>(ii->second),count,transpose,v0);\
   return this
 
 
@@ -659,8 +665,8 @@ Program const* Program::setMatrix2x3dv(std::string const&name,double const*v0,GL
 
 GLint Program::_getUniform(std::string name){
   assert(this!=nullptr);
-  auto ii = this->_info->uniforms.find(name);
-  if(ii==this->_info->uniforms.end())
+  auto ii = this->impl->info->uniforms.find(name);
+  if(ii==this->impl->info->uniforms.end())
     return -1;
   return std::get<ProgramInfo::LOCATION>(ii->second);
 }
@@ -677,10 +683,10 @@ void Program::_fillUniformInfo(){
     std::string name;
     GLint location;
     GLsizei length;
-    this->_gl.glGetActiveUniform(this->_id,i,longestUniform,&length,&size,&type,buffer);
+    this->getContext().glGetActiveUniform(this->getId(),i,longestUniform,&length,&size,&type,buffer);
     name = this->_chopIndexingInPropertyName(std::string(buffer));
     location = this->getUniformLocation(name);
-    this->_info->uniforms[name] = ProgramInfo::Properties(location,type,name,size);
+    this->impl->info->uniforms[name] = ProgramInfo::Properties(location,type,name,size);
     //add all variants name[0], name[1], ...
     for(GLint s=0;s<size;++s){
       std::stringstream ss;
@@ -688,7 +694,7 @@ void Program::_fillUniformInfo(){
       ss << s;
       ss << "]";
       std::string uniformNameWithIndexing = ss.str();
-      this->_info->uniforms[uniformNameWithIndexing] = ProgramInfo::Properties(
+      this->impl->info->uniforms[uniformNameWithIndexing] = ProgramInfo::Properties(
           this->getUniformLocation(uniformNameWithIndexing),
           type,
           uniformNameWithIndexing,
@@ -710,10 +716,10 @@ void Program::_fillAttribInfo(){
     std::string name;
     GLint location;
     GLsizei length;
-    this->_gl.glGetActiveAttrib(this->_id,i,longestAttrib,&length,&size,&type,buffer);
+    this->getContext().glGetActiveAttrib(this->getId(),i,longestAttrib,&length,&size,&type,buffer);
     name = this->_chopIndexingInPropertyName(std::string(buffer));
     location = this->getAttribLocation(name);
-    this->_info->attribs[name] = ProgramInfo::Properties(location,type,name,size);
+    this->impl->info->attribs[name] = ProgramInfo::Properties(location,type,name,size);
   }
   delete[]buffer;
 }
@@ -732,7 +738,7 @@ void Program::_fillBufferInfo(){
     GLint geometry           = this->getResourceParam(GL_SHADER_STORAGE_BLOCK,GL_REFERENCED_BY_GEOMETRY_SHADER       ,i);
     GLint fragment           = this->getResourceParam(GL_SHADER_STORAGE_BLOCK,GL_REFERENCED_BY_FRAGMENT_SHADER       ,i);
     GLint compute            = this->getResourceParam(GL_SHADER_STORAGE_BLOCK,GL_REFERENCED_BY_COMPUTE_SHADER        ,i);
-    this->_info->buffers[name] = ProgramInfo::BufferProperties(
+    this->impl->info->buffers[name] = ProgramInfo::BufferProperties(
         name,
         binding,
         dataSize,
@@ -764,8 +770,8 @@ GLuint const Program::nonExistingBufferBinding = std::numeric_limits<GLuint>::ma
 
 GLuint Program::getBufferBinding(std::string const&name)const{
   assert(this != nullptr);
-  auto ii = this->_info->buffers.find(name);
-  if(ii == this->_info->buffers.end()){
+  auto ii = this->impl->info->buffers.find(name);
+  if(ii == this->impl->info->buffers.end()){
     throw std::invalid_argument("there is no such buffer: "+name);
     return Program::nonExistingBufferBinding;;
   }
@@ -786,6 +792,6 @@ Program const*Program::bindBuffer(
 Program const*Program::dispatch(GLuint nofWorkGroupsX,GLuint nofWorkGroupsY,GLuint nofWorkGroupsZ)const{
   assert(this!=nullptr);
   this->use();
-  this->_gl.glDispatchCompute(nofWorkGroupsX,nofWorkGroupsY,nofWorkGroupsZ);
+  this->getContext().glDispatchCompute(nofWorkGroupsX,nofWorkGroupsY,nofWorkGroupsZ);
   return this;
 }

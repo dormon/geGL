@@ -20,22 +20,22 @@ void Texture::create(
   assert((width!=0)||(width!=0&&height!=0)||(width!=0&&height!=0&&depth!=0));
   this->_target = target;
   this->_format = internalFormat;
-  this->_gl.glCreateTextures(this->_target,1,&this->_id);
+  this->getContext().glCreateTextures(this->_target,1,&this->getId());
   if(levels>0){
-    if     (height == 0)this->_gl.glTextureStorage1D(this->_id,levels,this->_format,width             );
-    else if(depth  == 0)this->_gl.glTextureStorage2D(this->_id,levels,this->_format,width,height      );
-    else                this->_gl.glTextureStorage3D(this->_id,levels,this->_format,width,height,depth);
+    if     (height == 0)this->getContext().glTextureStorage1D(this->getId(),levels,this->_format,width             );
+    else if(depth  == 0)this->getContext().glTextureStorage2D(this->getId(),levels,this->_format,width,height      );
+    else                this->getContext().glTextureStorage3D(this->getId(),levels,this->_format,width,height,depth);
   }else{
     if(target == GL_TEXTURE_CUBE_MAP){
       for(uint32_t i=0;i<6;++i){
-        if     (height == 0)this->_gl.glTextureImage1DEXT(this->_id,GL_TEXTURE_CUBE_MAP_POSITIVE_X+i,0,this->_format,width             ,0,GL_RGBA,GL_UNSIGNED_BYTE,nullptr);
-        else if(depth  == 0)this->_gl.glTextureImage2DEXT(this->_id,GL_TEXTURE_CUBE_MAP_POSITIVE_X+i,0,this->_format,width,height      ,0,GL_RGBA,GL_UNSIGNED_BYTE,nullptr);
-        else                this->_gl.glTextureImage3DEXT(this->_id,GL_TEXTURE_CUBE_MAP_POSITIVE_X+i,0,this->_format,width,height,depth,0,GL_RGBA,GL_UNSIGNED_BYTE,nullptr);
+        if     (height == 0)this->getContext().glTextureImage1DEXT(this->getId(),GL_TEXTURE_CUBE_MAP_POSITIVE_X+i,0,this->_format,width             ,0,GL_RGBA,GL_UNSIGNED_BYTE,nullptr);
+        else if(depth  == 0)this->getContext().glTextureImage2DEXT(this->getId(),GL_TEXTURE_CUBE_MAP_POSITIVE_X+i,0,this->_format,width,height      ,0,GL_RGBA,GL_UNSIGNED_BYTE,nullptr);
+        else                this->getContext().glTextureImage3DEXT(this->getId(),GL_TEXTURE_CUBE_MAP_POSITIVE_X+i,0,this->_format,width,height,depth,0,GL_RGBA,GL_UNSIGNED_BYTE,nullptr);
       }
     }else{
-      if     (height == 0)this->_gl.glTextureImage1DEXT(this->_id,this->_target,0,this->_format,width             ,0,GL_RGBA,GL_UNSIGNED_BYTE,nullptr);
-      else if(depth  == 0)this->_gl.glTextureImage2DEXT(this->_id,this->_target,0,this->_format,width,height      ,0,GL_RGBA,GL_UNSIGNED_BYTE,nullptr);
-      else                this->_gl.glTextureImage3DEXT(this->_id,this->_target,0,this->_format,width,height,depth,0,GL_RGBA,GL_UNSIGNED_BYTE,nullptr);
+      if     (height == 0)this->getContext().glTextureImage1DEXT(this->getId(),this->_target,0,this->_format,width             ,0,GL_RGBA,GL_UNSIGNED_BYTE,nullptr);
+      else if(depth  == 0)this->getContext().glTextureImage2DEXT(this->getId(),this->_target,0,this->_format,width,height      ,0,GL_RGBA,GL_UNSIGNED_BYTE,nullptr);
+      else                this->getContext().glTextureImage3DEXT(this->getId(),this->_target,0,this->_format,width,height,depth,0,GL_RGBA,GL_UNSIGNED_BYTE,nullptr);
     }
   }
 }
@@ -147,7 +147,7 @@ Texture::~Texture(){
     for(auto const&a:attachments)
       f->attachTexture(a,nullptr);
   }
-  this->_gl.glDeleteTextures(1,&this->_id);
+  this->getContext().glDeleteTextures(1,&this->getId());
 }
 
 /**
@@ -157,7 +157,7 @@ Texture::~Texture(){
  */
 void   Texture::bind(GLuint unit)const{
   assert(this!=nullptr);
-  this->_gl.glBindTextureUnit(unit,this->_id);
+  this->getContext().glBindTextureUnit(unit,this->getId());
 }
 
 /**
@@ -167,7 +167,7 @@ void   Texture::bind(GLuint unit)const{
  */
 void Texture::unbind(GLuint unit)const{
   assert(this!=nullptr);
-  this->_gl.glBindTextureUnit(unit,0);
+  this->getContext().glBindTextureUnit(unit,0);
 }
 
 /**
@@ -189,7 +189,7 @@ void Texture::bindImage(
     GLint     layer)const{
   assert(this!=nullptr);
   if(format == 0)format=this->_format;
-  this->_gl.glBindImageTexture(unit,this->_id,level,layered,
+  this->getContext().glBindImageTexture(unit,this->getId(),level,layered,
       layer,access,format);
 }
 
@@ -203,7 +203,7 @@ void Texture::setData1D(
   assert(this!=nullptr);
   if(width==0)width=this->getWidth(0);
   for(GLint l=0;l<level;++l)width/=2;
-  this->_gl.glTextureSubImage1D(this->_id,level,xoffset,width,format,type,data);
+  this->getContext().glTextureSubImage1D(this->getId(),level,xoffset,width,format,type,data);
 }
 
 void Texture::setData2D(
@@ -228,16 +228,16 @@ void Texture::setData2D(
     }
   }
   if(rowLength==0)rowLength=width;
-  this->_gl.glPixelStorei(GL_UNPACK_ROW_LENGTH,rowLength);
+  this->getContext().glPixelStorei(GL_UNPACK_ROW_LENGTH,rowLength);
     
-  this->_gl.glPixelStorei(GL_UNPACK_ALIGNMENT ,1        );
+  this->getContext().glPixelStorei(GL_UNPACK_ALIGNMENT ,1        );
   if(target!=0){
-    this->_gl.glTextureSubImage2DEXT(this->_id,target       ,level,xoffset,yoffset,width,height,format,type,data);
+    this->getContext().glTextureSubImage2DEXT(this->getId(),target       ,level,xoffset,yoffset,width,height,format,type,data);
   }else{
-    this->_gl.glTextureSubImage2DEXT(this->_id,this->_target,level,xoffset,yoffset,width,height,format,type,data);
+    this->getContext().glTextureSubImage2DEXT(this->getId(),this->_target,level,xoffset,yoffset,width,height,format,type,data);
   }
-  this->_gl.glPixelStorei(GL_UNPACK_ALIGNMENT ,4);
-  this->_gl.glPixelStorei(GL_UNPACK_ROW_LENGTH,0);
+  this->getContext().glPixelStorei(GL_UNPACK_ALIGNMENT ,4);
+  this->getContext().glPixelStorei(GL_UNPACK_ROW_LENGTH,0);
 }
 
 void Texture::setData3D(
@@ -267,21 +267,21 @@ void Texture::setData3D(
   }
   if(rowLength==0)rowLength=width;
   if(imgHeight==0)imgHeight=height;
-  this->_gl.glPixelStorei(GL_UNPACK_ROW_LENGTH  ,rowLength);
-  this->_gl.glPixelStorei(GL_UNPACK_IMAGE_HEIGHT,imgHeight);
-  this->_gl.glPixelStorei(GL_UNPACK_ALIGNMENT   ,1        );
+  this->getContext().glPixelStorei(GL_UNPACK_ROW_LENGTH  ,rowLength);
+  this->getContext().glPixelStorei(GL_UNPACK_IMAGE_HEIGHT,imgHeight);
+  this->getContext().glPixelStorei(GL_UNPACK_ALIGNMENT   ,1        );
   if(target!=0)
-    this->_gl.glTextureSubImage3DEXT(this->_id,target       ,level,xoffset,yoffset,zoffset,width,height,depth,format,type,data);
+    this->getContext().glTextureSubImage3DEXT(this->getId(),target       ,level,xoffset,yoffset,zoffset,width,height,depth,format,type,data);
   else
-    this->_gl.glTextureSubImage3DEXT(this->_id,this->_target,level,xoffset,yoffset,zoffset,width,height,depth,format,type,data);
-  this->_gl.glPixelStorei(GL_UNPACK_ALIGNMENT   ,4);
-  this->_gl.glPixelStorei(GL_UNPACK_ROW_LENGTH  ,0);
-  this->_gl.glPixelStorei(GL_UNPACK_IMAGE_HEIGHT,0);
+    this->getContext().glTextureSubImage3DEXT(this->getId(),this->_target,level,xoffset,yoffset,zoffset,width,height,depth,format,type,data);
+  this->getContext().glPixelStorei(GL_UNPACK_ALIGNMENT   ,4);
+  this->getContext().glPixelStorei(GL_UNPACK_ROW_LENGTH  ,0);
+  this->getContext().glPixelStorei(GL_UNPACK_IMAGE_HEIGHT,0);
 }
 
 void Texture::generateMipmap()const{
   assert(this!=nullptr);
-  this->_gl.glGenerateTextureMipmap(this->_id);
+  this->getContext().glGenerateTextureMipmap(this->getId());
 }
 
 void Texture::clear(
@@ -290,7 +290,7 @@ void Texture::clear(
     GLenum       type  ,
     GLvoid const*data  ){
   assert(this!=nullptr);
-  this->_gl.glClearTexImage(this->_id,level,format,type,data);
+  this->getContext().glClearTexImage(this->getId(),level,format,type,data);
 }
 
 
@@ -302,7 +302,7 @@ void Texture::clear(
  */
 void Texture::texParameteri(GLenum pname,GLint params)const{
   assert(this!=nullptr);
-  this->_gl.glTextureParameteri(this->_id,pname,params);
+  this->getContext().glTextureParameteri(this->getId(),pname,params);
 }
 
 /**
@@ -314,10 +314,10 @@ void Texture::texParameteri(GLenum pname,GLint params)const{
 void Texture::texParameterfv(GLenum pname,GLfloat *params)const{
   assert(this!=nullptr);
 #ifndef USE_DSA
-  this->_gl.glBindTexture   (this->getTarget(),this->_id);
-  this->_gl.glTexParameterfv(this->getTarget(),pname,params);
+  this->getContext().glBindTexture   (this->getTarget(),this->getId());
+  this->getContext().glTexParameterfv(this->getTarget(),pname,params);
 #else //USE_DSA
-  this->_gl.glTextureParameterfv(this->_id,pname,params);
+  this->getContext().glTextureParameterfv(this->getId(),pname,params);
 #endif//USE_DSA
 }
 
@@ -330,15 +330,15 @@ void Texture::texParameterfv(GLenum pname,GLfloat *params)const{
 GLenum Texture::getFormat()const{
   assert(this!=nullptr);
   return this->_format;
-  //glGetTextureParameteriv(this->_id,GL_TEXTURE_INTERNAL_FORMAT,(GLint*)format);
+  //glGetTextureParameteriv(this->getId(),GL_TEXTURE_INTERNAL_FORMAT,(GLint*)format);
 }
 
 GLuint Texture::_bindSafe()const{
   assert(this!=nullptr);
   GLuint oldId;
   GLenum target=this->getTarget();
-  this->_gl.glGetIntegerv(ge::gl::textureTarget2Binding(target),(GLint*)&oldId);
-  this->_gl.glBindTexture(target,this->_id);
+  this->getContext().glGetIntegerv(ge::gl::textureTarget2Binding(target),(GLint*)&oldId);
+  this->getContext().glBindTexture(target,this->getId());
   return oldId;
 }
 
@@ -349,10 +349,10 @@ GLint Texture::_getTexLevelParameter(GLint level,GLenum pname)const{
   GLuint oldId=this->_bindSafe();
   GLenum target = this->getTarget();
   if(target == GL_TEXTURE_CUBE_MAP)target = GL_TEXTURE_CUBE_MAP_POSITIVE_X;
-  this->_gl.glGetTexLevelParameteriv(target,level,pname,&param);
-  this->_gl.glBindTexture(this->getTarget(),oldId);
+  this->getContext().glGetTexLevelParameteriv(target,level,pname,&param);
+  this->getContext().glBindTexture(this->getTarget(),oldId);
 #else //USE_DSA
-  this->_gl.glGetTextureLevelParameteriv(this->_id,level,pname,&param);
+  this->getContext().glGetTextureLevelParameteriv(this->getId(),level,pname,&param);
 #endif//USE_DSA
   return param;
 }
@@ -362,10 +362,10 @@ GLint Texture::_getTexParameter(GLenum pname)const{
   GLint param;
 #ifndef USE_DSA
   GLuint oldId=this->_bindSafe();
-  this->_gl.glGetTexParameteriv(this->getTarget(),pname,&param);
-  this->_gl.glBindTexture(this->getTarget(),oldId);
+  this->getContext().glGetTexParameteriv(this->getTarget(),pname,&param);
+  this->getContext().glBindTexture(this->getTarget(),oldId);
 #else //USE_DSA
-  this->_gl.glGetTextureParameteriv(this->_id,pname,&param));
+  this->getContext().glGetTextureParameteriv(this->getId(),pname,&param));
 #endif//USE_DSA
   return param;
 }
@@ -374,10 +374,10 @@ void Texture::_getTexParameterf(GLfloat*data,GLenum pname)const{
   assert(this!=nullptr);
 #ifndef USE_DSA
   GLuint oldId=this->_bindSafe();
-  this->_gl.glGetTexParameterfv(this->getTarget(),pname,data);
-  this->_gl.glBindTexture(this->getTarget(),oldId);
+  this->getContext().glGetTexParameterfv(this->getTarget(),pname,data);
+  this->getContext().glBindTexture(this->getTarget(),oldId);
 #else
-  this->_gl.glGetTextureParameterfv(this->_id,pname,data);
+  this->getContext().glGetTextureParameterfv(this->getId(),pname,data);
 #endif//USE_DSA
 }
 

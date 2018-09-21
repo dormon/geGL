@@ -3,28 +3,45 @@
 
 using namespace ge::gl;
 
-OpenGLObject::OpenGLObject(GLuint id):_gl(nullptr){
-  assert(this!=nullptr);
-  this->_id = id;
-}
+class ge::gl::OpenGLObjectImpl {
+public:
+  GLuint id = 0u;///<object id
+  Context gl;
+  OpenGLObjectImpl(FunctionTablePointer const&table, GLuint id = 0u) :id(id), gl(table) {}
+  GLuint getId()const {
+    return id;
+  }
+  GLuint&getId() {
+    return id;
+  }
+  Context const&getContext()const {
+    return gl;
+  }
+};
+
+OpenGLObject::OpenGLObject(GLuint id) :OpenGLObject(nullptr, id) {}
 
 OpenGLObject::OpenGLObject(
     FunctionTablePointer const&table,
-    GLuint id):_gl(table){
-  assert(this!=nullptr);
-  this->_id = id;
+    GLuint id){
+  impl = new OpenGLObjectImpl(table, id);
 }
 
 OpenGLObject::~OpenGLObject(){
   assert(this!=nullptr);
-  this->_id = 0;
+  delete impl;
 }
 
 GLuint OpenGLObject::getId()const{
   assert(this!=nullptr);
-  return this->_id;
+  return this->impl->getId();
+}
+
+GLuint&OpenGLObject::getId(){
+  assert(this != nullptr);
+  return this->impl->getId();
 }
 
 ge::gl::Context const&OpenGLObject::getContext()const{
-  return this->_gl;
+  return this->impl->getContext();
 }

@@ -4,55 +4,55 @@ using namespace ge::gl;
 
 ProgramPipeline::ProgramPipeline(){
   assert(this!=nullptr);
-  this->_gl.glCreateProgramPipelines(1,&this->_id);
+  this->getContext().glCreateProgramPipelines(1,&this->getId());
 }
 
 ProgramPipeline::ProgramPipeline(
     FunctionTablePointer const&table):OpenGLObject(table){
   assert(this!=nullptr);
-  this->_gl.glCreateProgramPipelines(1,&this->_id);
+  this->getContext().glCreateProgramPipelines(1,&this->getId());
 }
 
 ProgramPipeline::~ProgramPipeline(){
   assert(this!=nullptr);
-  this->_gl.glDeleteProgramPipelines(1,&this->_id);
+  this->getContext().glDeleteProgramPipelines(1,&this->getId());
 }
 
 void ProgramPipeline::bind()const{
   assert(this!=nullptr);
-  this->_gl.glBindProgramPipeline(this->_id);
+  this->getContext().glBindProgramPipeline(this->getId());
 }
 
 void ProgramPipeline::unbind()const{
   assert(this!=nullptr);
-  this->_gl.glBindProgramPipeline(0);
+  this->getContext().glBindProgramPipeline(0);
 }
 void ProgramPipeline::useProgramStages(GLbitfield stages,GLuint program)const{
   assert(this!=nullptr);
-  this->_gl.glUseProgramStages(this->_id,stages,program);
+  this->getContext().glUseProgramStages(this->getId(),stages,program);
 }
 void ProgramPipeline::useVertexStage    (GLuint program)const{
   assert(this!=nullptr);
-  this->_gl.glUseProgramStages(this->_id,GL_VERTEX_SHADER_BIT,program);
+  this->getContext().glUseProgramStages(this->getId(),GL_VERTEX_SHADER_BIT,program);
 }
 void ProgramPipeline::useControlStage   (GLuint program)const{
   assert(this!=nullptr);
-  this->_gl.glUseProgramStages(this->_id,GL_TESS_CONTROL_SHADER_BIT,program);
+  this->getContext().glUseProgramStages(this->getId(),GL_TESS_CONTROL_SHADER_BIT,program);
 }
 void ProgramPipeline::useEvaluationStage(GLuint program)const{
   assert(this!=nullptr);
-  this->_gl.glUseProgramStages(this->_id,GL_TESS_EVALUATION_SHADER_BIT,program);
+  this->getContext().glUseProgramStages(this->getId(),GL_TESS_EVALUATION_SHADER_BIT,program);
 }
 void ProgramPipeline::useGeometryStage  (GLuint program)const{
   assert(this!=nullptr);
-  this->_gl.glUseProgramStages(this->_id,GL_GEOMETRY_SHADER_BIT,program);
+  this->getContext().glUseProgramStages(this->getId(),GL_GEOMETRY_SHADER_BIT,program);
 }
 void ProgramPipeline::useFragmentStage  (GLuint program)const{
   assert(this!=nullptr);
-  this->_gl.glUseProgramStages(this->_id,GL_FRAGMENT_SHADER_BIT,program);
+  this->getContext().glUseProgramStages(this->getId(),GL_FRAGMENT_SHADER_BIT,program);
 }
 void ProgramPipeline::useComputeStage   (GLuint program)const{
   assert(this!=nullptr);
-  this->_gl.glUseProgramStages(this->_id,GL_COMPUTE_SHADER_BIT,program);
+  this->getContext().glUseProgramStages(this->getId(),GL_COMPUTE_SHADER_BIT,program);
 }
 

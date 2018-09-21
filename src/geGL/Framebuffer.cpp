@@ -12,19 +12,19 @@ using namespace ge::gl;
 GLint Framebuffer::getParam(GLenum pname){
   assert(this!=nullptr);
   GLint param;
-  this->_gl.glGetNamedFramebufferParameteriv(this->_id,pname,&param);
+  this->getContext().glGetNamedFramebufferParameteriv(this->getId(),pname,&param);
   return param;
 }
 
 void Framebuffer::setParam(GLenum pname,GLint param){
   assert(this!=nullptr);
-  this->_gl.glNamedFramebufferParameteri(this->_id,pname,param);
+  this->getContext().glNamedFramebufferParameteri(this->getId(),pname,param);
 }
 
 GLint Framebuffer::getAttachmentParam(GLenum attachment,GLenum pname){
   assert(this!=nullptr);
   GLint param;
-  this->_gl.glGetNamedFramebufferAttachmentParameteriv(this->_id,attachment,pname,&param);
+  this->getContext().glGetNamedFramebufferAttachmentParameteriv(this->getId(),attachment,pname,&param);
   return param;
 }
 
@@ -32,8 +32,8 @@ Framebuffer::Framebuffer (
     FunctionTablePointer const&table,
     bool defaultFramebuffer):OpenGLObject(table){
   assert(this!=nullptr);
-  if(defaultFramebuffer)this->_id=0;
-  else this->_gl.glCreateFramebuffers(1,&this->_id);
+  if(defaultFramebuffer)this->getId()=0;
+  else this->getContext().glCreateFramebuffers(1,&this->getId());
 }
 
 Framebuffer::Framebuffer (bool defaultFramebuffer):Framebuffer(nullptr,defaultFramebuffer){
@@ -45,7 +45,7 @@ Framebuffer::~Framebuffer(){
     x.second->_framebuffers.erase(this);
   for(auto const&x:this->_renderbufferAttachments)
     x.second->_framebuffers.erase(this);
-  this->_gl.glDeleteFramebuffers(1,&this->_id);
+  this->getContext().glDeleteFramebuffers(1,&this->getId());
 }
 
 void Framebuffer::removeLinktoAttachedRenderbuffer(GLenum attachment){
@@ -68,14 +68,14 @@ void Framebuffer::attachRenderbuffer(
   removeLinktoAttachedRenderbuffer(attachment);
 
   if(!renderbuffer){
-    this->_gl.glNamedFramebufferRenderbuffer(this->_id,attachment,GL_RENDERBUFFER,0);
+    this->getContext().glNamedFramebufferRenderbuffer(this->getId(),attachment,GL_RENDERBUFFER,0);
     return;
   }
 
   this->_renderbufferAttachments[attachment] = renderbuffer;
   renderbuffer->_framebuffers.insert(this);
 
-  this->_gl.glNamedFramebufferRenderbuffer(this->_id,attachment,GL_RENDERBUFFER,renderbuffer->getId());
+  this->getContext().glNamedFramebufferRenderbuffer(this->getId(),attachment,GL_RENDERBUFFER,renderbuffer->getId());
 }
 
 void Framebuffer::attachRenderbuffer(
@@ -104,9 +104,9 @@ void Framebuffer::attachTexture(GLenum attachment,Texture*texture,GLint level,GL
 
   if(!texture){
     if(layer==-1)
-      this->_gl.glNamedFramebufferTexture(this->_id,attachment,0,level);
+      this->getContext().glNamedFramebufferTexture(this->getId(),attachment,0,level);
     else
-      this->_gl.glNamedFramebufferTextureLayer(this->_id,attachment,0,level,layer);
+      this->getContext().glNamedFramebufferTextureLayer(this->getId(),attachment,0,level,layer);
     return;
   }
 
@@ -114,9 +114,9 @@ void Framebuffer::attachTexture(GLenum attachment,Texture*texture,GLint level,GL
   texture->_framebuffers.insert(this);
 
   if(layer==-1)
-    this->_gl.glNamedFramebufferTexture(this->_id,attachment,texture->getId(),level);
+    this->getContext().glNamedFramebufferTexture(this->getId(),attachment,texture->getId(),level);
   else
-    this->_gl.glNamedFramebufferTextureLayer(this->_id,attachment,texture->getId(),level,layer);
+    this->getContext().glNamedFramebufferTextureLayer(this->getId(),attachment,texture->getId(),level,layer);
 }
 
 void Framebuffer::attachTexture(GLenum attachment,std::shared_ptr<Texture>const&texture,GLint level,GLint layer){
@@ -125,32 +125,32 @@ void Framebuffer::attachTexture(GLenum attachment,std::shared_ptr<Texture>const&
 
 void Framebuffer::bind  (GLenum target)const{
   assert(this!=nullptr);
-  this->_gl.glBindFramebuffer(target,this->_id);
+  this->getContext().glBindFramebuffer(target,this->getId());
 }
 void Framebuffer::unbind(GLenum target)const{
   assert(this!=nullptr);
-  this->_gl.glBindFramebuffer(target,0);
+  this->getContext().glBindFramebuffer(target,0);
 }
 
 bool Framebuffer::check()const{
   assert(this!=nullptr);
-  return this->_gl.glCheckNamedFramebufferStatus(this->_id,GL_DRAW_FRAMEBUFFER)==GL_FRAMEBUFFER_COMPLETE;
+  return this->getContext().glCheckNamedFramebufferStatus(this->getId(),GL_DRAW_FRAMEBUFFER)==GL_FRAMEBUFFER_COMPLETE;
 }
 
 void Framebuffer::drawBuffer(GLenum buffer)const{
   assert(this!=nullptr);
-  this->_gl.glNamedFramebufferDrawBuffer(this->_id,buffer);
+  this->getContext().glNamedFramebufferDrawBuffer(this->getId(),buffer);
 }
 
 void Framebuffer::drawBuffers(GLsizei n,const GLenum *buffers)const{
   assert(this!=nullptr);
-  this->_gl.glNamedFramebufferDrawBuffers(this->_id,n,buffers);
+  this->getContext().glNamedFramebufferDrawBuffers(this->getId(),n,buffers);
 }
 
 
 void Framebuffer::drawBuffers(std::vector<GLenum>const buffers)const{
   assert(this!=nullptr);
-  this->_gl.glNamedFramebufferDrawBuffers(this->_id,(GLsizei)buffers.size(),buffers.data());
+  this->getContext().glNamedFramebufferDrawBuffers(this->getId(),(GLsizei)buffers.size(),buffers.data());
 }
 
 void Framebuffer::drawBuffers(GLsizei n,...)const{
@@ -169,22 +169,22 @@ void Framebuffer::drawBuffers(GLsizei n,...)const{
 
 void Framebuffer::clearBuffer (GLenum buffer,GLint drawBuffer,const GLint*value)const{
   assert(this!=nullptr);
-  this->_gl.glClearNamedFramebufferiv(this->_id,buffer,drawBuffer,value);
+  this->getContext().glClearNamedFramebufferiv(this->getId(),buffer,drawBuffer,value);
 }
 
 void Framebuffer::clearBuffer (GLenum buffer,GLint drawBuffer,const GLfloat*value)const{
   assert(this!=nullptr);
-  this->_gl.glClearNamedFramebufferfv(this->_id,buffer,drawBuffer,value);
+  this->getContext().glClearNamedFramebufferfv(this->getId(),buffer,drawBuffer,value);
 }
 
 void Framebuffer::clearBuffer (GLenum buffer,GLint drawBuffer,const GLuint*value)const{
   assert(this!=nullptr);
-  this->_gl.glClearNamedFramebufferuiv(this->_id,buffer,drawBuffer,value);
+  this->getContext().glClearNamedFramebufferuiv(this->getId(),buffer,drawBuffer,value);
 }
 
 void Framebuffer::clearBuffer (GLenum buffer,GLint drawBuffer,GLfloat depth,GLint stencil)const{
   assert(this!=nullptr);
-  this->_gl.glClearNamedFramebufferfi(this->_id,buffer,drawBuffer,depth,stencil);
+  this->getContext().glClearNamedFramebufferfi(this->getId(),buffer,drawBuffer,depth,stencil);
 }
 
 void Framebuffer::invalidateFramebuffer(
@@ -196,14 +196,14 @@ void Framebuffer::invalidateFramebuffer(
     GLsizei       height        )const{
   assert(this!=nullptr);
   if(x==-1)
-    this->_gl.glInvalidateNamedFramebufferData(this->_id,numAttachments,attachments);
+    this->getContext().glInvalidateNamedFramebufferData(this->getId(),numAttachments,attachments);
   else
-    this->_gl.glInvalidateNamedFramebufferSubData(this->_id,numAttachments,attachments,x,y,width,height);
+    this->getContext().glInvalidateNamedFramebufferSubData(this->getId(),numAttachments,attachments,x,y,width,height);
 }
 
 GLboolean Framebuffer::isFramebuffer()const{
   assert(this!=nullptr);
-  return this->_gl.glIsFramebuffer(this->_id);
+  return this->getContext().glIsFramebuffer(this->getId());
 }
 
 void Framebuffer::setDefaultWidth(GLint width){
@@ -371,7 +371,7 @@ std::string Framebuffer::getInfo(){
   }
 
   GLint maxColorAttachments;
-  this->_gl.glGetIntegerv(GL_MAX_COLOR_ATTACHMENTS,&maxColorAttachments);
+  this->getContext().glGetIntegerv(GL_MAX_COLOR_ATTACHMENTS,&maxColorAttachments);
   ss<<"GL_MAX_COLOR_ATTACHMENTS: "<<maxColorAttachments<<std::endl;
   for(GLint a=0;a<maxColorAttachments;++a){
     ss<<ge::gl::translateFramebufferAttachment(GL_COLOR_ATTACHMENT0+a)<<":"<<std::endl;

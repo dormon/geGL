@@ -6,7 +6,7 @@
 class ge::gl::Context{
   public:
     GEGL_EXPORT Context(FunctionTablePointer const&t = nullptr);
-	GEGL_EXPORT ~Context(){}
+	  GEGL_EXPORT ~Context(){}
     FunctionTablePointer const&getFunctionTable()const{
       assert(this!=nullptr);
       return this->m_table;
@@ -16,7 +16,7 @@ class ge::gl::Context{
       this->m_table = t;
     }
 #include<geGL/Generated/ContextDeclarations.h>
-  protected:
+  private:
     FunctionTablePointer m_table = nullptr;
 };
 

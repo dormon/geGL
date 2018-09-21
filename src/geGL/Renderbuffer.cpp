@@ -8,7 +8,7 @@ using namespace ge::gl;
  * @brief Construct new renderbuffer (reserve its id)
  */
 Renderbuffer::Renderbuffer(){
-  this->_gl.glCreateRenderbuffers(1,&this->_id);
+  this->getContext().glCreateRenderbuffers(1,&this->getId());
 }
 
 /**
@@ -27,7 +27,7 @@ Renderbuffer::Renderbuffer(
     GLsizei              const&height        ,
     GLsizei              const&samples       ):OpenGLObject(table){
   assert(this!=nullptr);
-  this->_gl.glCreateRenderbuffers(1,&this->_id);
+  this->getContext().glCreateRenderbuffers(1,&this->getId());
   this->setStorage(internalFormat,width,height,samples);
 }
 
@@ -60,7 +60,7 @@ void Renderbuffer::setStorage(
     GLsizei const&height        ,
     GLsizei const&samples       )const{
   assert(this!=nullptr);
-  this->_gl.glNamedRenderbufferStorageMultisample(this->_id,internalFormat,samples,width,height);
+  this->getContext().glNamedRenderbufferStorageMultisample(this->getId(),internalFormat,samples,width,height);
 }
 
 
@@ -78,7 +78,7 @@ Renderbuffer::~Renderbuffer(){
     for(auto const&a:attachments)
       f->attachRenderbuffer(a,nullptr);
   }
-  this->_gl.glDeleteRenderbuffers(1,&this->_id);
+  this->getContext().glDeleteRenderbuffers(1,&this->getId());
 }
 
 /**
@@ -86,7 +86,7 @@ Renderbuffer::~Renderbuffer(){
  */
 void   Renderbuffer::bind()const{
   assert(this!=nullptr);
-  this->_gl.glBindRenderbuffer(GL_RENDERBUFFER,this->_id);
+  this->getContext().glBindRenderbuffer(GL_RENDERBUFFER,this->getId());
 }
 
 /**
@@ -94,7 +94,7 @@ void   Renderbuffer::bind()const{
  */
 void Renderbuffer::unbind()const{
   assert(this!=nullptr);
-  this->_gl.glBindRenderbuffer(GL_RENDERBUFFER,0);
+  this->getContext().glBindRenderbuffer(GL_RENDERBUFFER,0);
 }
 
 /**
@@ -200,7 +200,7 @@ GLint Renderbuffer::getStencilSize()const{
 GLint Renderbuffer::_getParamateri(GLenum pname)const{
   assert(this!=nullptr);
   GLint param;
-  this->_gl.glGetNamedRenderbufferParameteriv(this->_id,pname,&param);
+  this->getContext().glGetNamedRenderbufferParameteriv(this->getId(),pname,&param);
   return param;
 }
 
