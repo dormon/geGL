@@ -13,62 +13,56 @@ class GEGL_EXPORT ge::gl::Buffer : public OpenGLObject {
     KEEP_DATA  = 1u << 1u,
   };
   Buffer();
-  Buffer(GLsizeiptr const&    size,
-         GLvoid const* const& data  = nullptr,
-         GLbitfield const&    flags = GL_STATIC_DRAW);
+  Buffer(GLsizeiptr    size,
+         GLvoid const* data  = nullptr,
+         GLbitfield    flags = GL_STATIC_DRAW);
   Buffer(FunctionTablePointer const& table);
   Buffer(FunctionTablePointer const& table,
-         GLsizeiptr const&           size,
-         GLvoid const* const&        data  = nullptr,
-         GLbitfield const&           flags = GL_STATIC_DRAW);
+         GLsizeiptr                  size,
+         GLvoid const*               data  = nullptr,
+         GLbitfield                  flags = GL_STATIC_DRAW);
   template <typename T>
-  Buffer(std::vector<T> const& data, GLbitfield const& flags = GL_STATIC_DRAW);
+  Buffer(std::vector<T> const& data, GLbitfield flags = GL_STATIC_DRAW);
   template <typename T>
   Buffer(FunctionTablePointer const& table,
          std::vector<T> const&       data,
-         GLbitfield const&           flags = GL_STATIC_DRAW);
+         GLbitfield                  flags = GL_STATIC_DRAW);
   virtual ~Buffer();
-  void    alloc(GLsizeiptr const&    size,
-                GLvoid const* const& data  = nullptr,
-                GLbitfield const&    flags = GL_STATIC_DRAW);
-  GLvoid* map(GLbitfield const& access = GL_MAP_READ_BIT |
-                                         GL_MAP_WRITE_BIT) const;
-  GLvoid* map(GLintptr const&   offset,
-              GLsizeiptr const& size,
-              GLbitfield const& access = GL_MAP_READ_BIT |
-                                         GL_MAP_WRITE_BIT) const;
+  void    alloc(GLsizeiptr    size,
+                GLvoid const* data  = nullptr,
+                GLbitfield    flags = GL_STATIC_DRAW);
+  GLvoid* map(GLbitfield access = GL_MAP_READ_BIT | GL_MAP_WRITE_BIT) const;
+  GLvoid* map(GLintptr   offset,
+              GLsizeiptr size,
+              GLbitfield access = GL_MAP_READ_BIT | GL_MAP_WRITE_BIT) const;
   void    unmap() const;
-  void    setData(GLvoid const* const& data,
-                  GLsizeiptr const&    size   = 0,
-                  GLintptr const&      offset = 0) const;
-  void    getData(GLvoid* const&    data,
-                  GLsizeiptr const& size   = 0,
-                  GLintptr const&   offset = 0) const;
-  void    bind(GLenum const& target) const;
-  void    bindRange(GLenum const&     target,
-                    GLuint const&     index,
-                    GLintptr const&   offset,
-                    GLsizeiptr const& size) const;
-  void    bindBase(GLenum const& target, GLuint const& index) const;
-  void    unbind(GLenum const& target) const;
-  void    unbindRange(GLenum const& target, GLuint const& index) const;
-  void    unbindBase(GLenum const& target, GLuint const& index) const;
-  void    realloc(GLsizeiptr const&   newSize,
-                  ReallocFlags const& flags = NEW_BUFFER);
+  void    setData(GLvoid const* data,
+                  GLsizeiptr    size   = 0,
+                  GLintptr      offset = 0) const;
+  void    getData(GLvoid* data, GLsizeiptr size = 0, GLintptr offset = 0) const;
+  void    bind(GLenum target) const;
+  void    bindRange(GLenum     target,
+                    GLuint     index,
+                    GLintptr   offset,
+                    GLsizeiptr size) const;
+  void    bindBase(GLenum target, GLuint index) const;
+  void    unbind(GLenum target) const;
+  void    unbindRange(GLenum target, GLuint index) const;
+  void    unbindBase(GLenum target, GLuint index) const;
+  void    realloc(GLsizeiptr newSize, ReallocFlags flags = NEW_BUFFER);
   void    copy(Buffer const& buffer) const;
-  void    flushMapped(GLsizeiptr const& size   = 0,
-                      GLintptr const&   offset = 0) const;
-  void invalidate(GLsizeiptr const& size = 0, GLintptr const& offset = 0) const;
-  void clear(GLenum const&        internalFormat,
-             GLenum const&        format,
-             GLenum const&        type,
-             GLvoid const* const& Data = nullptr) const;
-  void clear(GLenum const&        internalFormat,
-             GLintptr const&      offset,
-             GLsizeiptr const&    size,
-             GLenum const&        format,
-             GLenum const&        type,
-             GLvoid const* const& Data = nullptr) const;
+  void    flushMapped(GLsizeiptr size = 0, GLintptr offset = 0) const;
+  void    invalidate(GLsizeiptr size = 0, GLintptr offset = 0) const;
+  void    clear(GLenum        internalFormat,
+                GLenum        format,
+                GLenum        type,
+                GLvoid const* Data = nullptr) const;
+  void    clear(GLenum        internalFormat,
+                GLintptr      offset,
+                GLsizeiptr    size,
+                GLenum        format,
+                GLenum        type,
+                GLvoid const* Data = nullptr) const;
   GLsizeiptr getSize() const;
   GLbitfield getUsage() const;
   GLenum     getAccess() const;
@@ -85,7 +79,7 @@ class GEGL_EXPORT ge::gl::Buffer : public OpenGLObject {
 };
 
 template <typename T>
-ge::gl::Buffer::Buffer(std::vector<T> const& data, GLbitfield const& flags)
+ge::gl::Buffer::Buffer(std::vector<T> const& data, GLbitfield flags)
     : Buffer(data.size() * sizeof(T), data.data(), flags)
 {
 }
@@ -93,7 +87,7 @@ ge::gl::Buffer::Buffer(std::vector<T> const& data, GLbitfield const& flags)
 template <typename T>
 ge::gl::Buffer::Buffer(FunctionTablePointer const& table,
                        std::vector<T> const&       data,
-                       GLbitfield const&           flags)
+                       GLbitfield                  flags)
     : Buffer(table, data.size() * sizeof(T), data.data(), flags)
 {
 }

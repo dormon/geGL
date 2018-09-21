@@ -21,9 +21,7 @@ Buffer::Buffer() : Buffer(nullptr) {}
  * @param data optional pointer to data data
  * @param flags optional flags, right flags can make buffer immutable
  */
-Buffer::Buffer(GLsizeiptr const &   size,
-               GLvoid const *const &data,
-               GLbitfield const &   flags)
+Buffer::Buffer(GLsizeiptr size, GLvoid const *data, GLbitfield flags)
     : Buffer(nullptr, size, data, flags)
 {
 }
@@ -47,9 +45,9 @@ Buffer::Buffer(FunctionTablePointer const &table) : OpenGLObject(table)
  * @param flags optional flags
  */
 Buffer::Buffer(FunctionTablePointer const &table,
-               GLsizeiptr const &          size,
-               GLvoid const *const &       data,
-               GLbitfield const &          flags)
+               GLsizeiptr                  size,
+               GLvoid const *              data,
+               GLbitfield                  flags)
     : Buffer(table)
 {
   alloc(size, data, flags);
@@ -67,9 +65,7 @@ Buffer::~Buffer() { getContext().glDeleteBuffers(1, &getId()); }
  * @param data optional data
  * @param flags optional flags
  */
-void Buffer::alloc(GLsizeiptr const &   size,
-                   GLvoid const *const &data,
-                   GLbitfield const &   flags)
+void Buffer::alloc(GLsizeiptr size, GLvoid const *data, GLbitfield flags)
 {
   getContext().glCreateBuffers(1, &getId());
   impl->bufferData(size, data, flags);
@@ -80,7 +76,7 @@ void Buffer::alloc(GLsizeiptr const &   size,
  *
  * @param target target
  */
-void Buffer::bind(GLenum const &target) const
+void Buffer::bind(GLenum target) const
 {
   getContext().glBindBuffer(target, getId());
 }
@@ -93,10 +89,10 @@ void Buffer::bind(GLenum const &target) const
  * @param offset offset
  * @param size size of buffer
  */
-void Buffer::bindRange(GLenum const &    target,
-                       GLuint const &    index,
-                       GLintptr const &  offset,
-                       GLsizeiptr const &size) const
+void Buffer::bindRange(GLenum     target,
+                       GLuint     index,
+                       GLintptr   offset,
+                       GLsizeiptr size) const
 {
   getContext().glBindBufferRange(target, index, getId(), offset, size);
 }
@@ -107,7 +103,7 @@ void Buffer::bindRange(GLenum const &    target,
  * @param target target
  * @param index index
  */
-void Buffer::bindBase(GLenum const &target, GLuint const &index) const
+void Buffer::bindBase(GLenum target, GLuint index) const
 {
   getContext().glBindBufferBase(target, index, getId());
 }
@@ -117,7 +113,7 @@ void Buffer::bindBase(GLenum const &target, GLuint const &index) const
  *
  * @param target target
  */
-void Buffer::unbind(GLenum const &target) const
+void Buffer::unbind(GLenum target) const
 {
   getContext().glBindBuffer(target, 0);
 }
@@ -128,7 +124,7 @@ void Buffer::unbind(GLenum const &target) const
  * @param target target
  * @param index  index
  */
-void Buffer::unbindRange(GLenum const &target, GLuint const &index) const
+void Buffer::unbindRange(GLenum target, GLuint index) const
 {
   getContext().glBindBufferBase(target, index, 0);
 }
@@ -139,7 +135,7 @@ void Buffer::unbindRange(GLenum const &target, GLuint const &index) const
  * @param target target
  * @param index  index
  */
-void Buffer::unbindBase(GLenum const &target, GLuint const &index) const
+void Buffer::unbindBase(GLenum target, GLuint index) const
 {
   getContext().glBindBufferBase(target, index, 0);
 }
@@ -150,7 +146,7 @@ void Buffer::unbindBase(GLenum const &target, GLuint const &index) const
  * @param newSize new size
  * @param flags KEEP_ID|KEEP_DATA
  */
-void Buffer::realloc(GLsizeiptr const &newSize, ReallocFlags const &flags)
+void Buffer::realloc(GLsizeiptr newSize, ReallocFlags flags)
 {
   impl->realloc(newSize, flags);
 }
@@ -173,7 +169,7 @@ void Buffer::copy(Buffer const &buffer) const
  * @param offset offset into buffer in bytes
  * @param size   length of data in bytes
  */
-void Buffer::flushMapped(GLsizeiptr const &size, GLintptr const &offset) const
+void Buffer::flushMapped(GLsizeiptr size, GLintptr offset) const
 {
   auto s = size;
   if (s == 0) s = getSize();
@@ -186,7 +182,7 @@ void Buffer::flushMapped(GLsizeiptr const &size, GLintptr const &offset) const
  * @param offset offset of region in bytes
  * @param size   length of region in bytes
  */
-void Buffer::invalidate(GLsizeiptr const &size, GLintptr const &offset) const
+void Buffer::invalidate(GLsizeiptr size, GLintptr offset) const
 {
   getContext().glInvalidateBufferSubData(getId(), offset, size);
 }
@@ -199,10 +195,10 @@ void Buffer::invalidate(GLsizeiptr const &size, GLintptr const &offset) const
  * @param type type of data
  * @param data optional data
  */
-void Buffer::clear(GLenum const &       internalFormat,
-                   GLenum const &       format,
-                   GLenum const &       type,
-                   GLvoid const *const &data) const
+void Buffer::clear(GLenum        internalFormat,
+                   GLenum        format,
+                   GLenum        type,
+                   GLvoid const *data) const
 {
   getContext().glClearNamedBufferData(getId(), internalFormat, format, type,
                                       data);
@@ -218,12 +214,12 @@ void Buffer::clear(GLenum const &       internalFormat,
  * @param type   type of data
  * @param data   data
  */
-void Buffer::clear(GLenum const &       internalFormat,
-                   GLintptr const &     offset,
-                   GLsizeiptr const &   size,
-                   GLenum const &       format,
-                   GLenum const &       type,
-                   GLvoid const *const &data) const
+void Buffer::clear(GLenum        internalFormat,
+                   GLintptr      offset,
+                   GLsizeiptr    size,
+                   GLenum        format,
+                   GLenum        type,
+                   GLvoid const *data) const
 {
   getContext().glClearNamedBufferSubData(getId(), internalFormat, offset, size,
                                          format, type, data);
@@ -236,7 +232,7 @@ void Buffer::clear(GLenum const &       internalFormat,
  *
  * @return pointer to pinned memory
  */
-GLvoid *Buffer::map(GLbitfield const &access) const
+GLvoid *Buffer::map(GLbitfield access) const
 {
   GLbitfield a = access;
   if (access == GL_READ_ONLY) a = GL_MAP_READ_BIT;
@@ -254,9 +250,7 @@ GLvoid *Buffer::map(GLbitfield const &access) const
  *
  * @return pointer to pinned memory
  */
-GLvoid *Buffer::map(GLintptr const &  offset,
-                    GLsizeiptr const &size,
-                    GLbitfield const &access) const
+GLvoid *Buffer::map(GLintptr offset, GLsizeiptr size, GLbitfield access) const
 {
   return getContext().glMapNamedBufferRange(getId(), offset, size, access);
 }
@@ -273,9 +267,7 @@ void Buffer::unmap() const { getContext().glUnmapNamedBuffer(getId()); }
  * @param size size of data in bytes
  * @param offset offset into buffer
  */
-void Buffer::setData(GLvoid const *const &data,
-                     GLsizeiptr const &   size,
-                     GLintptr const &     offset) const
+void Buffer::setData(GLvoid const *data, GLsizeiptr size, GLintptr offset) const
 {
   GLsizeiptr s = size;
   if (s == 0) s = getSize();
@@ -289,9 +281,7 @@ void Buffer::setData(GLvoid const *const &data,
  * @param size size of obtained data in bytes
  * @param offset offset into buffer
  */
-void Buffer::getData(GLvoid *const &   data,
-                     GLsizeiptr const &size,
-                     GLintptr const &  offset) const
+void Buffer::getData(GLvoid *data, GLsizeiptr size, GLintptr offset) const
 {
   GLsizeiptr s = size;
   if (s == 0) s = getSize();
