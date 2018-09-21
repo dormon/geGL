@@ -8,9 +8,10 @@
 class GEGL_EXPORT ge::gl::Buffer : public OpenGLObject {
  public:
   enum ReallocFlags {
-    NEW_BUFFER = 0u,
-    KEEP_ID    = 1u << 0u,
-    KEEP_DATA  = 1u << 1u,
+    NEW_BUFFER   = 0u,
+    KEEP_ID      = 1u << 0u,
+    KEEP_DATA    = 1u << 1u,
+    KEEP_DATA_ID = KEEP_ID | KEEP_DATA,
   };
   Buffer();
   Buffer(GLsizeiptr    size,

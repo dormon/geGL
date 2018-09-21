@@ -43,6 +43,20 @@ TEST_CASE("Buffer Tests"){
     REQUIRE(data[1] == 10.f);
     REQUIRE(data[2] == 100.f);
     REQUIRE(data[3] == 0.f);
+    auto oldId = c->getId();
+    c->realloc(10*sizeof(float),Buffer::KEEP_DATA_ID);
+    REQUIRE(c->getSize() == 10*sizeof(float));
+    REQUIRE(c->getId() == oldId);
+    float dd[10];
+    for(int i=0;i<10;++i)dd[i] = 0.f;
+    c->getData(dd);
+    REQUIRE(dd[0] == 10.f);
+    REQUIRE(dd[1] == 10.f);
+    REQUIRE(dd[2] == 100.f);
+    oldId = c->getId();
+    c->realloc(sizeof(float),Buffer::KEEP_ID);
+    REQUIRE(c->getSize() == sizeof(float));
+    REQUIRE(c->getId() == oldId);
   }
   win.endFrame();
 }
