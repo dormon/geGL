@@ -22,12 +22,6 @@ class GEGL_EXPORT ge::gl::Buffer : public OpenGLObject {
          GLsizeiptr                  size,
          GLvoid const*               data  = nullptr,
          GLbitfield                  flags = GL_STATIC_DRAW);
-  template <typename T>
-  Buffer(std::vector<T> const& data, GLbitfield flags = GL_STATIC_DRAW);
-  template <typename T>
-  Buffer(FunctionTablePointer const& table,
-         std::vector<T> const&       data,
-         GLbitfield                  flags = GL_STATIC_DRAW);
   virtual ~Buffer();
   void    alloc(GLsizeiptr    size,
                 GLvoid const* data  = nullptr,
@@ -74,6 +68,17 @@ class GEGL_EXPORT ge::gl::Buffer : public OpenGLObject {
   GLvoid*    getMapPointer() const;
   GLboolean  isImmutable() const;
 
+  template <typename T>
+  Buffer(std::vector<T> const& data, GLbitfield flags = GL_STATIC_DRAW);
+  template <typename T>
+  Buffer(FunctionTablePointer const& table,
+         std::vector<T> const&       data,
+         GLbitfield                  flags = GL_STATIC_DRAW);
+  template<typename T>
+  void setData(std::vector<T>const&d,GLintptr offset = 0)const;
+  template<typename T>
+  void getData(std::vector<T>&d,GLintptr offset = 0)const;
+
  private:
   BufferImpl* impl = nullptr;
   friend class VertexArray;
@@ -91,4 +96,17 @@ ge::gl::Buffer::Buffer(FunctionTablePointer const& table,
                        GLbitfield                  flags)
     : Buffer(table, data.size() * sizeof(T), data.data(), flags)
 {
+}
+
+
+template<typename T>
+void ge::gl::Buffer::setData(std::vector<T>const&d,GLintptr offset)const{
+  setData(d.data(),d.size() * sizeof(T),offset);
+}
+
+template<typename T>
+void ge::gl::Buffer::getData(std::vector<T>&d,GLintptr offset)const{
+  auto const size = (getSize() - offset);
+  d.reserve(size/sizeof(T));
+  getData(d.data(),size,offset);
 }

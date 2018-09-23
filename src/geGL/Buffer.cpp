@@ -273,9 +273,10 @@ void Buffer::unmap() const { getContext().glUnmapNamedBuffer(getId()); }
  */
 void Buffer::setData(GLvoid const *data, GLsizeiptr size, GLintptr offset) const
 {
-  GLsizeiptr s = size;
-  if (s == 0) s = getSize();
-  getContext().glNamedBufferSubData(getId(), offset, s, data);
+  auto const bs = getSize();
+  if (size == 0) size = bs-offset;
+  if (size + offset > bs)size = bs - offset;
+  getContext().glNamedBufferSubData(getId(), offset, size, data);
 }
 
 /**
@@ -287,9 +288,10 @@ void Buffer::setData(GLvoid const *data, GLsizeiptr size, GLintptr offset) const
  */
 void Buffer::getData(GLvoid *data, GLsizeiptr size, GLintptr offset) const
 {
-  GLsizeiptr s = size;
-  if (s == 0) s = getSize();
-  getContext().glGetNamedBufferSubData(getId(), offset, s, data);
+  auto const bs = getSize();
+  if (size == 0)size = bs - offset;
+  if (size + offset > bs) size = bs - offset;
+  getContext().glGetNamedBufferSubData(getId(), offset, size, data);
 }
 
 /**

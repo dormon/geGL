@@ -5,6 +5,7 @@
 #include <geGL/VertexArrayImpl.h>
 
 using namespace ge::gl;
+using namespace std;
 
 BufferImpl::BufferImpl(Buffer *b) : buffer(b) {}
 
@@ -26,8 +27,8 @@ void BufferImpl::updateVertexArrays()
     if (vao->impl->elementBuffer == me) {
       vao->addElementBuffer(me);
     }
-    std::vector<GLuint> attribs;
-    GLuint              attribId = 0;
+    vector<GLuint> attribs;
+    GLuint         attribId = 0;
     for (auto const &y : vao->impl->buffers) {
       if (y == me) attribs.push_back(attribId);
       attribId++;
@@ -48,28 +49,37 @@ void BufferImpl::updateVertexArrays()
 
 GLint BufferImpl::getBufferParameter(GLenum pname) const
 {
-  GLint param;
-  buffer->getContext().glGetNamedBufferParameteriv(buffer->getId(), pname,
-                                                   &param);
+  GLint       param;
+  auto const &gl = buffer->getContext();
+  gl.glGetNamedBufferParameteriv(buffer->getId(), pname, &param);
   return param;
 }
 
 GLvoid *BufferImpl::getBufferPointer(GLenum pname) const
 {
-  GLvoid *param;
-  buffer->getContext().glGetNamedBufferPointerv(buffer->getId(), pname, &param);
+  GLvoid *    param;
+  auto const &gl = buffer->getContext();
+  gl.glGetNamedBufferPointerv(buffer->getId(), pname, &param);
   return param;
+}
+
+void throwIfReallocFlagsAreIncompatible(Buffer *buffer, Buffer::ReallocFlags f)
+{
+  if (!((f & Buffer::KEEP_ID) && buffer->isImmutable())) return;
+  throw runtime_error(
+      "Buffer::realloc - can't sustain buffer id, buffer is immutable");
+}
+
+void throwIfReallocFlagsAreInvalid(){
+  throw runtime_error("Buffer::realloc - invalid buffer reallocation flags.");
 }
 
 void BufferImpl::realloc(GLsizeiptr size, Buffer::ReallocFlags f)
 {
-  if ((f & Buffer::KEEP_ID) && buffer->isImmutable()) {
-    throw std::runtime_error(
-        "Buffer::realloc - can't sustain buffer id, buffer is immutable");
-  }
+  throwIfReallocFlagsAreIncompatible(buffer, f);
 
   GLbitfield bufferFlags = buffer->getUsage();
-  if (f == (Buffer::KEEP_ID | Buffer::KEEP_DATA))
+  if (f == Buffer::KEEP_DATA_ID )
     resizeBufferKeepDataKeepId(size, bufferFlags);
   else if (f == Buffer::KEEP_ID)
     resizeBuffer(size, bufferFlags);
@@ -78,8 +88,7 @@ void BufferImpl::realloc(GLsizeiptr size, Buffer::ReallocFlags f)
   else if (f == Buffer::NEW_BUFFER)
     newBuffer(size, bufferFlags);
   else
-    throw std::runtime_error(
-        "Buffer::realloc - invalid buffer reallocation flags.");
+    throwIfReallocFlagsAreInvalid();
 }
 
 void BufferImpl::resizeBuffer(GLsizeiptr size, GLbitfield flags)
