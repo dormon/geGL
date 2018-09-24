@@ -58,7 +58,6 @@ Buffer::Buffer(FunctionTablePointer const &table,
  */
 Buffer::~Buffer()
 {
-  getContext().glDeleteBuffers(1, &getId());
   delete impl;
 }
 

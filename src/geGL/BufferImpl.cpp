@@ -20,6 +20,11 @@ void BufferImpl::bufferData(GLsizeiptr    size,
     gl.glNamedBufferStorage(buffer->getId(), size, data, flags);
 }
 
+BufferImpl::~BufferImpl(){
+  buffer->getContext().glDeleteBuffers(1, &buffer->getId());
+  removeReferences();
+}
+
 void BufferImpl::updateVertexArrays()
 {
   auto const me = buffer;
@@ -123,4 +128,15 @@ void BufferImpl::newBuffer(GLsizeiptr size, GLbitfield flags)
   buffer->getContext().glDeleteBuffers(1, &buffer->getId());
   buffer->alloc(size, nullptr, flags);
   updateVertexArrays();
+}
+
+void BufferImpl::removeReferences(){
+  auto vaos = vertexArrays;
+  for(auto const&vao:vaos){
+    if(vao->impl->elementBuffer == buffer)
+      vao->removeElementBuffer();
+    for(size_t i=0;i<vao->impl->buffers.size();++i)
+      if(vao->impl->buffers.at(i) == buffer)
+        vao->removeAttrib(i);
+  }
 }

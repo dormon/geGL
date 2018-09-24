@@ -11,6 +11,7 @@ set(SOURCES
   src/${PROJECT_NAME}/Buffer.cpp
   src/${PROJECT_NAME}/BufferImpl.cpp
   src/${PROJECT_NAME}/VertexArray.cpp
+  src/${PROJECT_NAME}/VertexArrayImpl.cpp
   src/${PROJECT_NAME}/Framebuffer.cpp
   src/${PROJECT_NAME}/Texture.cpp
   src/${PROJECT_NAME}/Sampler.cpp

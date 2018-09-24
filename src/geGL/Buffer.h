@@ -82,6 +82,7 @@ class GEGL_EXPORT ge::gl::Buffer : public OpenGLObject {
  private:
   BufferImpl* impl = nullptr;
   friend class VertexArray;
+  friend class VertexArrayImpl;
 };
 
 template <typename T>

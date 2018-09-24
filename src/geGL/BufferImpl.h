@@ -6,6 +6,7 @@
 class ge::gl::BufferImpl {
  public:
   BufferImpl(Buffer* b);
+  ~BufferImpl();
   GLint   getBufferParameter(GLenum pname) const;
   GLvoid* getBufferPointer(GLenum pname) const;
   void bufferData(GLsizeiptr size, GLvoid const* data, GLbitfield flags) const;
@@ -15,6 +16,7 @@ class ge::gl::BufferImpl {
   void resizeBufferKeepData(GLsizeiptr size, GLbitfield flags);
   void resizeBufferKeepDataKeepId(GLsizeiptr size, GLbitfield flags);
   void newBuffer(GLsizeiptr size, GLbitfield flags);
+  void removeReferences();
   Buffer*                buffer = nullptr;
   std::set<VertexArray*> vertexArrays;
 };
