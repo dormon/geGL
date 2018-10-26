@@ -2,6 +2,7 @@
 
 #include<geGL/OpenGL.h>
 #include<iostream>
+#include<array>
 
 namespace ge{
   namespace gl{
