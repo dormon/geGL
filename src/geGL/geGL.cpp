@@ -56,40 +56,75 @@ namespace ge{
         }
     };
 #else
-#include<dlfcn.h>
-    class GEGL_EXPORT OpenGLFunctionLoader{
+      
+#include <geGL/Dylib.h>
+      
+#if __APPLE__
+      class GEGL_EXPORT OpenGLFunctionLoader {
       protected:
-        bool _triedToLoadOpenGL = false;
-        bool _triedToLoadGetProcAddress = false;
-        void*openglLib = nullptr;
-        using PROC = void(*)();
-        using GETPROCTYPE = PROC(*)(uint8_t const*);
-        GETPROCTYPE _glXGetProcAddress = nullptr;
+          bool _triedToLoadOpenGL = false;
+          void* openglLib = nullptr;
       public:
-        void*operator()(char const*name){
-          const std::string libName = "libGL.so.1";
-          const std::string getProcAddressName = "glXGetProcAddress";
-          if(!this->_triedToLoadOpenGL){
-            this->_triedToLoadOpenGL = true;
-            this->openglLib = dlopen(libName.c_str(),RTLD_LAZY);
+          void* operator() (char const*name) {
+              if (!this->_triedToLoadOpenGL) {
+                  
+                  /* Load OpenGL framework at default framework search directories.
+                   (Default OpenGL path: '/System/Library/Frameworks/OpenGL.framework') */
+                  const std::string frameworkName = "OpenGL";
+                  this->openglLib = dl_open_framework(frameworkName.c_str());
+                  
+                  this->_triedToLoadOpenGL = true;
+              }
+              /* GL functions on OSX have been weak linked since OSX 10.2; this means that
+               you can call them directly and unimplemented extensions will resolve to NULL.
+               Note that this means that you must parse the extension string to determine if
+               a function is valid or not, or your program will crash.
+               Source: https://www.khronos.org/opengl/wiki/Load_OpenGL_Functions#MacOSX
+               */
+              
+              // TODO: glGetProcAddress (SDL?)
+              return dl_symbol(this->openglLib, name);
           }
-          if(!this->_triedToLoadGetProcAddress){
-            this->_triedToLoadGetProcAddress = true;
-            if(this->openglLib)
-              reinterpret_cast<void*&>(this->_glXGetProcAddress) = dlsym(this->openglLib,getProcAddressName.c_str());
-            else throw std::runtime_error("geGL::OpenGLFunctionLoader::operator() - cannot open "+libName);
+          ~OpenGLFunctionLoader() {
+              if(openglLib) dl_close_lib(this->openglLib);
+              this->openglLib = nullptr;
           }
-          if(!this->_glXGetProcAddress){
-            throw std::runtime_error("geGL::OpenGLFunctionLoader::operator() - cannot load " + getProcAddressName);
-            return nullptr;
+      };
+#else
+      class GEGL_EXPORT OpenGLFunctionLoader{
+      protected:
+          bool _triedToLoadOpenGL = false;
+          bool _triedToLoadGetProcAddress = false;
+          void*openglLib = nullptr;
+          using PROC = void(*)();
+          using GETPROCTYPE = PROC(*)(uint8_t const*);
+          GETPROCTYPE _glXGetProcAddress = nullptr;
+      public:
+          void*operator()(char const*name){
+              const std::string libName = "libGL.so.1";
+              const std::string getProcAddressName = "glXGetProcAddress";
+              if(!this->_triedToLoadOpenGL){
+                  this->_triedToLoadOpenGL = true;
+                  this->openglLib = dl_open_lib(libName.c_str());
+              }
+              if(!this->_triedToLoadGetProcAddress){
+                  this->_triedToLoadGetProcAddress = true;
+                  if(this->openglLib)
+                      reinterpret_cast<void*&>(this->_glXGetProcAddress) = dl_symbol(this->openglLib,getProcAddressName.c_str());
+                  else throw std::runtime_error("geGL::OpenGLFunctionLoader::operator() - cannot open "+libName);
+              }
+              if(!this->_glXGetProcAddress){
+                  throw std::runtime_error("geGL::OpenGLFunctionLoader::operator() - cannot load " + getProcAddressName);
+                  return nullptr;
+              }
+              return (void*)this->_glXGetProcAddress((uint8_t const*)(name));
           }
-          return (void*)this->_glXGetProcAddress((uint8_t const*)(name));
-        }
-        ~OpenGLFunctionLoader(){
-          if(openglLib)dlclose(this->openglLib);
-          this->openglLib = nullptr;
-        }
-    };
+          ~OpenGLFunctionLoader(){
+              if(openglLib)dl_close_lib(this->openglLib);
+              this->openglLib = nullptr;
+          }
+      };
+#endif
 #endif
 
     GEGL_EXPORT void*getProcAddress(char const*name){
