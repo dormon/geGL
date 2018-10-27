@@ -10,7 +10,6 @@ SET(CMAKE_CXX_STANDARD 14)
 set(SOURCES
   src/${PROJECT_NAME}/Buffer.cpp
   src/${PROJECT_NAME}/BufferImpl.cpp
-  src/${PROJECT_NAME}/Dylib.cpp
   src/${PROJECT_NAME}/VertexArray.cpp
   src/${PROJECT_NAME}/VertexArrayImpl.cpp
   src/${PROJECT_NAME}/Framebuffer.cpp
@@ -34,7 +33,6 @@ set(SOURCES
 set(INCLUDES
   src/${PROJECT_NAME}/Fwd.h
   src/${PROJECT_NAME}/Definitions.h
-  src/${PROJECT_NAME}/Dylib.h
   src/${PROJECT_NAME}/Buffer.h
   src/${PROJECT_NAME}/BufferImpl.h
   src/${PROJECT_NAME}/VertexArray.h
