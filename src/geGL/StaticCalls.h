@@ -62,6 +62,7 @@ namespace ge{
     GEGL_EXPORT void glCoverStrokePathNV(GLuint path,GLenum coverMode);
     GEGL_EXPORT void glTextureImage2DMultisampleNV(GLuint texture,GLenum target,GLsizei samples,GLint internalFormat,GLsizei width,GLsizei height,GLboolean fixedSampleLocations);
     GEGL_EXPORT void glVertex3bOES(GLbyte x,GLbyte y,GLbyte z);
+    GEGL_EXPORT void glImportMemoryWin32HandleEXT(GLuint memory,GLuint64 size,GLenum handleType,void* handle);
     GEGL_EXPORT void glTessellationFactorAMD(GLfloat factor);
     GEGL_EXPORT void glDebugMessageControl(GLenum source,GLenum type,GLenum severity,GLsizei count,const GLuint* ids,GLboolean enabled);
     GEGL_EXPORT GLboolean glIsObjectBufferATI(GLuint buffer);
@@ -113,12 +114,12 @@ namespace ge{
     GEGL_EXPORT void glProgramUniformMatrix3x4fvEXT(GLuint program,GLint location,GLsizei count,GLboolean transpose,const GLfloat* value);
     GEGL_EXPORT void glVertexAttribI2i(GLuint index,GLint x,GLint y);
     GEGL_EXPORT void glMultiTexCoord1i(GLenum target,GLint s);
-    GEGL_EXPORT void glUniform1ui64vARB(GLint location,GLsizei count,const GLuint64* value);
+    GEGL_EXPORT void glDeleteSemaphoresEXT(GLsizei n,const GLuint* semaphores);
     GEGL_EXPORT void glLoadProgramNV(GLenum target,GLuint id,GLsizei len,const GLubyte* program);
     GEGL_EXPORT void glWriteMaskEXT(GLuint res,GLuint in,GLenum outX,GLenum outY,GLenum outZ,GLenum outW);
     GEGL_EXPORT GLenum glGetGraphicsResetStatus();
     GEGL_EXPORT void glVertexAttrib1fv(GLuint index,const GLfloat* v);
-    GEGL_EXPORT GLboolean glIsEnabled(GLenum cap);
+    GEGL_EXPORT void glMultiTexCoord1s(GLenum target,GLshort s);
     GEGL_EXPORT void glImageTransformParameterfvHP(GLenum target,GLenum pname,const GLfloat* params);
     GEGL_EXPORT void glFramebufferTexture2D(GLenum target,GLenum attachment,GLenum textarget,GLuint texture,GLint level);
     GEGL_EXPORT void glGetFragmentLightfvSGIX(GLenum light,GLenum pname,GLfloat* params);
@@ -144,6 +145,7 @@ namespace ge{
     GEGL_EXPORT void glOrthofOES(GLfloat l,GLfloat r,GLfloat b,GLfloat t,GLfloat n,GLfloat f);
     GEGL_EXPORT void glViewportArrayv(GLuint first,GLsizei count,const GLfloat* v);
     GEGL_EXPORT void glDrawElementArrayATI(GLenum mode,GLsizei count);
+    GEGL_EXPORT void glBufferStorageMemEXT(GLenum target,GLsizeiptr size,GLuint memory,GLuint64 offset);
     GEGL_EXPORT void glGetPathColorGenfvNV(GLenum color,GLenum pname,GLfloat* value);
     GEGL_EXPORT void glWindowPos3iMESA(GLint x,GLint y,GLint z);
     GEGL_EXPORT void glMultiTexCoord2s(GLenum target,GLshort s,GLshort t);
@@ -165,7 +167,7 @@ namespace ge{
     GEGL_EXPORT void glMultiTexParameteriEXT(GLenum texunit,GLenum target,GLenum pname,GLint param);
     GEGL_EXPORT void glGetPointerv(GLenum pname,GLvoid** params);
     GEGL_EXPORT void glPathCommandsNV(GLuint path,GLsizei numCommands,const GLubyte* commands,GLsizei numCoords,GLenum coordType,const void* coords);
-    GEGL_EXPORT void glGetUniformfv(GLuint program,GLint location,GLfloat* params);
+    GEGL_EXPORT void glGetListParameterfvSGIX(GLuint list,GLenum pname,GLfloat* params);
     GEGL_EXPORT void glGetUniformuiv(GLuint program,GLint location,GLuint* params);
     GEGL_EXPORT void glDebugMessageInsertAMD(GLenum category,GLenum severity,GLuint id,GLsizei length,const GLchar* buf);
     GEGL_EXPORT void glFrustum(GLdouble left,GLdouble right,GLdouble bottom,GLdouble top,GLdouble near_val,GLdouble far_val);
@@ -183,7 +185,8 @@ namespace ge{
     GEGL_EXPORT void glGetRenderbufferParameteriv(GLenum target,GLenum pname,GLint* params);
     GEGL_EXPORT void glProgramUniform3fEXT(GLuint program,GLint location,GLfloat v0,GLfloat v1,GLfloat v2);
     GEGL_EXPORT void glNamedRenderbufferStorage(GLuint renderbuffer,GLenum internalformat,GLsizei width,GLsizei height);
-    GEGL_EXPORT void glProgramPathFragmentInputGenNV(GLuint program,GLint location,GLenum genMode,GLint components,const GLfloat* coeffs);
+    GEGL_EXPORT void glBindFragDataLocation(GLuint program,GLuint color,const GLchar* name);
+    GEGL_EXPORT void glPolygonOffsetClamp(GLfloat factor,GLfloat units,GLfloat clamp);
     GEGL_EXPORT void glFogCoordPointerListIBM(GLenum type,GLint stride,const void** pointer,GLint ptrstride);
     GEGL_EXPORT GLsync glFenceSync(GLenum condition,GLbitfield flags);
     GEGL_EXPORT void glGetVertexAttribIivEXT(GLuint index,GLenum pname,GLint* params);
@@ -216,6 +219,7 @@ namespace ge{
     GEGL_EXPORT void glGetTexParameterIuiv(GLenum target,GLenum pname,GLuint* params);
     GEGL_EXPORT void glBindBufferBaseNV(GLenum target,GLuint index,GLuint buffer);
     GEGL_EXPORT void glIndexPointer(GLenum type,GLsizei stride,const GLvoid* ptr);
+    GEGL_EXPORT void glGenQueryResourceTagNV(GLsizei n,GLint* tagIds);
     GEGL_EXPORT void glVertexAttrib4Nbv(GLuint index,const GLbyte* v);
     GEGL_EXPORT void glListParameteriSGIX(GLuint list,GLenum pname,GLint param);
     GEGL_EXPORT void glBlendColorxOES(GLfixed red,GLfixed green,GLfixed blue,GLfixed alpha);
@@ -230,6 +234,7 @@ namespace ge{
     GEGL_EXPORT void glUniformMatrix2x3dv(GLint location,GLsizei count,GLboolean transpose,const GLdouble* value);
     GEGL_EXPORT void glFramebufferDrawBufferEXT(GLuint framebuffer,GLenum mode);
     GEGL_EXPORT void glCopyColorSubTable(GLenum target,GLsizei start,GLint x,GLint y,GLsizei width);
+    GEGL_EXPORT void glGetNamedFramebufferParameterfvAMD(GLuint framebuffer,GLenum pname,GLuint numsamples,GLuint pixelindex,GLsizei size,GLfloat* values);
     GEGL_EXPORT void glVertexAttribL3d(GLuint index,GLdouble x,GLdouble y,GLdouble z);
     GEGL_EXPORT void glFragmentMaterialfvSGIX(GLenum face,GLenum pname,const GLfloat* params);
     GEGL_EXPORT void glMatrixLoadTranspose3x3fNV(GLenum matrixMode,const GLfloat* m);
@@ -253,6 +258,7 @@ namespace ge{
     GEGL_EXPORT void glUniform4uiv(GLint location,GLsizei count,const GLuint* value);
     GEGL_EXPORT void glFrameZoomSGIX(GLint factor);
     GEGL_EXPORT void glSecondaryColor3fEXT(GLfloat red,GLfloat green,GLfloat blue);
+    GEGL_EXPORT void glLGPUInterlockNVX();
     GEGL_EXPORT void glVertexAttribL1dv(GLuint index,const GLdouble* v);
     GEGL_EXPORT void glNormalStream3svATI(GLenum stream,const GLshort* coords);
     GEGL_EXPORT void glPathStencilFuncNV(GLenum func,GLint ref,GLuint mask);
@@ -263,6 +269,7 @@ namespace ge{
     GEGL_EXPORT void glScissorArrayv(GLuint first,GLsizei count,const GLint* v);
     GEGL_EXPORT void glCallList(GLuint list);
     GEGL_EXPORT void* glMapTexture2DINTEL(GLuint texture,GLint level,GLbitfield access,GLint* stride,GLenum* layout);
+    GEGL_EXPORT GLVULKANPROCNV glGetVkProcAddrNV(const GLchar* name);
     GEGL_EXPORT void glPixelTransferxOES(GLenum pname,GLfixed param);
     GEGL_EXPORT void glDeleteRenderbuffersEXT(GLsizei n,const GLuint* renderbuffers);
     GEGL_EXPORT void glTexCoord4fColor4fNormal3fVertex4fSUN(GLfloat s,GLfloat t,GLfloat p,GLfloat q,GLfloat r,GLfloat g,GLfloat b,GLfloat a,GLfloat nx,GLfloat ny,GLfloat nz,GLfloat x,GLfloat y,GLfloat z,GLfloat w);
@@ -290,6 +297,7 @@ namespace ge{
     GEGL_EXPORT void glUniform3iv(GLint location,GLsizei count,const GLint* value);
     GEGL_EXPORT void glVertexAttribL3i64vNV(GLuint index,const GLint64EXT* v);
     GEGL_EXPORT void glPolygonMode(GLenum face,GLenum mode);
+    GEGL_EXPORT void glFramebufferSamplePositionsfvAMD(GLenum target,GLuint numsamples,GLuint pixelindex,const GLfloat* values);
     GEGL_EXPORT void glConvolutionFilter1DEXT(GLenum target,GLenum internalformat,GLsizei width,GLenum format,GLenum type,const void* image);
     GEGL_EXPORT void glVertexAttrib1dvARB(GLuint index,const GLdouble* v);
     GEGL_EXPORT void glTextureSubImage2DEXT(GLuint texture,GLenum target,GLint level,GLint xoffset,GLint yoffset,GLsizei width,GLsizei height,GLenum format,GLenum type,const void* pixels);
@@ -305,6 +313,7 @@ namespace ge{
     GEGL_EXPORT void glMultiTexCoord2bvOES(GLenum texture,const GLbyte* coords);
     GEGL_EXPORT void glDeleteObjectARB(GLhandleARB obj);
     GEGL_EXPORT void glTextureLightEXT(GLenum pname);
+    GEGL_EXPORT void glRasterPos3i(GLint x,GLint y,GLint z);
     GEGL_EXPORT void glMultiTexCoord3dARB(GLenum target,GLdouble s,GLdouble t,GLdouble r);
     GEGL_EXPORT void glNamedFramebufferTextureEXT(GLuint framebuffer,GLenum attachment,GLuint texture,GLint level);
     GEGL_EXPORT void glTextureParameteriEXT(GLuint texture,GLenum target,GLenum pname,GLint param);
@@ -379,6 +388,7 @@ namespace ge{
     GEGL_EXPORT void glVertexStream1fvATI(GLenum stream,const GLfloat* coords);
     GEGL_EXPORT void glCreateVertexArrays(GLsizei n,GLuint* arrays);
     GEGL_EXPORT void glBeginConditionalRender(GLuint id,GLenum mode);
+    GEGL_EXPORT void glGetUnsignedBytevEXT(GLenum pname,GLubyte* data);
     GEGL_EXPORT void glConvolutionFilter1D(GLenum target,GLenum internalformat,GLsizei width,GLenum format,GLenum type,const GLvoid* image);
     GEGL_EXPORT void glMultiTexCoord3fARB(GLenum target,GLfloat s,GLfloat t,GLfloat r);
     GEGL_EXPORT void glGetQueryObjectuivARB(GLuint id,GLenum pname,GLuint* params);
@@ -391,10 +401,12 @@ namespace ge{
     GEGL_EXPORT void glUniform1d(GLint location,GLdouble x);
     GEGL_EXPORT GLint glRenderMode(GLenum mode);
     GEGL_EXPORT void glClearColorIiEXT(GLint red,GLint green,GLint blue,GLint alpha);
+    GEGL_EXPORT void glSignalSemaphoreEXT(GLuint semaphore,GLuint numBufferBarriers,const GLuint* buffers,GLuint numTextureBarriers,const GLuint* textures,const GLenum* dstLayouts);
     GEGL_EXPORT void glGetCompressedTexImage(GLenum target,GLint lod,GLvoid* img);
     GEGL_EXPORT void glCompressedTextureImage1DEXT(GLuint texture,GLenum target,GLint level,GLenum internalformat,GLsizei width,GLint border,GLsizei imageSize,const void* bits);
     GEGL_EXPORT void glGetActiveUniformBlockiv(GLuint program,GLuint uniformBlockIndex,GLenum pname,GLint* params);
     GEGL_EXPORT void glUniform1i(GLint location,GLint v0);
+    GEGL_EXPORT void glMultiDrawArraysIndirectCount(GLenum mode,const void* indirect,GLintptr drawcount,GLsizei maxdrawcount,GLsizei stride);
     GEGL_EXPORT void glGetTexEnvfv(GLenum target,GLenum pname,GLfloat* params);
     GEGL_EXPORT void glColorTableParameterivSGI(GLenum target,GLenum pname,const GLint* params);
     GEGL_EXPORT void glCullFace(GLenum mode);
@@ -406,12 +418,12 @@ namespace ge{
     GEGL_EXPORT void glProgramUniform4d(GLuint program,GLint location,GLdouble v0,GLdouble v1,GLdouble v2,GLdouble v3);
     GEGL_EXPORT void glTexCoord1xOES(GLfixed s);
     GEGL_EXPORT void glVertexStream3ivATI(GLenum stream,const GLint* coords);
-    GEGL_EXPORT const GLubyte* glGetStringi(GLenum name,GLuint index);
+    GEGL_EXPORT GLboolean glPointAlongPathNV(GLuint path,GLsizei startSegment,GLsizei numSegments,GLfloat distance,GLfloat* x,GLfloat* y,GLfloat* tangentX,GLfloat* tangentY);
     GEGL_EXPORT void glEndQueryARB(GLenum target);
     GEGL_EXPORT void glVDPAUMapSurfacesNV(GLsizei numSurfaces,const GLvdpauSurfaceNV* surfaces);
     GEGL_EXPORT void glVertex3i(GLint x,GLint y,GLint z);
     GEGL_EXPORT void glVertexAttrib4uivARB(GLuint index,const GLuint* v);
-    GEGL_EXPORT void glResumeTransformFeedbackNV();
+    GEGL_EXPORT void glTextureStorageMem3DEXT(GLuint texture,GLsizei levels,GLenum internalFormat,GLsizei width,GLsizei height,GLsizei depth,GLuint memory,GLuint64 offset);
     GEGL_EXPORT void glAttachShader(GLuint program,GLuint shader);
     GEGL_EXPORT void glColor4hNV(GLhalfNV red,GLhalfNV green,GLhalfNV blue,GLhalfNV alpha);
     GEGL_EXPORT void glGetFenceivNV(GLuint fence,GLenum pname,GLint* params);
@@ -423,6 +435,7 @@ namespace ge{
     GEGL_EXPORT void glTexCoord4bvOES(const GLbyte* coords);
     GEGL_EXPORT void glVertexAttrib3fARB(GLuint index,GLfloat x,GLfloat y,GLfloat z);
     GEGL_EXPORT void glRasterPos2xOES(GLfixed x,GLfixed y);
+    GEGL_EXPORT void glCreateMemoryObjectsEXT(GLsizei n,GLuint* memoryObjects);
     GEGL_EXPORT void glColor4ubVertex2fvSUN(const GLubyte* c,const GLfloat* v);
     GEGL_EXPORT void glSecondaryColor3dv(const GLdouble* v);
     GEGL_EXPORT void glVertexAttribI4sv(GLuint index,const GLshort* v);
@@ -451,6 +464,7 @@ namespace ge{
     GEGL_EXPORT void glDeleteQueriesARB(GLsizei n,const GLuint* ids);
     GEGL_EXPORT void glWindowPos3svARB(const GLshort* v);
     GEGL_EXPORT void glVertex4s(GLshort x,GLshort y,GLshort z,GLshort w);
+    GEGL_EXPORT void glImportMemoryWin32NameEXT(GLuint memory,GLuint64 size,GLenum handleType,const void* name);
     GEGL_EXPORT void glStringMarkerGREMEDY(GLsizei len,const void* string);
     GEGL_EXPORT GLboolean glIsTransformFeedback(GLuint id);
     GEGL_EXPORT void glProgramUniformMatrix2x3dvEXT(GLuint program,GLint location,GLsizei count,GLboolean transpose,const GLdouble* value);
@@ -465,6 +479,7 @@ namespace ge{
     GEGL_EXPORT void glProgramLocalParameter4dvARB(GLenum target,GLuint index,const GLdouble* params);
     GEGL_EXPORT void glReplacementCodeubSUN(GLubyte code);
     GEGL_EXPORT void glMultiDrawElementsIndirectBindlessNV(GLenum mode,GLenum type,const void* indirect,GLsizei drawCount,GLsizei stride,GLint vertexBufferCount);
+    GEGL_EXPORT void glImportSemaphoreWin32HandleEXT(GLuint semaphore,GLenum handleType,void* handle);
     GEGL_EXPORT void glUniformMatrix3fv(GLint location,GLsizei count,GLboolean transpose,const GLfloat* value);
     GEGL_EXPORT void glGetnMapfvARB(GLenum target,GLenum query,GLsizei bufSize,GLfloat* v);
     GEGL_EXPORT void glGetnUniformfv(GLuint program,GLint location,GLsizei bufSize,GLfloat* params);
@@ -478,6 +493,7 @@ namespace ge{
     GEGL_EXPORT void glBufferPageCommitmentARB(GLenum target,GLintptr offset,GLsizeiptr size,GLboolean commit);
     GEGL_EXPORT void glProgramLocalParameters4fvEXT(GLenum target,GLuint index,GLsizei count,const GLfloat* params);
     GEGL_EXPORT void glStencilFunc(GLenum func,GLint ref,GLuint mask);
+    GEGL_EXPORT void glSemaphoreParameterui64vEXT(GLuint semaphore,GLenum pname,const GLuint64* params);
     GEGL_EXPORT void glGetVertexAttribdvNV(GLuint index,GLenum pname,GLdouble* params);
     GEGL_EXPORT void glTexCoord3dv(const GLdouble* v);
     GEGL_EXPORT void glGetQueryBufferObjectiv(GLuint id,GLuint buffer,GLenum pname,GLintptr offset);
@@ -549,6 +565,7 @@ namespace ge{
     GEGL_EXPORT GLboolean glIsFenceNV(GLuint fence);
     GEGL_EXPORT void glMatrixFrustumEXT(GLenum mode,GLdouble left,GLdouble right,GLdouble bottom,GLdouble top,GLdouble zNear,GLdouble zFar);
     GEGL_EXPORT void glDispatchComputeIndirect(GLintptr indirect);
+    GEGL_EXPORT GLint glQueryResourceNV(GLenum queryType,GLint tagId,GLuint bufSize,GLint* buffer);
     GEGL_EXPORT void glMultiTexCoord4bOES(GLenum texture,GLbyte s,GLbyte t,GLbyte r,GLbyte q);
     GEGL_EXPORT void glProgramEnvParameter4dARB(GLenum target,GLuint index,GLdouble x,GLdouble y,GLdouble z,GLdouble w);
     GEGL_EXPORT void glProgramUniform1uiEXT(GLuint program,GLint location,GLuint v0);
@@ -565,6 +582,7 @@ namespace ge{
     GEGL_EXPORT void glTexCoord1iv(const GLint* v);
     GEGL_EXPORT void glProgramUniform3fvEXT(GLuint program,GLint location,GLsizei count,const GLfloat* value);
     GEGL_EXPORT void glColor3uiv(const GLuint* v);
+    GEGL_EXPORT void glRenderGpuMaskNV(GLbitfield mask);
     GEGL_EXPORT void glListBase(GLuint base);
     GEGL_EXPORT void glTexCoord2bOES(GLbyte s,GLbyte t);
     GEGL_EXPORT GLuint glBindMaterialParameterEXT(GLenum face,GLenum value);
@@ -605,6 +623,7 @@ namespace ge{
     GEGL_EXPORT void glFragmentLightivSGIX(GLenum light,GLenum pname,const GLint* params);
     GEGL_EXPORT void glBindImageTexture(GLuint unit,GLuint texture,GLint level,GLboolean layered,GLint layer,GLenum access,GLenum format);
     GEGL_EXPORT void glTransformFeedbackVaryings(GLuint program,GLsizei count,const GLchar*const* varyings,GLenum bufferMode);
+    GEGL_EXPORT void glMulticastBufferSubDataNV(GLbitfield gpuMask,GLuint buffer,GLintptr offset,GLsizeiptr size,const GLvoid* data);
     GEGL_EXPORT void glDrawRangeElements(GLenum mode,GLuint start,GLuint end,GLsizei count,GLenum type,const GLvoid* indices);
     GEGL_EXPORT void glTexCoord1s(GLshort s);
     GEGL_EXPORT void glBindBufferBase(GLenum target,GLuint index,GLuint buffer);
@@ -617,8 +636,8 @@ namespace ge{
     GEGL_EXPORT void glSampleMapATI(GLuint dst,GLuint interp,GLenum swizzle);
     GEGL_EXPORT void glProgramUniform2i64ARB(GLuint program,GLint location,GLint64 x,GLint64 y);
     GEGL_EXPORT void glBinormal3ivEXT(const GLint* v);
-    GEGL_EXPORT void glMultiDrawArraysIndirectCountARB(GLenum mode,GLintptr indirect,GLintptr drawcount,GLsizei maxdrawcount,GLsizei stride);
-    GEGL_EXPORT void glUniformBufferEXT(GLuint program,GLint location,GLuint buffer);
+    GEGL_EXPORT void glMultiDrawArraysIndirectCountARB(GLenum mode,const void* indirect,GLintptr drawcount,GLsizei maxdrawcount,GLsizei stride);
+    GEGL_EXPORT void glTextureStorageMem1DEXT(GLuint texture,GLsizei levels,GLenum internalFormat,GLsizei width,GLuint memory,GLuint64 offset);
     GEGL_EXPORT void glWindowPos2ivMESA(const GLint* v);
     GEGL_EXPORT void glTexCoordP4ui(GLenum type,GLuint coords);
     GEGL_EXPORT void glMultiTexSubImage1DEXT(GLenum texunit,GLenum target,GLint level,GLint xoffset,GLsizei width,GLenum format,GLenum type,const void* pixels);
@@ -640,7 +659,7 @@ namespace ge{
     GEGL_EXPORT void glUniformMatrix2x4fv(GLint location,GLsizei count,GLboolean transpose,const GLfloat* value);
     GEGL_EXPORT void glGetMultiTexParameterfvEXT(GLenum texunit,GLenum target,GLenum pname,GLfloat* params);
     GEGL_EXPORT void glDepthRangeIndexed(GLuint index,GLdouble n,GLdouble f);
-    GEGL_EXPORT void glMultiTexCoord1s(GLenum target,GLshort s);
+    GEGL_EXPORT GLboolean glIsEnabled(GLenum cap);
     GEGL_EXPORT void glMatrixScalefEXT(GLenum mode,GLfloat x,GLfloat y,GLfloat z);
     GEGL_EXPORT GLenum glGetError();
     GEGL_EXPORT void glGetTexEnviv(GLenum target,GLenum pname,GLint* params);
@@ -726,7 +745,7 @@ namespace ge{
     GEGL_EXPORT void glGetImageTransformParameterfvHP(GLenum target,GLenum pname,GLfloat* params);
     GEGL_EXPORT void glRasterPos2fv(const GLfloat* v);
     GEGL_EXPORT void glVertex3xOES(GLfixed x,GLfixed y);
-    GEGL_EXPORT void glProgramUniform2dvEXT(GLuint program,GLint location,GLsizei count,const GLdouble* value);
+    GEGL_EXPORT GLboolean glIsMemoryObjectEXT(GLuint memoryObject);
     GEGL_EXPORT void glWeightPointerARB(GLint size,GLenum type,GLsizei stride,const void* pointer);
     GEGL_EXPORT void glFinishFenceNV(GLuint fence);
     GEGL_EXPORT void glDepthRangexOES(GLfixed n,GLfixed f);
@@ -772,7 +791,7 @@ namespace ge{
     GEGL_EXPORT void glUniform3d(GLint location,GLdouble x,GLdouble y,GLdouble z);
     GEGL_EXPORT void glUniform3f(GLint location,GLfloat v0,GLfloat v1,GLfloat v2);
     GEGL_EXPORT void glActiveProgramEXT(GLuint program);
-    GEGL_EXPORT void glDeleteVertexArrays(GLsizei n,const GLuint* arrays);
+    GEGL_EXPORT void glProgramUniform3uiv(GLuint program,GLint location,GLsizei count,const GLuint* value);
     GEGL_EXPORT void glUniform3ui64vARB(GLint location,GLsizei count,const GLuint64* value);
     GEGL_EXPORT void glProgramUniform1ui64vARB(GLuint program,GLint location,GLsizei count,const GLuint64* value);
     GEGL_EXPORT void glTextureParameterfEXT(GLuint texture,GLenum target,GLenum pname,GLfloat param);
@@ -786,6 +805,7 @@ namespace ge{
     GEGL_EXPORT void glMultiTexCoord2xOES(GLenum texture,GLfixed s,GLfixed t);
     GEGL_EXPORT void glColor3sv(const GLshort* v);
     GEGL_EXPORT void glTexCoord2fVertex3fSUN(GLfloat s,GLfloat t,GLfloat x,GLfloat y,GLfloat z);
+    GEGL_EXPORT void glGetMemoryObjectParameterivEXT(GLuint memoryObject,GLenum pname,GLint* params);
     GEGL_EXPORT void glPolygonOffsetEXT(GLfloat factor,GLfloat bias);
     GEGL_EXPORT void glWeightPathsNV(GLuint resultPath,GLsizei numPaths,const GLuint* paths,const GLfloat* weights);
     GEGL_EXPORT void glCombinerStageParameterfvNV(GLenum stage,GLenum pname,const GLfloat* params);
@@ -852,6 +872,7 @@ namespace ge{
     GEGL_EXPORT void glVertex2hNV(GLhalfNV x,GLhalfNV y);
     GEGL_EXPORT void glDeleteVertexShaderEXT(GLuint id);
     GEGL_EXPORT void glTexImage3DEXT(GLenum target,GLint level,GLenum internalformat,GLsizei width,GLsizei height,GLsizei depth,GLint border,GLenum format,GLenum type,const void* pixels);
+    GEGL_EXPORT void glSignalVkFenceNV(GLuint64 vkFence);
     GEGL_EXPORT void glProgramLocalParameterI4ivNV(GLenum target,GLuint index,const GLint* params);
     GEGL_EXPORT void glGlobalAlphaFactoriSUN(GLint factor);
     GEGL_EXPORT void glTextureStorage1D(GLuint texture,GLsizei levels,GLenum internalformat,GLsizei width);
@@ -880,7 +901,7 @@ namespace ge{
     GEGL_EXPORT void glPatchParameteri(GLenum pname,GLint value);
     GEGL_EXPORT void glMap1d(GLenum target,GLdouble u1,GLdouble u2,GLint stride,GLint order,const GLdouble* points);
     GEGL_EXPORT void glGetTexFilterFuncSGIS(GLenum target,GLenum filter,GLfloat* weights);
-    GEGL_EXPORT void glGetTexParameteriv(GLenum target,GLenum pname,GLint* params);
+    GEGL_EXPORT void glVertexStream3dATI(GLenum stream,GLdouble x,GLdouble y,GLdouble z);
     GEGL_EXPORT void glVertexArrayVertexBindingDivisorEXT(GLuint vaobj,GLuint bindingindex,GLuint divisor);
     GEGL_EXPORT void glMultiTexCoord3svARB(GLenum target,const GLshort* v);
     GEGL_EXPORT void glBindProgramNV(GLenum target,GLuint id);
@@ -897,6 +918,7 @@ namespace ge{
     GEGL_EXPORT void glTextureStorage2DEXT(GLuint texture,GLenum target,GLsizei levels,GLenum internalformat,GLsizei width,GLsizei height);
     GEGL_EXPORT void glVertexArrayFogCoordOffsetEXT(GLuint vaobj,GLuint buffer,GLenum type,GLsizei stride,GLintptr offset);
     GEGL_EXPORT void glDeleteNamedStringARB(GLint namelen,const GLchar* name);
+    GEGL_EXPORT void glMulticastGetQueryObjecti64vNV(GLuint gpu,GLuint id,GLenum pname,GLint64* params);
     GEGL_EXPORT void glGenOcclusionQueriesNV(GLsizei n,GLuint* ids);
     GEGL_EXPORT void glLighti(GLenum light,GLenum pname,GLint param);
     GEGL_EXPORT void glTexImage1D(GLenum target,GLint level,GLint internalFormat,GLsizei width,GLint border,GLenum format,GLenum type,const GLvoid* pixels);
@@ -913,7 +935,9 @@ namespace ge{
     GEGL_EXPORT void glGetMapParameterivNV(GLenum target,GLenum pname,GLint* params);
     GEGL_EXPORT void glSampleCoverage(GLclampf value,GLboolean invert);
     GEGL_EXPORT void glClearDepthxOES(GLfixed depth);
+    GEGL_EXPORT void glUniformBufferEXT(GLuint program,GLint location,GLuint buffer);
     GEGL_EXPORT void glTexCoord2fNormal3fVertex3fvSUN(const GLfloat* tc,const GLfloat* n,const GLfloat* v);
+    GEGL_EXPORT void glMulticastGetQueryObjectuivNV(GLuint gpu,GLuint id,GLenum pname,GLuint* params);
     GEGL_EXPORT void glGetFirstPerfQueryIdINTEL(GLuint* queryId);
     GEGL_EXPORT GLboolean glUnmapNamedBufferEXT(GLuint buffer);
     GEGL_EXPORT void glGetTransformFeedbacki_v(GLuint xfb,GLenum pname,GLuint index,GLint* param);
@@ -966,15 +990,16 @@ namespace ge{
     GEGL_EXPORT void glBinormal3dvEXT(const GLdouble* v);
     GEGL_EXPORT GLsync glImportSyncEXT(GLenum external_sync_type,GLintptr external_sync,GLbitfield flags);
     GEGL_EXPORT void glGetMapiv(GLenum target,GLenum query,GLint* v);
-    GEGL_EXPORT void glGetListParameterfvSGIX(GLuint list,GLenum pname,GLfloat* params);
+    GEGL_EXPORT void glImportSemaphoreFdEXT(GLuint semaphore,GLenum handleType,GLint fd);
     GEGL_EXPORT void glMultiTexCoord4sv(GLenum target,const GLshort* v);
     GEGL_EXPORT void glPNTrianglesiATI(GLenum pname,GLint param);
     GEGL_EXPORT void glBindVertexArrayAPPLE(GLuint array);
     GEGL_EXPORT void glObjectPtrLabel(const void* ptr,GLsizei length,const GLchar* label);
     GEGL_EXPORT GLuint glGetDebugMessageLog(GLuint count,GLsizei bufSize,GLenum* sources,GLenum* types,GLuint* ids,GLenum* severities,GLsizei* lengths,GLchar* messageLog);
     GEGL_EXPORT void glTrackMatrixNV(GLenum target,GLuint address,GLenum matrix,GLenum transform);
-    GEGL_EXPORT void glBindFragDataLocation(GLuint program,GLuint color,const GLchar* name);
+    GEGL_EXPORT void glProgramPathFragmentInputGenNV(GLuint program,GLint location,GLenum genMode,GLint components,const GLfloat* coeffs);
     GEGL_EXPORT void glTangent3ivEXT(const GLint* v);
+    GEGL_EXPORT void glGetUniformfv(GLuint program,GLint location,GLfloat* params);
     GEGL_EXPORT void glSecondaryColor3ubv(const GLubyte* v);
     GEGL_EXPORT void glMakeTextureHandleNonResidentNV(GLuint64 handle);
     GEGL_EXPORT void glVertexAttribs4ubvNV(GLuint index,GLsizei count,const GLubyte* v);
@@ -983,6 +1008,7 @@ namespace ge{
     GEGL_EXPORT void glGetnPolygonStippleARB(GLsizei bufSize,GLubyte* pattern);
     GEGL_EXPORT void glUniform2i64vNV(GLint location,GLsizei count,const GLint64EXT* value);
     GEGL_EXPORT void glLightModelf(GLenum pname,GLfloat param);
+    GEGL_EXPORT void glDeleteMemoryObjectsEXT(GLsizei n,const GLuint* memoryObjects);
     GEGL_EXPORT void glMultiTexSubImage2DEXT(GLenum texunit,GLenum target,GLint level,GLint xoffset,GLint yoffset,GLsizei width,GLsizei height,GLenum format,GLenum type,const void* pixels);
     GEGL_EXPORT void glReplacementCodeuiColor3fVertex3fSUN(GLuint rc,GLfloat r,GLfloat g,GLfloat b,GLfloat x,GLfloat y,GLfloat z);
     GEGL_EXPORT void glTangent3dvEXT(const GLdouble* v);
@@ -1023,6 +1049,7 @@ namespace ge{
     GEGL_EXPORT void glProgramUniform2f(GLuint program,GLint location,GLfloat v0,GLfloat v1);
     GEGL_EXPORT void glRasterPos4sv(const GLshort* v);
     GEGL_EXPORT void glColor4s(GLshort red,GLshort green,GLshort blue,GLshort alpha);
+    GEGL_EXPORT void glMulticastGetQueryObjectivNV(GLuint gpu,GLuint id,GLenum pname,GLint* params);
     GEGL_EXPORT void glColorFragmentOp3ATI(GLenum op,GLuint dst,GLuint dstMask,GLuint dstMod,GLuint arg1,GLuint arg1Rep,GLuint arg1Mod,GLuint arg2,GLuint arg2Rep,GLuint arg2Mod,GLuint arg3,GLuint arg3Rep,GLuint arg3Mod);
     GEGL_EXPORT void glResizeBuffersMESA();
     GEGL_EXPORT void glGetMinmaxParameterfv(GLenum target,GLenum pname,GLfloat* params);
@@ -1061,6 +1088,7 @@ namespace ge{
     GEGL_EXPORT void glGetActiveSubroutineUniformiv(GLuint program,GLenum shadertype,GLuint index,GLenum pname,GLint* values);
     GEGL_EXPORT void glVertexAttribPointerARB(GLuint index,GLint size,GLenum type,GLboolean normalized,GLsizei stride,const void* pointer);
     GEGL_EXPORT void glCompressedTexSubImage2DARB(GLenum target,GLint level,GLint xoffset,GLint yoffset,GLsizei width,GLsizei height,GLenum format,GLsizei imageSize,const void* data);
+    GEGL_EXPORT void glTexStorageMem1DEXT(GLenum target,GLsizei levels,GLenum internalFormat,GLsizei width,GLuint memory,GLuint64 offset);
     GEGL_EXPORT void glVertex2hvNV(const GLhalfNV* v);
     GEGL_EXPORT void glTexBuffer(GLenum target,GLenum internalformat,GLuint buffer);
     GEGL_EXPORT void glArrayElement(GLint i);
@@ -1080,7 +1108,7 @@ namespace ge{
     GEGL_EXPORT void glMap1xOES(GLenum target,GLfixed u1,GLfixed u2,GLint stride,GLint order,GLfixed points);
     GEGL_EXPORT void glVertexAttrib3fvNV(GLuint index,const GLfloat* v);
     GEGL_EXPORT void glReferencePlaneSGIX(const GLdouble* equation);
-    GEGL_EXPORT void glGetMultiTexGendvEXT(GLenum texunit,GLenum coord,GLenum pname,GLdouble* params);
+    GEGL_EXPORT void glMulticastBlitFramebufferNV(GLuint srcGpu,GLuint dstGpu,GLint srcX0,GLint srcY0,GLint srcX1,GLint srcY1,GLint dstX0,GLint dstY0,GLint dstX1,GLint dstY1,GLbitfield mask,GLenum filter);
     GEGL_EXPORT void glGetCombinerInputParameterfvNV(GLenum stage,GLenum portion,GLenum variable,GLenum pname,GLfloat* params);
     GEGL_EXPORT GLuint64 glGetTextureSamplerHandleARB(GLuint texture,GLuint sampler);
     GEGL_EXPORT void glBindTexture(GLenum target,GLuint texture);
@@ -1151,6 +1179,7 @@ namespace ge{
     GEGL_EXPORT void glGetnUniformui64vARB(GLuint program,GLint location,GLsizei bufSize,GLuint64* params);
     GEGL_EXPORT GLuint glCreateShaderProgramv(GLenum type,GLsizei count,const GLchar*const* strings);
     GEGL_EXPORT void glGetQueryObjectiv(GLuint id,GLenum pname,GLint* params);
+    GEGL_EXPORT void glMaxShaderCompilerThreadsKHR(GLuint count);
     GEGL_EXPORT void glPNTrianglesfATI(GLenum pname,GLfloat param);
     GEGL_EXPORT void glGlobalAlphaFactorusSUN(GLushort factor);
     GEGL_EXPORT void glVertexAttrib3dvNV(GLuint index,const GLdouble* v);
@@ -1164,6 +1193,7 @@ namespace ge{
     GEGL_EXPORT void glTexCoord2d(GLdouble s,GLdouble t);
     GEGL_EXPORT void glPointParameteri(GLenum pname,GLint param);
     GEGL_EXPORT void glTexCoord2f(GLfloat s,GLfloat t);
+    GEGL_EXPORT void glGetUnsignedBytei_vEXT(GLenum target,GLuint index,GLubyte* data);
     GEGL_EXPORT void glColor4iv(const GLint* v);
     GEGL_EXPORT void* glMapNamedBufferRange(GLuint buffer,GLintptr offset,GLsizeiptr length,GLbitfield access);
     GEGL_EXPORT GLboolean glUnmapBuffer(GLenum target);
@@ -1180,8 +1210,10 @@ namespace ge{
     GEGL_EXPORT void glVertexAttrib1svNV(GLuint index,const GLshort* v);
     GEGL_EXPORT void glNamedFramebufferTextureFaceEXT(GLuint framebuffer,GLenum attachment,GLuint texture,GLint level,GLenum face);
     GEGL_EXPORT void glProgramUniform2ui64vNV(GLuint program,GLint location,GLsizei count,const GLuint64EXT* value);
+    GEGL_EXPORT void glStencilFillPathNV(GLuint path,GLenum fillMode,GLuint mask);
     GEGL_EXPORT void glNormal3dv(const GLdouble* v);
     GEGL_EXPORT void glReleaseShaderCompiler();
+    GEGL_EXPORT void glTexStorageMem3DEXT(GLenum target,GLsizei levels,GLenum internalFormat,GLsizei width,GLsizei height,GLsizei depth,GLuint memory,GLuint64 offset);
     GEGL_EXPORT void glTexCoord3bvOES(const GLbyte* coords);
     GEGL_EXPORT GLboolean glIsVertexAttribEnabledAPPLE(GLuint index,GLenum pname);
     GEGL_EXPORT void glTexCoord1dv(const GLdouble* v);
@@ -1190,6 +1222,7 @@ namespace ge{
     GEGL_EXPORT void glSetFenceAPPLE(GLuint fence);
     GEGL_EXPORT void glWeightsvARB(GLint size,const GLshort* weights);
     GEGL_EXPORT void glShadeModel(GLenum mode);
+    GEGL_EXPORT void glTextureStorageMem3DMultisampleEXT(GLuint texture,GLsizei samples,GLenum internalFormat,GLsizei width,GLsizei height,GLsizei depth,GLboolean fixedSampleLocations,GLuint memory,GLuint64 offset);
     GEGL_EXPORT void glMapGrid1d(GLint un,GLdouble u1,GLdouble u2);
     GEGL_EXPORT void glGetHistogramParameterivEXT(GLenum target,GLenum pname,GLint* params);
     GEGL_EXPORT void glConservativeRasterParameteriNV(GLenum pname,GLint param);
@@ -1249,6 +1282,7 @@ namespace ge{
     GEGL_EXPORT void glMultiTexEnviEXT(GLenum texunit,GLenum target,GLenum pname,GLint param);
     GEGL_EXPORT void glVertexAttribI2iEXT(GLuint index,GLint x,GLint y);
     GEGL_EXPORT void glProgramParameter4fvNV(GLenum target,GLuint index,const GLfloat* v);
+    GEGL_EXPORT void glWaitSemaphoreEXT(GLuint semaphore,GLuint numBufferBarriers,const GLuint* buffers,GLuint numTextureBarriers,const GLuint* textures,const GLenum* srcLayouts);
     GEGL_EXPORT void glNamedFramebufferSampleLocationsfvNV(GLuint framebuffer,GLuint start,GLsizei count,const GLfloat* v);
     GEGL_EXPORT void glTexCoordP4uiv(GLenum type,const GLuint* coords);
     GEGL_EXPORT void glRectxvOES(const GLfixed* v1,const GLfixed* v2);
@@ -1270,7 +1304,6 @@ namespace ge{
     GEGL_EXPORT void glMakeBufferNonResidentNV(GLenum target);
     GEGL_EXPORT void glUniform1ui64ARB(GLint location,GLuint64 x);
     GEGL_EXPORT void glStencilStrokePathNV(GLuint path,GLint reference,GLuint mask);
-    GEGL_EXPORT void glProgramUniform3uiv(GLuint program,GLint location,GLsizei count,const GLuint* value);
     GEGL_EXPORT void glVariantuivEXT(GLuint id,const GLuint* addr);
     GEGL_EXPORT void glCopyTexSubImage3DEXT(GLenum target,GLint level,GLint xoffset,GLint yoffset,GLint zoffset,GLint x,GLint y,GLsizei width,GLsizei height);
     GEGL_EXPORT void glSpriteParameteriSGIX(GLenum pname,GLint param);
@@ -1348,7 +1381,7 @@ namespace ge{
     GEGL_EXPORT void glVertex4xOES(GLfixed x,GLfixed y,GLfixed z);
     GEGL_EXPORT void glVertexAttribI2uivEXT(GLuint index,const GLuint* v);
     GEGL_EXPORT void glNamedProgramLocalParameter4fvEXT(GLuint program,GLenum target,GLuint index,const GLfloat* params);
-    GEGL_EXPORT void glPointParameterfvSGIS(GLenum pname,const GLfloat* params);
+    GEGL_EXPORT void glColor3usv(const GLushort* v);
     GEGL_EXPORT void glGetPixelTransformParameterfvEXT(GLenum target,GLenum pname,GLfloat* params);
     GEGL_EXPORT void glIndexxvOES(const GLfixed* component);
     GEGL_EXPORT void glDepthMask(GLboolean flag);
@@ -1360,6 +1393,7 @@ namespace ge{
     GEGL_EXPORT void glGetMultiTexEnvfvEXT(GLenum texunit,GLenum target,GLenum pname,GLfloat* params);
     GEGL_EXPORT void glDeleteFencesNV(GLsizei n,const GLuint* fences);
     GEGL_EXPORT void glVertexAttribs1dvNV(GLuint index,GLsizei count,const GLdouble* v);
+    GEGL_EXPORT void glBufferStorageExternalEXT(GLenum target,GLintptr offset,GLsizeiptr size,GLeglClientBufferEXT clientBuffer,GLbitfield flags);
     GEGL_EXPORT void glVertexStream2sATI(GLenum stream,GLshort x,GLshort y);
     GEGL_EXPORT void glGetnSeparableFilterARB(GLenum target,GLenum format,GLenum type,GLsizei rowBufSize,void* row,GLsizei columnBufSize,void* column,void* span);
     GEGL_EXPORT void glProgramUniform2dv(GLuint program,GLint location,GLsizei count,const GLdouble* value);
@@ -1419,8 +1453,10 @@ namespace ge{
     GEGL_EXPORT void glProgramUniformMatrix3dvEXT(GLuint program,GLint location,GLsizei count,GLboolean transpose,const GLdouble* value);
     GEGL_EXPORT void glSeparableFilter2D(GLenum target,GLenum internalformat,GLsizei width,GLsizei height,GLenum format,GLenum type,const GLvoid* row,const GLvoid* column);
     GEGL_EXPORT void glVertexAttribI1uiv(GLuint index,const GLuint* v);
+    GEGL_EXPORT void glLGPUCopyImageSubDataNVX(GLuint sourceGpu,GLbitfield destinationGpuMask,GLuint srcName,GLenum srcTarget,GLint srcLevel,GLint srcX,GLint srxY,GLint srcZ,GLuint dstName,GLenum dstTarget,GLint dstLevel,GLint dstX,GLint dstY,GLint dstZ,GLsizei width,GLsizei height,GLsizei depth);
     GEGL_EXPORT void glTexStorage2D(GLenum target,GLsizei levels,GLenum internalformat,GLsizei width,GLsizei height);
     GEGL_EXPORT void glColor3fv(const GLfloat* v);
+    GEGL_EXPORT void glGetMultiTexGendvEXT(GLenum texunit,GLenum coord,GLenum pname,GLdouble* params);
     GEGL_EXPORT void glVertexAttribL4dvEXT(GLuint index,const GLdouble* v);
     GEGL_EXPORT void glGetActiveUniform(GLuint program,GLuint index,GLsizei bufSize,GLsizei* length,GLint* size,GLenum* type,GLchar* name);
     GEGL_EXPORT void glUniform2ui64vARB(GLint location,GLsizei count,const GLuint64* value);
@@ -1428,6 +1464,7 @@ namespace ge{
     GEGL_EXPORT GLenum glPathGlyphIndexRangeNV(GLenum fontTarget,const void* fontName,GLbitfield fontStyle,GLuint pathParameterTemplate,GLfloat emScale,GLuint baseAndCount[2]);
     GEGL_EXPORT void glColorPointer(GLint size,GLenum type,GLsizei stride,const GLvoid* ptr);
     GEGL_EXPORT void glProgramEnvParameterI4ivNV(GLenum target,GLuint index,const GLint* params);
+    GEGL_EXPORT void glMulticastGetQueryObjectui64vNV(GLuint gpu,GLuint id,GLenum pname,GLuint64* params);
     GEGL_EXPORT void glMultiTexParameterfEXT(GLenum texunit,GLenum target,GLenum pname,GLfloat param);
     GEGL_EXPORT void glNamedFramebufferTextureLayer(GLuint framebuffer,GLenum attachment,GLuint texture,GLint level,GLint layer);
     GEGL_EXPORT void glGetVertexArrayIntegervEXT(GLuint vaobj,GLenum pname,GLint* param);
@@ -1522,6 +1559,7 @@ namespace ge{
     GEGL_EXPORT void glTexStorage3D(GLenum target,GLsizei levels,GLenum internalformat,GLsizei width,GLsizei height,GLsizei depth);
     GEGL_EXPORT void glTextureParameteriv(GLuint texture,GLenum pname,const GLint* param);
     GEGL_EXPORT void glNamedBufferDataEXT(GLuint buffer,GLsizeiptr size,const void* data,GLenum usage);
+    GEGL_EXPORT void glImportSemaphoreWin32NameEXT(GLuint semaphore,GLenum handleType,const void* name);
     GEGL_EXPORT void glMultiTexCoord3fvARB(GLenum target,const GLfloat* v);
     GEGL_EXPORT void glUniformMatrix3x4fv(GLint location,GLsizei count,GLboolean transpose,const GLfloat* value);
     GEGL_EXPORT void glSubpixelPrecisionBiasNV(GLuint xbits,GLuint ybits);
@@ -1628,14 +1666,17 @@ namespace ge{
     GEGL_EXPORT void glProvokingVertexEXT(GLenum mode);
     GEGL_EXPORT void glVariantubvEXT(GLuint id,const GLubyte* addr);
     GEGL_EXPORT void glFlush();
+    GEGL_EXPORT void glFramebufferTexture2DEXT(GLenum target,GLenum attachment,GLenum textarget,GLuint texture,GLint level);
     GEGL_EXPORT void glGetColorTableParameterivEXT(GLenum target,GLenum pname,GLint* params);
     GEGL_EXPORT void glPresentFrameDualFillNV(GLuint video_slot,GLuint64EXT minPresentTime,GLuint beginPresentTimeId,GLuint presentDurationId,GLenum type,GLenum target0,GLuint fill0,GLenum target1,GLuint fill1,GLenum target2,GLuint fill2,GLenum target3,GLuint fill3);
     GEGL_EXPORT GLuint glGenVertexShadersEXT(GLuint range);
+    GEGL_EXPORT void glSpecializeShaderARB(GLuint shader,const GLchar* pEntryPoint,GLuint numSpecializationConstants,const GLuint* pConstantIndex,const GLuint* pConstantValue);
     GEGL_EXPORT void glProgramUniformHandleui64vARB(GLuint program,GLint location,GLsizei count,const GLuint64* values);
     GEGL_EXPORT void glDepthRangefOES(GLclampf n,GLclampf f);
+    GEGL_EXPORT void glDeleteVertexArrays(GLsizei n,const GLuint* arrays);
     GEGL_EXPORT void glDrawElementsInstancedBaseVertexBaseInstance(GLenum mode,GLsizei count,GLenum type,const void* indices,GLsizei instancecount,GLint basevertex,GLuint baseinstance);
     GEGL_EXPORT void glGetTexLevelParameteriv(GLenum target,GLint level,GLenum pname,GLint* params);
-    GEGL_EXPORT void glStencilFillPathNV(GLuint path,GLenum fillMode,GLuint mask);
+    GEGL_EXPORT void glDrawVkImageNV(GLuint64 vkImage,GLuint sampler,GLfloat x0,GLfloat y0,GLfloat x1,GLfloat y1,GLfloat z,GLfloat s0,GLfloat t0,GLfloat s1,GLfloat t1);
     GEGL_EXPORT void glWindowPos3iARB(GLint x,GLint y,GLint z);
     GEGL_EXPORT void glPrioritizeTextures(GLsizei n,const GLuint* textures,const GLclampf* priorities);
     GEGL_EXPORT void glWindowPos3fvMESA(const GLfloat* v);
@@ -1736,6 +1777,8 @@ namespace ge{
     GEGL_EXPORT void glBinormal3bvEXT(const GLbyte* v);
     GEGL_EXPORT void glUniform3fv(GLint location,GLsizei count,const GLfloat* value);
     GEGL_EXPORT void glGetnPixelMapusvARB(GLenum map,GLsizei bufSize,GLushort* values);
+    GEGL_EXPORT void glMemoryObjectParameterivEXT(GLuint memoryObject,GLenum pname,const GLint* params);
+    GEGL_EXPORT void glGenSemaphoresEXT(GLsizei n,GLuint* semaphores);
     GEGL_EXPORT void glMultiTexCoordP1ui(GLenum texture,GLenum type,GLuint coords);
     GEGL_EXPORT void glClearNamedBufferDataEXT(GLuint buffer,GLenum internalformat,GLenum format,GLenum type,const void* data);
     GEGL_EXPORT void glUniformMatrix4dv(GLint location,GLsizei count,GLboolean transpose,const GLdouble* value);
@@ -1881,6 +1924,7 @@ namespace ge{
     GEGL_EXPORT void glMultiTexParameterIivEXT(GLenum texunit,GLenum target,GLenum pname,const GLint* params);
     GEGL_EXPORT void glUniform1i64ARB(GLint location,GLint64 x);
     GEGL_EXPORT void glUniform1iv(GLint location,GLsizei count,const GLint* value);
+    GEGL_EXPORT void glMulticastBarrierNV();
     GEGL_EXPORT void glVertexAttribArrayObjectATI(GLuint index,GLint size,GLenum type,GLboolean normalized,GLsizei stride,GLuint buffer,GLuint offset);
     GEGL_EXPORT void glUniform2iARB(GLint location,GLint v0,GLint v1);
     GEGL_EXPORT void glDrawArraysInstanced(GLenum mode,GLint first,GLsizei count,GLsizei instancecount);
@@ -1944,6 +1988,7 @@ namespace ge{
     GEGL_EXPORT void glLoadTransposeMatrixd(const GLdouble m[16]);
     GEGL_EXPORT void glLoadTransposeMatrixf(const GLfloat m[16]);
     GEGL_EXPORT void glGetPointervEXT(GLenum pname,void** params);
+    GEGL_EXPORT void glSignalVkSemaphoreNV(GLuint64 vkSemaphore);
     GEGL_EXPORT void glEndConditionalRenderNV();
     GEGL_EXPORT void glTexCoord2fNormal3fVertex3fSUN(GLfloat s,GLfloat t,GLfloat nx,GLfloat ny,GLfloat nz,GLfloat x,GLfloat y,GLfloat z);
     GEGL_EXPORT void glUniform3i64vARB(GLint location,GLsizei count,const GLint64* value);
@@ -2063,11 +2108,13 @@ namespace ge{
     GEGL_EXPORT void glFramebufferSampleLocationsfvARB(GLenum target,GLuint start,GLsizei count,const GLfloat* v);
     GEGL_EXPORT void glGetLightiv(GLenum light,GLenum pname,GLint* params);
     GEGL_EXPORT void glBlendFuncSeparatei(GLuint buf,GLenum srcRGB,GLenum dstRGB,GLenum srcAlpha,GLenum dstAlpha);
+    GEGL_EXPORT GLboolean glAcquireKeyedMutexWin32EXT(GLuint memory,GLuint64 key,GLuint timeout);
     GEGL_EXPORT void glGetBooleanIndexedvEXT(GLenum target,GLuint index,GLboolean* data);
     GEGL_EXPORT void glGetProgramSubroutineParameteruivNV(GLenum target,GLuint index,GLuint* param);
     GEGL_EXPORT void glUniform2ui(GLint location,GLuint v0,GLuint v1);
     GEGL_EXPORT void glApplyFramebufferAttachmentCMAAINTEL();
     GEGL_EXPORT void glWindowPos2fv(const GLfloat* v);
+    GEGL_EXPORT void glWaitVkSemaphoreNV(GLuint64 vkSemaphore);
     GEGL_EXPORT void glDisablei(GLenum target,GLuint index);
     GEGL_EXPORT void glSelectPerfMonitorCountersAMD(GLuint monitor,GLboolean enable,GLuint group,GLint numCounters,GLuint* counterList);
     GEGL_EXPORT void glGetVertexAttribLi64vNV(GLuint index,GLenum pname,GLint64EXT* params);
@@ -2076,6 +2123,7 @@ namespace ge{
     GEGL_EXPORT void glWindowPos2iARB(GLint x,GLint y);
     GEGL_EXPORT void glGetProgramLocalParameterdvARB(GLenum target,GLuint index,GLdouble* params);
     GEGL_EXPORT void glGetUniformui64vARB(GLuint program,GLint location,GLuint64* params);
+    GEGL_EXPORT void glSecondaryColor3us(GLushort red,GLushort green,GLushort blue);
     GEGL_EXPORT void glGetSynciv(GLsync sync,GLenum pname,GLsizei bufSize,GLsizei* length,GLint* values);
     GEGL_EXPORT void glMakeImageHandleResidentARB(GLuint64 handle,GLenum access);
     GEGL_EXPORT void glGetProgramNamedParameterfvNV(GLuint id,GLsizei len,const GLubyte* name,GLfloat* params);
@@ -2100,7 +2148,7 @@ namespace ge{
     GEGL_EXPORT void glBlitFramebufferEXT(GLint srcX0,GLint srcY0,GLint srcX1,GLint srcY1,GLint dstX0,GLint dstY0,GLint dstX1,GLint dstY1,GLbitfield mask,GLenum filter);
     GEGL_EXPORT void glUniformMatrix4fvARB(GLint location,GLsizei count,GLboolean transpose,const GLfloat* value);
     GEGL_EXPORT void glProgramEnvParameter4dvARB(GLenum target,GLuint index,const GLdouble* params);
-    GEGL_EXPORT void glSecondaryColor3hNV(GLhalfNV red,GLhalfNV green,GLhalfNV blue);
+    GEGL_EXPORT void glTextureStorageMem2DEXT(GLuint texture,GLsizei levels,GLenum internalFormat,GLsizei width,GLsizei height,GLuint memory,GLuint64 offset);
     GEGL_EXPORT void glVertexAttribP3uiv(GLuint index,GLenum type,GLboolean normalized,const GLuint* value);
     GEGL_EXPORT void glFogCoordFormatNV(GLenum type,GLsizei stride);
     GEGL_EXPORT void glGetMultiTexLevelParameterivEXT(GLenum texunit,GLenum target,GLint level,GLenum pname,GLint* params);
@@ -2174,6 +2222,7 @@ namespace ge{
     GEGL_EXPORT void glGetUniformuivEXT(GLuint program,GLint location,GLuint* params);
     GEGL_EXPORT void glGetnPixelMapfvARB(GLenum map,GLsizei bufSize,GLfloat* values);
     GEGL_EXPORT void glFramebufferTextureEXT(GLenum target,GLenum attachment,GLuint texture,GLint level);
+    GEGL_EXPORT void glMultiDrawElementsIndirectCount(GLenum mode,GLenum type,const void* indirect,GLintptr drawcount,GLsizei maxdrawcount,GLsizei stride);
     GEGL_EXPORT void glVertexAttribIPointer(GLuint index,GLint size,GLenum type,GLsizei stride,const void* pointer);
     GEGL_EXPORT void glMultiTexCoordP3ui(GLenum texture,GLenum type,GLuint coords);
     GEGL_EXPORT void glEvaluateDepthValuesARB();
@@ -2287,6 +2336,7 @@ namespace ge{
     GEGL_EXPORT void glConvolutionParameteriv(GLenum target,GLenum pname,const GLint* params);
     GEGL_EXPORT void glCopyMultiTexSubImage2DEXT(GLenum texunit,GLenum target,GLint level,GLint xoffset,GLint yoffset,GLint x,GLint y,GLsizei width,GLsizei height);
     GEGL_EXPORT void glEnableVertexAttribArrayARB(GLuint index);
+    GEGL_EXPORT void glMulticastCopyBufferSubDataNV(GLuint readGpu,GLbitfield writeGpuMask,GLuint readBuffer,GLuint writeBuffer,GLintptr readOffset,GLintptr writeOffset,GLsizeiptr size);
     GEGL_EXPORT void glEnable(GLenum cap);
     GEGL_EXPORT void glGetActiveUniformsiv(GLuint program,GLsizei uniformCount,const GLuint* uniformIndices,GLenum pname,GLint* params);
     GEGL_EXPORT void glGetVertexAttribivARB(GLuint index,GLenum pname,GLint* params);
@@ -2295,6 +2345,7 @@ namespace ge{
     GEGL_EXPORT GLint glGetAttribLocation(GLuint program,const GLchar* name);
     GEGL_EXPORT void glVertexAttrib4dv(GLuint index,const GLdouble* v);
     GEGL_EXPORT void glGetTextureParameteriv(GLuint texture,GLenum pname,GLint* params);
+    GEGL_EXPORT void glNamedBufferStorageMemEXT(GLuint buffer,GLsizeiptr size,GLuint memory,GLuint64 offset);
     GEGL_EXPORT void glPathSubCoordsNV(GLuint path,GLsizei coordStart,GLsizei numCoords,GLenum coordType,const void* coords);
     GEGL_EXPORT void glMatrixIndexusvARB(GLint size,const GLushort* indices);
     GEGL_EXPORT void glGetVideouivNV(GLuint video_slot,GLenum pname,GLuint* params);
@@ -2305,6 +2356,7 @@ namespace ge{
     GEGL_EXPORT void glMatrixScaledEXT(GLenum mode,GLdouble x,GLdouble y,GLdouble z);
     GEGL_EXPORT void glProgramUniformMatrix2x3fv(GLuint program,GLint location,GLsizei count,GLboolean transpose,const GLfloat* value);
     GEGL_EXPORT void glGetFragmentLightivSGIX(GLenum light,GLenum pname,GLint* params);
+    GEGL_EXPORT const GLubyte* glGetStringi(GLenum name,GLuint index);
     GEGL_EXPORT void glWindowPos2svARB(const GLshort* v);
     GEGL_EXPORT void glVertexAttrib2svNV(GLuint index,const GLshort* v);
     GEGL_EXPORT void glWindowPos2ivARB(const GLint* v);
@@ -2329,8 +2381,8 @@ namespace ge{
     GEGL_EXPORT void glExtractComponentEXT(GLuint res,GLuint src,GLuint num);
     GEGL_EXPORT void glCombinerParameterivNV(GLenum pname,const GLint* params);
     GEGL_EXPORT void glMinmax(GLenum target,GLenum internalformat,GLboolean sink);
-    GEGL_EXPORT void glGenBuffersARB(GLsizei n,GLuint* buffers);
-    GEGL_EXPORT void glColor3usv(const GLushort* v);
+    GEGL_EXPORT void glColorP3ui(GLenum type,GLuint color);
+    GEGL_EXPORT void glPointParameterfvSGIS(GLenum pname,const GLfloat* params);
     GEGL_EXPORT void glBlendEquationi(GLuint buf,GLenum mode);
     GEGL_EXPORT void glGetFogFuncSGIS(GLfloat* points);
     GEGL_EXPORT void glVertexAttrib4fvNV(GLuint index,const GLfloat* v);
@@ -2340,6 +2392,7 @@ namespace ge{
     GEGL_EXPORT void glSecondaryColorPointerEXT(GLint size,GLenum type,GLsizei stride,const void* pointer);
     GEGL_EXPORT void glMultiTexCoordP4uiv(GLenum texture,GLenum type,const GLuint* coords);
     GEGL_EXPORT void glGetBufferSubDataARB(GLenum target,GLintptrARB offset,GLsizeiptrARB size,void* data);
+    GEGL_EXPORT void glSecondaryColor3hNV(GLhalfNV red,GLhalfNV green,GLhalfNV blue);
     GEGL_EXPORT void glGetPathParameterivNV(GLuint path,GLenum pname,GLint* value);
     GEGL_EXPORT void glFlushRasterSGIX();
     GEGL_EXPORT void glElementPointerATI(GLenum type,const void* pointer);
@@ -2349,6 +2402,7 @@ namespace ge{
     GEGL_EXPORT void glSharpenTexFuncSGIS(GLenum target,GLsizei n,const GLfloat* points);
     GEGL_EXPORT void glClearDepthfOES(GLclampf depth);
     GEGL_EXPORT void glDeleteCommandListsNV(GLsizei n,const GLuint* lists);
+    GEGL_EXPORT void glSpecializeShader(GLuint shader,const GLchar* pEntryPoint,GLuint numSpecializationConstants,const GLuint* pConstantIndex,const GLuint* pConstantValue);
     GEGL_EXPORT void glVertex4hNV(GLhalfNV x,GLhalfNV y,GLhalfNV z,GLhalfNV w);
     GEGL_EXPORT void glSecondaryColor3dvEXT(const GLdouble* v);
     GEGL_EXPORT void glGenTextures(GLsizei n,GLuint* textures);
@@ -2424,14 +2478,17 @@ namespace ge{
     GEGL_EXPORT void glLinkProgramARB(GLhandleARB programObj);
     GEGL_EXPORT void glFinishFenceAPPLE(GLuint fence);
     GEGL_EXPORT void glVertexArrayVertexAttribBindingEXT(GLuint vaobj,GLuint attribindex,GLuint bindingindex);
+    GEGL_EXPORT void glTexStorageMem3DMultisampleEXT(GLenum target,GLsizei samples,GLenum internalFormat,GLsizei width,GLsizei height,GLsizei depth,GLboolean fixedSampleLocations,GLuint memory,GLuint64 offset);
+    GEGL_EXPORT void glUniform1ui64vARB(GLint location,GLsizei count,const GLuint64* value);
     GEGL_EXPORT void glMultiTexCoord4fv(GLenum target,const GLfloat* v);
-    GEGL_EXPORT void glRasterPos3i(GLint x,GLint y,GLint z);
+    GEGL_EXPORT void glMulticastFramebufferSampleLocationsfvNV(GLuint gpu,GLuint framebuffer,GLuint start,GLsizei count,const GLfloat* v);
     GEGL_EXPORT void glRasterPos3d(GLdouble x,GLdouble y,GLdouble z);
     GEGL_EXPORT GLint glPollAsyncSGIX(GLuint* markerp);
     GEGL_EXPORT void glRasterPos3f(GLfloat x,GLfloat y,GLfloat z);
     GEGL_EXPORT void glCompressedTexImage3D(GLenum target,GLint level,GLenum internalformat,GLsizei width,GLsizei height,GLsizei depth,GLint border,GLsizei imageSize,const GLvoid* data);
     GEGL_EXPORT void glVariantivEXT(GLuint id,const GLint* addr);
     GEGL_EXPORT void glUnmapTexture2DINTEL(GLuint texture,GLint level);
+    GEGL_EXPORT void glMulticastWaitSyncNV(GLuint signalGpu,GLbitfield waitGpuMask);
     GEGL_EXPORT void glGetVertexAttribiv(GLuint index,GLenum pname,GLint* params);
     GEGL_EXPORT void glGetPathCoordsNV(GLuint path,GLfloat* coords);
     GEGL_EXPORT void glColor4xvOES(const GLfixed* components);
@@ -2467,6 +2524,7 @@ namespace ge{
     GEGL_EXPORT void glSetFenceNV(GLuint fence,GLenum condition);
     GEGL_EXPORT void glAttachObjectARB(GLhandleARB containerObj,GLhandleARB obj);
     GEGL_EXPORT void glCopyConvolutionFilter1D(GLenum target,GLenum internalformat,GLint x,GLint y,GLsizei width);
+    GEGL_EXPORT void glTexStorageMem2DMultisampleEXT(GLenum target,GLsizei samples,GLenum internalFormat,GLsizei width,GLsizei height,GLboolean fixedSampleLocations,GLuint memory,GLuint64 offset);
     GEGL_EXPORT void glProgramParameters4fvNV(GLenum target,GLuint index,GLsizei count,const GLfloat* v);
     GEGL_EXPORT void glNamedFramebufferParameteriEXT(GLuint framebuffer,GLenum pname,GLint param);
     GEGL_EXPORT void glVertexAttrib4Nsv(GLuint index,const GLshort* v);
@@ -2500,9 +2558,9 @@ namespace ge{
     GEGL_EXPORT void glGetFloatv(GLenum pname,GLfloat* params);
     GEGL_EXPORT void glVertexArrayVertexAttribIFormatEXT(GLuint vaobj,GLuint attribindex,GLint size,GLenum type,GLuint relativeoffset);
     GEGL_EXPORT void glHint(GLenum target,GLenum mode);
-    GEGL_EXPORT GLboolean glPointAlongPathNV(GLuint path,GLsizei startSegment,GLsizei numSegments,GLfloat distance,GLfloat* x,GLfloat* y,GLfloat* tangentX,GLfloat* tangentY);
     GEGL_EXPORT void glVertexStream2svATI(GLenum stream,const GLshort* coords);
     GEGL_EXPORT void glMultiDrawArraysIndirect(GLenum mode,const void* indirect,GLsizei drawcount,GLsizei stride);
+    GEGL_EXPORT void glMultiTexEnvfvEXT(GLenum texunit,GLenum target,GLenum pname,const GLfloat* params);
     GEGL_EXPORT void glVertexAttribP2uiv(GLuint index,GLenum type,GLboolean normalized,const GLuint* value);
     GEGL_EXPORT void glProgramUniform1i64vARB(GLuint program,GLint location,GLsizei count,const GLint64* value);
     GEGL_EXPORT void glFramebufferTextureARB(GLenum target,GLenum attachment,GLuint texture,GLint level);
@@ -2520,11 +2578,13 @@ namespace ge{
     GEGL_EXPORT void glVertexAttrib4fNV(GLuint index,GLfloat x,GLfloat y,GLfloat z,GLfloat w);
     GEGL_EXPORT void glGetColorTableParameterivSGI(GLenum target,GLenum pname,GLint* params);
     GEGL_EXPORT void glVertexArrayAttribBinding(GLuint vaobj,GLuint attribindex,GLuint bindingindex);
+    GEGL_EXPORT GLboolean glIsSemaphoreEXT(GLuint semaphore);
     GEGL_EXPORT void glProgramParameters4dvNV(GLenum target,GLuint index,GLsizei count,const GLdouble* v);
     GEGL_EXPORT void glVertexAttribL4dv(GLuint index,const GLdouble* v);
-    GEGL_EXPORT void glVertexStream3dATI(GLenum stream,GLdouble x,GLdouble y,GLdouble z);
+    GEGL_EXPORT void glGetTexParameteriv(GLenum target,GLenum pname,GLint* params);
     GEGL_EXPORT GLintptr glGetUniformOffsetEXT(GLuint program,GLint location);
     GEGL_EXPORT void glGetVertexAttribPointerv(GLuint index,GLenum pname,void** pointer);
+    GEGL_EXPORT void glResumeTransformFeedbackNV();
     GEGL_EXPORT void glProgramUniform3i64vNV(GLuint program,GLint location,GLsizei count,const GLint64EXT* value);
     GEGL_EXPORT void glTangent3fEXT(GLfloat tx,GLfloat ty,GLfloat tz);
     GEGL_EXPORT void glGetPathMetricRangeNV(GLbitfield metricQueryMask,GLuint firstPathName,GLsizei numPaths,GLsizei stride,GLfloat* metrics);
@@ -2548,6 +2608,7 @@ namespace ge{
     GEGL_EXPORT void glGetProgramResourcefvNV(GLuint program,GLenum programInterface,GLuint index,GLsizei propCount,const GLenum* props,GLsizei bufSize,GLsizei* length,GLfloat* params);
     GEGL_EXPORT void glBinormalPointerEXT(GLenum type,GLsizei stride,const void* pointer);
     GEGL_EXPORT void glGetLightfv(GLenum light,GLenum pname,GLfloat* params);
+    GEGL_EXPORT void glMulticastCopyImageSubDataNV(GLuint srcGpu,GLbitfield dstGpuMask,GLuint srcName,GLenum srcTarget,GLint srcLevel,GLint srcX,GLint srcY,GLint srcZ,GLuint dstName,GLenum dstTarget,GLint dstLevel,GLint dstX,GLint dstY,GLint dstZ,GLsizei srcWidth,GLsizei srcHeight,GLsizei srcDepth);
     GEGL_EXPORT void glVertex2bOES(GLbyte x,GLbyte y);
     GEGL_EXPORT void glUniform2ivARB(GLint location,GLsizei count,const GLint* value);
     GEGL_EXPORT void glMultiTexCoord3s(GLenum target,GLshort s,GLshort t,GLshort r);
@@ -2564,6 +2625,7 @@ namespace ge{
     GEGL_EXPORT void glGetBufferPointerv(GLenum target,GLenum pname,void** params);
     GEGL_EXPORT void glProgramUniform1fEXT(GLuint program,GLint location,GLfloat v0);
     GEGL_EXPORT void glWindowPos2fvMESA(const GLfloat* v);
+    GEGL_EXPORT void glAlphaToCoverageDitherControlNV(GLenum mode);
     GEGL_EXPORT void glPolygonOffsetxOES(GLfixed factor,GLfixed units);
     GEGL_EXPORT void glVertexAttrib4dARB(GLuint index,GLdouble x,GLdouble y,GLdouble z,GLdouble w);
     GEGL_EXPORT void glUniformHandleui64vARB(GLint location,GLsizei count,const GLuint64* value);
@@ -2571,7 +2633,8 @@ namespace ge{
     GEGL_EXPORT void glSwizzleEXT(GLuint res,GLuint in,GLenum outX,GLenum outY,GLenum outZ,GLenum outW);
     GEGL_EXPORT void glBindFragmentShaderATI(GLuint id);
     GEGL_EXPORT void glVertexAttribs3hvNV(GLuint index,GLsizei n,const GLhalfNV* v);
-    GEGL_EXPORT void glColorP3ui(GLenum type,GLuint color);
+    GEGL_EXPORT void glGenBuffersARB(GLsizei n,GLuint* buffers);
+    GEGL_EXPORT void glTextureStorageMem2DMultisampleEXT(GLuint texture,GLsizei samples,GLenum internalFormat,GLsizei width,GLsizei height,GLboolean fixedSampleLocations,GLuint memory,GLuint64 offset);
     GEGL_EXPORT void glListParameterfvSGIX(GLuint list,GLenum pname,const GLfloat* params);
     GEGL_EXPORT void glNamedRenderbufferStorageMultisample(GLuint renderbuffer,GLsizei samples,GLenum internalformat,GLsizei width,GLsizei height);
     GEGL_EXPORT void glVertexAttribI1iEXT(GLuint index,GLint x);
@@ -2651,7 +2714,7 @@ namespace ge{
     GEGL_EXPORT void glIndexMaterialEXT(GLenum face,GLenum mode);
     GEGL_EXPORT void glFogCoorddEXT(GLdouble coord);
     GEGL_EXPORT void glTexCoord2hvNV(const GLhalfNV* v);
-    GEGL_EXPORT void glFramebufferTexture2DEXT(GLenum target,GLenum attachment,GLenum textarget,GLuint texture,GLint level);
+    GEGL_EXPORT void glGetFramebufferParameterfvAMD(GLenum target,GLenum pname,GLuint numsamples,GLuint pixelindex,GLsizei size,GLfloat* values);
     GEGL_EXPORT void glTexEnviv(GLenum target,GLenum pname,const GLint* params);
     GEGL_EXPORT void glEndTransformFeedbackNV();
     GEGL_EXPORT void glGlobalAlphaFactoruiSUN(GLuint factor);
@@ -2662,6 +2725,7 @@ namespace ge{
     GEGL_EXPORT GLuint glCreateProgram();
     GEGL_EXPORT void glVertexStream2dATI(GLenum stream,GLdouble x,GLdouble y);
     GEGL_EXPORT void glUniform4ui64vARB(GLint location,GLsizei count,const GLuint64* value);
+    GEGL_EXPORT void glGetSemaphoreParameterui64vEXT(GLuint semaphore,GLenum pname,GLuint64* params);
     GEGL_EXPORT void glPrimitiveRestartIndex(GLuint index);
     GEGL_EXPORT void glNormalStream3fATI(GLenum stream,GLfloat nx,GLfloat ny,GLfloat nz);
     GEGL_EXPORT void glProgramUniformMatrix2fv(GLuint program,GLint location,GLsizei count,GLboolean transpose,const GLfloat* value);
@@ -2691,7 +2755,7 @@ namespace ge{
     GEGL_EXPORT void glGetPerfMonitorGroupStringAMD(GLuint group,GLsizei bufSize,GLsizei* length,GLchar* groupString);
     GEGL_EXPORT void glUniform3ui(GLint location,GLuint v0,GLuint v1,GLuint v2);
     GEGL_EXPORT void glGetNamedProgramLocalParameterdvEXT(GLuint program,GLenum target,GLuint index,GLdouble* params);
-    GEGL_EXPORT void glSecondaryColor3us(GLushort red,GLushort green,GLushort blue);
+    GEGL_EXPORT void glDeleteQueryResourceTagNV(GLsizei n,const GLint* tagIds);
     GEGL_EXPORT void glVertexAttribI4uiv(GLuint index,const GLuint* v);
     GEGL_EXPORT void glVertexAttrib4bv(GLuint index,const GLbyte* v);
     GEGL_EXPORT void glMultiTexCoord3xOES(GLenum texture,GLfixed s,GLfixed t,GLfixed r);
@@ -2747,10 +2811,12 @@ namespace ge{
     GEGL_EXPORT void glCopyBufferSubData(GLenum readTarget,GLenum writeTarget,GLintptr readOffset,GLintptr writeOffset,GLsizeiptr size);
     GEGL_EXPORT GLuint glBindTexGenParameterEXT(GLenum unit,GLenum coord,GLenum value);
     GEGL_EXPORT void glNormalStream3bATI(GLenum stream,GLbyte nx,GLbyte ny,GLbyte nz);
+    GEGL_EXPORT void glTexStorageMem2DEXT(GLenum target,GLsizei levels,GLenum internalFormat,GLsizei width,GLsizei height,GLuint memory,GLuint64 offset);
     GEGL_EXPORT void glTextureImage2DEXT(GLuint texture,GLenum target,GLint level,GLint internalformat,GLsizei width,GLsizei height,GLint border,GLenum format,GLenum type,const void* pixels);
     GEGL_EXPORT void glGetColorTableParameteriv(GLenum target,GLenum pname,GLint* params);
     GEGL_EXPORT void glActiveTextureARB(GLenum texture);
     GEGL_EXPORT void glTexCoord4xOES(GLfixed s,GLfixed t,GLfixed r,GLfixed q);
+    GEGL_EXPORT void glNamedBufferStorageExternalEXT(GLuint buffer,GLintptr offset,GLsizeiptr size,GLeglClientBufferEXT clientBuffer,GLbitfield flags);
     GEGL_EXPORT void glSecondaryColor3fvEXT(const GLfloat* v);
     GEGL_EXPORT void glUniformMatrix4x2fv(GLint location,GLsizei count,GLboolean transpose,const GLfloat* value);
     GEGL_EXPORT void glStartInstrumentsSGIX();
@@ -2760,7 +2826,7 @@ namespace ge{
     GEGL_EXPORT void glUniform1fARB(GLint location,GLfloat v0);
     GEGL_EXPORT void glNamedFramebufferTexture1DEXT(GLuint framebuffer,GLenum attachment,GLenum textarget,GLuint texture,GLint level);
     GEGL_EXPORT void* glMapBufferRange(GLenum target,GLintptr offset,GLsizeiptr length,GLbitfield access);
-    GEGL_EXPORT void glMultiDrawElementsIndirectCountARB(GLenum mode,GLenum type,GLintptr indirect,GLintptr drawcount,GLsizei maxdrawcount,GLsizei stride);
+    GEGL_EXPORT void glMultiDrawElementsIndirectCountARB(GLenum mode,GLenum type,const void* indirect,GLintptr drawcount,GLsizei maxdrawcount,GLsizei stride);
     GEGL_EXPORT void glProgramUniformMatrix4x2fv(GLuint program,GLint location,GLsizei count,GLboolean transpose,const GLfloat* value);
     GEGL_EXPORT void glGetTextureParameterIivEXT(GLuint texture,GLenum target,GLenum pname,GLint* params);
     GEGL_EXPORT void glMultiTexCoord3hNV(GLenum target,GLhalfNV s,GLhalfNV t,GLhalfNV r);
@@ -2784,6 +2850,7 @@ namespace ge{
     GEGL_EXPORT void glPushClientAttrib(GLbitfield mask);
     GEGL_EXPORT void glShaderSource(GLuint shader,GLsizei count,const GLchar*const* string,const GLint* length);
     GEGL_EXPORT void glDispatchComputeGroupSizeARB(GLuint num_groups_x,GLuint num_groups_y,GLuint num_groups_z,GLuint group_size_x,GLuint group_size_y,GLuint group_size_z);
+    GEGL_EXPORT void glLGPUNamedBufferSubDataNVX(GLbitfield gpuMask,GLuint buffer,GLintptr offset,GLsizeiptr size,const void* data);
     GEGL_EXPORT void glGetnPixelMapfv(GLenum map,GLsizei bufSize,GLfloat* values);
     GEGL_EXPORT void glTexCoordP2uiv(GLenum type,const GLuint* coords);
     GEGL_EXPORT void glUniform2f(GLint location,GLfloat v0,GLfloat v1);
@@ -2804,9 +2871,10 @@ namespace ge{
     GEGL_EXPORT void glTexCoordP1ui(GLenum type,GLuint coords);
     GEGL_EXPORT void glPointParameterfvEXT(GLenum pname,const GLfloat* params);
     GEGL_EXPORT void glUniform4fARB(GLint location,GLfloat v0,GLfloat v1,GLfloat v2,GLfloat v3);
+    GEGL_EXPORT void glImportMemoryFdEXT(GLuint memory,GLuint64 size,GLenum handleType,GLint fd);
     GEGL_EXPORT void glCopyTextureSubImage3D(GLuint texture,GLint level,GLint xoffset,GLint yoffset,GLint zoffset,GLint x,GLint y,GLsizei width,GLsizei height);
     GEGL_EXPORT void glMultiTexCoord2fv(GLenum target,const GLfloat* v);
-    GEGL_EXPORT void glMultiTexEnvfvEXT(GLenum texunit,GLenum target,GLenum pname,const GLfloat* params);
+    GEGL_EXPORT void glNamedFramebufferSamplePositionsfvAMD(GLuint framebuffer,GLuint numsamples,GLuint pixelindex,const GLfloat* values);
     GEGL_EXPORT void glNormalP3ui(GLenum type,GLuint coords);
     GEGL_EXPORT void glDrawRangeElementArrayATI(GLenum mode,GLuint start,GLuint end,GLsizei count);
     GEGL_EXPORT void glVertexAttribI1i(GLuint index,GLint x);
@@ -2815,12 +2883,14 @@ namespace ge{
     GEGL_EXPORT GLuint glGetDebugMessageLogARB(GLuint count,GLsizei bufSize,GLenum* sources,GLenum* types,GLuint* ids,GLenum* severities,GLsizei* lengths,GLchar* messageLog);
     GEGL_EXPORT void glGetPathTexGenfvNV(GLenum texCoordSet,GLenum pname,GLfloat* value);
     GEGL_EXPORT void glNamedProgramLocalParameters4fvEXT(GLuint program,GLenum target,GLuint index,GLsizei count,const GLfloat* params);
+    GEGL_EXPORT void glQueryResourceTagNV(GLint tagId,const GLchar* tagString);
     GEGL_EXPORT void glVertexStream3fvATI(GLenum stream,const GLfloat* coords);
     GEGL_EXPORT void glFramebufferTexture3D(GLenum target,GLenum attachment,GLenum textarget,GLuint texture,GLint level,GLint zoffset);
     GEGL_EXPORT void glCompressedTextureSubImage2DEXT(GLuint texture,GLenum target,GLint level,GLint xoffset,GLint yoffset,GLsizei width,GLsizei height,GLenum format,GLsizei imageSize,const void* bits);
     GEGL_EXPORT void glWindowPos3dv(const GLdouble* v);
     GEGL_EXPORT void glCopyConvolutionFilter2D(GLenum target,GLenum internalformat,GLint x,GLint y,GLsizei width,GLsizei height);
     GEGL_EXPORT void glReadInstrumentsSGIX(GLint marker);
+    GEGL_EXPORT void glProgramUniform2dvEXT(GLuint program,GLint location,GLsizei count,const GLdouble* value);
     GEGL_EXPORT void glSamplerParameterfv(GLuint sampler,GLenum pname,const GLfloat* param);
     GEGL_EXPORT void glBindBufferARB(GLenum target,GLuint buffer);
     GEGL_EXPORT void glVertexAttrib1sNV(GLuint index,GLshort x);
@@ -2852,6 +2922,7 @@ namespace ge{
     GEGL_EXPORT void glVertexAttrib2s(GLuint index,GLshort x,GLshort y);
     GEGL_EXPORT void glTexImage3DMultisample(GLenum target,GLsizei samples,GLenum internalformat,GLsizei width,GLsizei height,GLsizei depth,GLboolean fixedsamplelocations);
     GEGL_EXPORT GLuint glGetUniformBlockIndex(GLuint program,const GLchar* uniformBlockName);
+    GEGL_EXPORT GLboolean glReleaseKeyedMutexWin32EXT(GLuint memory,GLuint64 key);
     GEGL_EXPORT void glFrontFace(GLenum mode);
     GEGL_EXPORT void glEvalCoord1xOES(GLfixed u);
     GEGL_EXPORT void glDrawArraysInstancedBaseInstance(GLenum mode,GLint first,GLsizei count,GLsizei instancecount,GLuint baseinstance);

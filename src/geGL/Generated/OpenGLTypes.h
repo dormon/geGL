@@ -38,6 +38,8 @@ typedef ptrdiff_t GLintptrARB;
 typedef GLint GLfixed;
 typedef void ( *GLDEBUGPROCAMD)(GLuint id,GLenum category,GLenum severity,GLsizei length,const GLchar *message,void *userParam);
 typedef int64_t GLint64EXT;
+typedef void *GLeglClientBufferEXT;
+typedef void ( *GLVULKANPROCNV)(void);
 typedef unsigned short GLhalfNV;
 typedef GLintptr GLvdpauSurfaceNV;
 typedef void* GLeglImageOES;

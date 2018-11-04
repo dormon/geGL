@@ -61,6 +61,7 @@ void ge::gl::glProgramUniform4fEXT(GLuint program,GLint location,GLfloat v0,GLfl
 void ge::gl::glCoverStrokePathNV(GLuint path,GLenum coverMode){ge::gl::getDefaultContext()->glCoverStrokePathNV(path,coverMode);}
 void ge::gl::glTextureImage2DMultisampleNV(GLuint texture,GLenum target,GLsizei samples,GLint internalFormat,GLsizei width,GLsizei height,GLboolean fixedSampleLocations){ge::gl::getDefaultContext()->glTextureImage2DMultisampleNV(texture,target,samples,internalFormat,width,height,fixedSampleLocations);}
 void ge::gl::glVertex3bOES(GLbyte x,GLbyte y,GLbyte z){ge::gl::getDefaultContext()->glVertex3bOES(x,y,z);}
+void ge::gl::glImportMemoryWin32HandleEXT(GLuint memory,GLuint64 size,GLenum handleType,void* handle){ge::gl::getDefaultContext()->glImportMemoryWin32HandleEXT(memory,size,handleType,handle);}
 void ge::gl::glTessellationFactorAMD(GLfloat factor){ge::gl::getDefaultContext()->glTessellationFactorAMD(factor);}
 void ge::gl::glDebugMessageControl(GLenum source,GLenum type,GLenum severity,GLsizei count,const GLuint* ids,GLboolean enabled){ge::gl::getDefaultContext()->glDebugMessageControl(source,type,severity,count,ids,enabled);}
 GLboolean ge::gl::glIsObjectBufferATI(GLuint buffer){return ge::gl::getDefaultContext()->glIsObjectBufferATI(buffer);}
@@ -112,12 +113,12 @@ void ge::gl::glGetMultiTexParameterivEXT(GLenum texunit,GLenum target,GLenum pna
 void ge::gl::glProgramUniformMatrix3x4fvEXT(GLuint program,GLint location,GLsizei count,GLboolean transpose,const GLfloat* value){ge::gl::getDefaultContext()->glProgramUniformMatrix3x4fvEXT(program,location,count,transpose,value);}
 void ge::gl::glVertexAttribI2i(GLuint index,GLint x,GLint y){ge::gl::getDefaultContext()->glVertexAttribI2i(index,x,y);}
 void ge::gl::glMultiTexCoord1i(GLenum target,GLint s){ge::gl::getDefaultContext()->glMultiTexCoord1i(target,s);}
-void ge::gl::glUniform1ui64vARB(GLint location,GLsizei count,const GLuint64* value){ge::gl::getDefaultContext()->glUniform1ui64vARB(location,count,value);}
+void ge::gl::glDeleteSemaphoresEXT(GLsizei n,const GLuint* semaphores){ge::gl::getDefaultContext()->glDeleteSemaphoresEXT(n,semaphores);}
 void ge::gl::glLoadProgramNV(GLenum target,GLuint id,GLsizei len,const GLubyte* program){ge::gl::getDefaultContext()->glLoadProgramNV(target,id,len,program);}
 void ge::gl::glWriteMaskEXT(GLuint res,GLuint in,GLenum outX,GLenum outY,GLenum outZ,GLenum outW){ge::gl::getDefaultContext()->glWriteMaskEXT(res,in,outX,outY,outZ,outW);}
 GLenum ge::gl::glGetGraphicsResetStatus(){return ge::gl::getDefaultContext()->glGetGraphicsResetStatus();}
 void ge::gl::glVertexAttrib1fv(GLuint index,const GLfloat* v){ge::gl::getDefaultContext()->glVertexAttrib1fv(index,v);}
-GLboolean ge::gl::glIsEnabled(GLenum cap){return ge::gl::getDefaultContext()->glIsEnabled(cap);}
+void ge::gl::glMultiTexCoord1s(GLenum target,GLshort s){ge::gl::getDefaultContext()->glMultiTexCoord1s(target,s);}
 void ge::gl::glImageTransformParameterfvHP(GLenum target,GLenum pname,const GLfloat* params){ge::gl::getDefaultContext()->glImageTransformParameterfvHP(target,pname,params);}
 void ge::gl::glFramebufferTexture2D(GLenum target,GLenum attachment,GLenum textarget,GLuint texture,GLint level){ge::gl::getDefaultContext()->glFramebufferTexture2D(target,attachment,textarget,texture,level);}
 void ge::gl::glGetFragmentLightfvSGIX(GLenum light,GLenum pname,GLfloat* params){ge::gl::getDefaultContext()->glGetFragmentLightfvSGIX(light,pname,params);}
@@ -143,6 +144,7 @@ void ge::gl::glGetnMapdvARB(GLenum target,GLenum query,GLsizei bufSize,GLdouble*
 void ge::gl::glOrthofOES(GLfloat l,GLfloat r,GLfloat b,GLfloat t,GLfloat n,GLfloat f){ge::gl::getDefaultContext()->glOrthofOES(l,r,b,t,n,f);}
 void ge::gl::glViewportArrayv(GLuint first,GLsizei count,const GLfloat* v){ge::gl::getDefaultContext()->glViewportArrayv(first,count,v);}
 void ge::gl::glDrawElementArrayATI(GLenum mode,GLsizei count){ge::gl::getDefaultContext()->glDrawElementArrayATI(mode,count);}
+void ge::gl::glBufferStorageMemEXT(GLenum target,GLsizeiptr size,GLuint memory,GLuint64 offset){ge::gl::getDefaultContext()->glBufferStorageMemEXT(target,size,memory,offset);}
 void ge::gl::glGetPathColorGenfvNV(GLenum color,GLenum pname,GLfloat* value){ge::gl::getDefaultContext()->glGetPathColorGenfvNV(color,pname,value);}
 void ge::gl::glWindowPos3iMESA(GLint x,GLint y,GLint z){ge::gl::getDefaultContext()->glWindowPos3iMESA(x,y,z);}
 void ge::gl::glMultiTexCoord2s(GLenum target,GLshort s,GLshort t){ge::gl::getDefaultContext()->glMultiTexCoord2s(target,s,t);}
@@ -164,7 +166,7 @@ void ge::gl::glVertexAttrib4hvNV(GLuint index,const GLhalfNV* v){ge::gl::getDefa
 void ge::gl::glMultiTexParameteriEXT(GLenum texunit,GLenum target,GLenum pname,GLint param){ge::gl::getDefaultContext()->glMultiTexParameteriEXT(texunit,target,pname,param);}
 void ge::gl::glGetPointerv(GLenum pname,GLvoid** params){ge::gl::getDefaultContext()->glGetPointerv(pname,params);}
 void ge::gl::glPathCommandsNV(GLuint path,GLsizei numCommands,const GLubyte* commands,GLsizei numCoords,GLenum coordType,const void* coords){ge::gl::getDefaultContext()->glPathCommandsNV(path,numCommands,commands,numCoords,coordType,coords);}
-void ge::gl::glGetUniformfv(GLuint program,GLint location,GLfloat* params){ge::gl::getDefaultContext()->glGetUniformfv(program,location,params);}
+void ge::gl::glGetListParameterfvSGIX(GLuint list,GLenum pname,GLfloat* params){ge::gl::getDefaultContext()->glGetListParameterfvSGIX(list,pname,params);}
 void ge::gl::glGetUniformuiv(GLuint program,GLint location,GLuint* params){ge::gl::getDefaultContext()->glGetUniformuiv(program,location,params);}
 void ge::gl::glDebugMessageInsertAMD(GLenum category,GLenum severity,GLuint id,GLsizei length,const GLchar* buf){ge::gl::getDefaultContext()->glDebugMessageInsertAMD(category,severity,id,length,buf);}
 void ge::gl::glFrustum(GLdouble left,GLdouble right,GLdouble bottom,GLdouble top,GLdouble near_val,GLdouble far_val){ge::gl::getDefaultContext()->glFrustum(left,right,bottom,top,near_val,far_val);}
@@ -182,7 +184,8 @@ void ge::gl::glLoadIdentityDeformationMapSGIX(GLbitfield mask){ge::gl::getDefaul
 void ge::gl::glGetRenderbufferParameteriv(GLenum target,GLenum pname,GLint* params){ge::gl::getDefaultContext()->glGetRenderbufferParameteriv(target,pname,params);}
 void ge::gl::glProgramUniform3fEXT(GLuint program,GLint location,GLfloat v0,GLfloat v1,GLfloat v2){ge::gl::getDefaultContext()->glProgramUniform3fEXT(program,location,v0,v1,v2);}
 void ge::gl::glNamedRenderbufferStorage(GLuint renderbuffer,GLenum internalformat,GLsizei width,GLsizei height){ge::gl::getDefaultContext()->glNamedRenderbufferStorage(renderbuffer,internalformat,width,height);}
-void ge::gl::glProgramPathFragmentInputGenNV(GLuint program,GLint location,GLenum genMode,GLint components,const GLfloat* coeffs){ge::gl::getDefaultContext()->glProgramPathFragmentInputGenNV(program,location,genMode,components,coeffs);}
+void ge::gl::glBindFragDataLocation(GLuint program,GLuint color,const GLchar* name){ge::gl::getDefaultContext()->glBindFragDataLocation(program,color,name);}
+void ge::gl::glPolygonOffsetClamp(GLfloat factor,GLfloat units,GLfloat clamp){ge::gl::getDefaultContext()->glPolygonOffsetClamp(factor,units,clamp);}
 void ge::gl::glFogCoordPointerListIBM(GLenum type,GLint stride,const void** pointer,GLint ptrstride){ge::gl::getDefaultContext()->glFogCoordPointerListIBM(type,stride,pointer,ptrstride);}
 GLsync ge::gl::glFenceSync(GLenum condition,GLbitfield flags){return ge::gl::getDefaultContext()->glFenceSync(condition,flags);}
 void ge::gl::glGetVertexAttribIivEXT(GLuint index,GLenum pname,GLint* params){ge::gl::getDefaultContext()->glGetVertexAttribIivEXT(index,pname,params);}
@@ -215,6 +218,7 @@ GLvdpauSurfaceNV ge::gl::glVDPAURegisterVideoSurfaceNV(const void* vdpSurface,GL
 void ge::gl::glGetTexParameterIuiv(GLenum target,GLenum pname,GLuint* params){ge::gl::getDefaultContext()->glGetTexParameterIuiv(target,pname,params);}
 void ge::gl::glBindBufferBaseNV(GLenum target,GLuint index,GLuint buffer){ge::gl::getDefaultContext()->glBindBufferBaseNV(target,index,buffer);}
 void ge::gl::glIndexPointer(GLenum type,GLsizei stride,const GLvoid* ptr){ge::gl::getDefaultContext()->glIndexPointer(type,stride,ptr);}
+void ge::gl::glGenQueryResourceTagNV(GLsizei n,GLint* tagIds){ge::gl::getDefaultContext()->glGenQueryResourceTagNV(n,tagIds);}
 void ge::gl::glVertexAttrib4Nbv(GLuint index,const GLbyte* v){ge::gl::getDefaultContext()->glVertexAttrib4Nbv(index,v);}
 void ge::gl::glListParameteriSGIX(GLuint list,GLenum pname,GLint param){ge::gl::getDefaultContext()->glListParameteriSGIX(list,pname,param);}
 void ge::gl::glBlendColorxOES(GLfixed red,GLfixed green,GLfixed blue,GLfixed alpha){ge::gl::getDefaultContext()->glBlendColorxOES(red,green,blue,alpha);}
@@ -229,6 +233,7 @@ void ge::gl::glMultiTexCoord1fARB(GLenum target,GLfloat s){ge::gl::getDefaultCon
 void ge::gl::glUniformMatrix2x3dv(GLint location,GLsizei count,GLboolean transpose,const GLdouble* value){ge::gl::getDefaultContext()->glUniformMatrix2x3dv(location,count,transpose,value);}
 void ge::gl::glFramebufferDrawBufferEXT(GLuint framebuffer,GLenum mode){ge::gl::getDefaultContext()->glFramebufferDrawBufferEXT(framebuffer,mode);}
 void ge::gl::glCopyColorSubTable(GLenum target,GLsizei start,GLint x,GLint y,GLsizei width){ge::gl::getDefaultContext()->glCopyColorSubTable(target,start,x,y,width);}
+void ge::gl::glGetNamedFramebufferParameterfvAMD(GLuint framebuffer,GLenum pname,GLuint numsamples,GLuint pixelindex,GLsizei size,GLfloat* values){ge::gl::getDefaultContext()->glGetNamedFramebufferParameterfvAMD(framebuffer,pname,numsamples,pixelindex,size,values);}
 void ge::gl::glVertexAttribL3d(GLuint index,GLdouble x,GLdouble y,GLdouble z){ge::gl::getDefaultContext()->glVertexAttribL3d(index,x,y,z);}
 void ge::gl::glFragmentMaterialfvSGIX(GLenum face,GLenum pname,const GLfloat* params){ge::gl::getDefaultContext()->glFragmentMaterialfvSGIX(face,pname,params);}
 void ge::gl::glMatrixLoadTranspose3x3fNV(GLenum matrixMode,const GLfloat* m){ge::gl::getDefaultContext()->glMatrixLoadTranspose3x3fNV(matrixMode,m);}
@@ -252,6 +257,7 @@ void ge::gl::glPathParameterivNV(GLuint path,GLenum pname,const GLint* value){ge
 void ge::gl::glUniform4uiv(GLint location,GLsizei count,const GLuint* value){ge::gl::getDefaultContext()->glUniform4uiv(location,count,value);}
 void ge::gl::glFrameZoomSGIX(GLint factor){ge::gl::getDefaultContext()->glFrameZoomSGIX(factor);}
 void ge::gl::glSecondaryColor3fEXT(GLfloat red,GLfloat green,GLfloat blue){ge::gl::getDefaultContext()->glSecondaryColor3fEXT(red,green,blue);}
+void ge::gl::glLGPUInterlockNVX(){ge::gl::getDefaultContext()->glLGPUInterlockNVX();}
 void ge::gl::glVertexAttribL1dv(GLuint index,const GLdouble* v){ge::gl::getDefaultContext()->glVertexAttribL1dv(index,v);}
 void ge::gl::glNormalStream3svATI(GLenum stream,const GLshort* coords){ge::gl::getDefaultContext()->glNormalStream3svATI(stream,coords);}
 void ge::gl::glPathStencilFuncNV(GLenum func,GLint ref,GLuint mask){ge::gl::getDefaultContext()->glPathStencilFuncNV(func,ref,mask);}
@@ -262,6 +268,7 @@ void ge::gl::glEndOcclusionQueryNV(){ge::gl::getDefaultContext()->glEndOcclusion
 void ge::gl::glScissorArrayv(GLuint first,GLsizei count,const GLint* v){ge::gl::getDefaultContext()->glScissorArrayv(first,count,v);}
 void ge::gl::glCallList(GLuint list){ge::gl::getDefaultContext()->glCallList(list);}
 void* ge::gl::glMapTexture2DINTEL(GLuint texture,GLint level,GLbitfield access,GLint* stride,GLenum* layout){return ge::gl::getDefaultContext()->glMapTexture2DINTEL(texture,level,access,stride,layout);}
+GLVULKANPROCNV ge::gl::glGetVkProcAddrNV(const GLchar* name){return ge::gl::getDefaultContext()->glGetVkProcAddrNV(name);}
 void ge::gl::glPixelTransferxOES(GLenum pname,GLfixed param){ge::gl::getDefaultContext()->glPixelTransferxOES(pname,param);}
 void ge::gl::glDeleteRenderbuffersEXT(GLsizei n,const GLuint* renderbuffers){ge::gl::getDefaultContext()->glDeleteRenderbuffersEXT(n,renderbuffers);}
 void ge::gl::glTexCoord4fColor4fNormal3fVertex4fSUN(GLfloat s,GLfloat t,GLfloat p,GLfloat q,GLfloat r,GLfloat g,GLfloat b,GLfloat a,GLfloat nx,GLfloat ny,GLfloat nz,GLfloat x,GLfloat y,GLfloat z,GLfloat w){ge::gl::getDefaultContext()->glTexCoord4fColor4fNormal3fVertex4fSUN(s,t,p,q,r,g,b,a,nx,ny,nz,x,y,z,w);}
@@ -289,6 +296,7 @@ GLboolean ge::gl::glIsImageHandleResidentNV(GLuint64 handle){return ge::gl::getD
 void ge::gl::glUniform3iv(GLint location,GLsizei count,const GLint* value){ge::gl::getDefaultContext()->glUniform3iv(location,count,value);}
 void ge::gl::glVertexAttribL3i64vNV(GLuint index,const GLint64EXT* v){ge::gl::getDefaultContext()->glVertexAttribL3i64vNV(index,v);}
 void ge::gl::glPolygonMode(GLenum face,GLenum mode){ge::gl::getDefaultContext()->glPolygonMode(face,mode);}
+void ge::gl::glFramebufferSamplePositionsfvAMD(GLenum target,GLuint numsamples,GLuint pixelindex,const GLfloat* values){ge::gl::getDefaultContext()->glFramebufferSamplePositionsfvAMD(target,numsamples,pixelindex,values);}
 void ge::gl::glConvolutionFilter1DEXT(GLenum target,GLenum internalformat,GLsizei width,GLenum format,GLenum type,const void* image){ge::gl::getDefaultContext()->glConvolutionFilter1DEXT(target,internalformat,width,format,type,image);}
 void ge::gl::glVertexAttrib1dvARB(GLuint index,const GLdouble* v){ge::gl::getDefaultContext()->glVertexAttrib1dvARB(index,v);}
 void ge::gl::glTextureSubImage2DEXT(GLuint texture,GLenum target,GLint level,GLint xoffset,GLint yoffset,GLsizei width,GLsizei height,GLenum format,GLenum type,const void* pixels){ge::gl::getDefaultContext()->glTextureSubImage2DEXT(texture,target,level,xoffset,yoffset,width,height,format,type,pixels);}
@@ -304,6 +312,7 @@ void ge::gl::glCopyTextureSubImage3DEXT(GLuint texture,GLenum target,GLint level
 void ge::gl::glMultiTexCoord2bvOES(GLenum texture,const GLbyte* coords){ge::gl::getDefaultContext()->glMultiTexCoord2bvOES(texture,coords);}
 void ge::gl::glDeleteObjectARB(GLhandleARB obj){ge::gl::getDefaultContext()->glDeleteObjectARB(obj);}
 void ge::gl::glTextureLightEXT(GLenum pname){ge::gl::getDefaultContext()->glTextureLightEXT(pname);}
+void ge::gl::glRasterPos3i(GLint x,GLint y,GLint z){ge::gl::getDefaultContext()->glRasterPos3i(x,y,z);}
 void ge::gl::glMultiTexCoord3dARB(GLenum target,GLdouble s,GLdouble t,GLdouble r){ge::gl::getDefaultContext()->glMultiTexCoord3dARB(target,s,t,r);}
 void ge::gl::glNamedFramebufferTextureEXT(GLuint framebuffer,GLenum attachment,GLuint texture,GLint level){ge::gl::getDefaultContext()->glNamedFramebufferTextureEXT(framebuffer,attachment,texture,level);}
 void ge::gl::glTextureParameteriEXT(GLuint texture,GLenum target,GLenum pname,GLint param){ge::gl::getDefaultContext()->glTextureParameteriEXT(texture,target,pname,param);}
@@ -378,6 +387,7 @@ void ge::gl::glGetNamedFramebufferParameteriv(GLuint framebuffer,GLenum pname,GL
 void ge::gl::glVertexStream1fvATI(GLenum stream,const GLfloat* coords){ge::gl::getDefaultContext()->glVertexStream1fvATI(stream,coords);}
 void ge::gl::glCreateVertexArrays(GLsizei n,GLuint* arrays){ge::gl::getDefaultContext()->glCreateVertexArrays(n,arrays);}
 void ge::gl::glBeginConditionalRender(GLuint id,GLenum mode){ge::gl::getDefaultContext()->glBeginConditionalRender(id,mode);}
+void ge::gl::glGetUnsignedBytevEXT(GLenum pname,GLubyte* data){ge::gl::getDefaultContext()->glGetUnsignedBytevEXT(pname,data);}
 void ge::gl::glConvolutionFilter1D(GLenum target,GLenum internalformat,GLsizei width,GLenum format,GLenum type,const GLvoid* image){ge::gl::getDefaultContext()->glConvolutionFilter1D(target,internalformat,width,format,type,image);}
 void ge::gl::glMultiTexCoord3fARB(GLenum target,GLfloat s,GLfloat t,GLfloat r){ge::gl::getDefaultContext()->glMultiTexCoord3fARB(target,s,t,r);}
 void ge::gl::glGetQueryObjectuivARB(GLuint id,GLenum pname,GLuint* params){ge::gl::getDefaultContext()->glGetQueryObjectuivARB(id,pname,params);}
@@ -390,10 +400,12 @@ void ge::gl::glGetnHistogram(GLenum target,GLboolean reset,GLenum format,GLenum 
 void ge::gl::glUniform1d(GLint location,GLdouble x){ge::gl::getDefaultContext()->glUniform1d(location,x);}
 GLint ge::gl::glRenderMode(GLenum mode){return ge::gl::getDefaultContext()->glRenderMode(mode);}
 void ge::gl::glClearColorIiEXT(GLint red,GLint green,GLint blue,GLint alpha){ge::gl::getDefaultContext()->glClearColorIiEXT(red,green,blue,alpha);}
+void ge::gl::glSignalSemaphoreEXT(GLuint semaphore,GLuint numBufferBarriers,const GLuint* buffers,GLuint numTextureBarriers,const GLuint* textures,const GLenum* dstLayouts){ge::gl::getDefaultContext()->glSignalSemaphoreEXT(semaphore,numBufferBarriers,buffers,numTextureBarriers,textures,dstLayouts);}
 void ge::gl::glGetCompressedTexImage(GLenum target,GLint lod,GLvoid* img){ge::gl::getDefaultContext()->glGetCompressedTexImage(target,lod,img);}
 void ge::gl::glCompressedTextureImage1DEXT(GLuint texture,GLenum target,GLint level,GLenum internalformat,GLsizei width,GLint border,GLsizei imageSize,const void* bits){ge::gl::getDefaultContext()->glCompressedTextureImage1DEXT(texture,target,level,internalformat,width,border,imageSize,bits);}
 void ge::gl::glGetActiveUniformBlockiv(GLuint program,GLuint uniformBlockIndex,GLenum pname,GLint* params){ge::gl::getDefaultContext()->glGetActiveUniformBlockiv(program,uniformBlockIndex,pname,params);}
 void ge::gl::glUniform1i(GLint location,GLint v0){ge::gl::getDefaultContext()->glUniform1i(location,v0);}
+void ge::gl::glMultiDrawArraysIndirectCount(GLenum mode,const void* indirect,GLintptr drawcount,GLsizei maxdrawcount,GLsizei stride){ge::gl::getDefaultContext()->glMultiDrawArraysIndirectCount(mode,indirect,drawcount,maxdrawcount,stride);}
 void ge::gl::glGetTexEnvfv(GLenum target,GLenum pname,GLfloat* params){ge::gl::getDefaultContext()->glGetTexEnvfv(target,pname,params);}
 void ge::gl::glColorTableParameterivSGI(GLenum target,GLenum pname,const GLint* params){ge::gl::getDefaultContext()->glColorTableParameterivSGI(target,pname,params);}
 void ge::gl::glCullFace(GLenum mode){ge::gl::getDefaultContext()->glCullFace(mode);}
@@ -405,12 +417,12 @@ void ge::gl::glViewportIndexedf(GLuint index,GLfloat x,GLfloat y,GLfloat w,GLflo
 void ge::gl::glProgramUniform4d(GLuint program,GLint location,GLdouble v0,GLdouble v1,GLdouble v2,GLdouble v3){ge::gl::getDefaultContext()->glProgramUniform4d(program,location,v0,v1,v2,v3);}
 void ge::gl::glTexCoord1xOES(GLfixed s){ge::gl::getDefaultContext()->glTexCoord1xOES(s);}
 void ge::gl::glVertexStream3ivATI(GLenum stream,const GLint* coords){ge::gl::getDefaultContext()->glVertexStream3ivATI(stream,coords);}
-const GLubyte* ge::gl::glGetStringi(GLenum name,GLuint index){return ge::gl::getDefaultContext()->glGetStringi(name,index);}
+GLboolean ge::gl::glPointAlongPathNV(GLuint path,GLsizei startSegment,GLsizei numSegments,GLfloat distance,GLfloat* x,GLfloat* y,GLfloat* tangentX,GLfloat* tangentY){return ge::gl::getDefaultContext()->glPointAlongPathNV(path,startSegment,numSegments,distance,x,y,tangentX,tangentY);}
 void ge::gl::glEndQueryARB(GLenum target){ge::gl::getDefaultContext()->glEndQueryARB(target);}
 void ge::gl::glVDPAUMapSurfacesNV(GLsizei numSurfaces,const GLvdpauSurfaceNV* surfaces){ge::gl::getDefaultContext()->glVDPAUMapSurfacesNV(numSurfaces,surfaces);}
 void ge::gl::glVertex3i(GLint x,GLint y,GLint z){ge::gl::getDefaultContext()->glVertex3i(x,y,z);}
 void ge::gl::glVertexAttrib4uivARB(GLuint index,const GLuint* v){ge::gl::getDefaultContext()->glVertexAttrib4uivARB(index,v);}
-void ge::gl::glResumeTransformFeedbackNV(){ge::gl::getDefaultContext()->glResumeTransformFeedbackNV();}
+void ge::gl::glTextureStorageMem3DEXT(GLuint texture,GLsizei levels,GLenum internalFormat,GLsizei width,GLsizei height,GLsizei depth,GLuint memory,GLuint64 offset){ge::gl::getDefaultContext()->glTextureStorageMem3DEXT(texture,levels,internalFormat,width,height,depth,memory,offset);}
 void ge::gl::glAttachShader(GLuint program,GLuint shader){ge::gl::getDefaultContext()->glAttachShader(program,shader);}
 void ge::gl::glColor4hNV(GLhalfNV red,GLhalfNV green,GLhalfNV blue,GLhalfNV alpha){ge::gl::getDefaultContext()->glColor4hNV(red,green,blue,alpha);}
 void ge::gl::glGetFenceivNV(GLuint fence,GLenum pname,GLint* params){ge::gl::getDefaultContext()->glGetFenceivNV(fence,pname,params);}
@@ -422,6 +434,7 @@ GLboolean ge::gl::glUnmapNamedBuffer(GLuint buffer){return ge::gl::getDefaultCon
 void ge::gl::glTexCoord4bvOES(const GLbyte* coords){ge::gl::getDefaultContext()->glTexCoord4bvOES(coords);}
 void ge::gl::glVertexAttrib3fARB(GLuint index,GLfloat x,GLfloat y,GLfloat z){ge::gl::getDefaultContext()->glVertexAttrib3fARB(index,x,y,z);}
 void ge::gl::glRasterPos2xOES(GLfixed x,GLfixed y){ge::gl::getDefaultContext()->glRasterPos2xOES(x,y);}
+void ge::gl::glCreateMemoryObjectsEXT(GLsizei n,GLuint* memoryObjects){ge::gl::getDefaultContext()->glCreateMemoryObjectsEXT(n,memoryObjects);}
 void ge::gl::glColor4ubVertex2fvSUN(const GLubyte* c,const GLfloat* v){ge::gl::getDefaultContext()->glColor4ubVertex2fvSUN(c,v);}
 void ge::gl::glSecondaryColor3dv(const GLdouble* v){ge::gl::getDefaultContext()->glSecondaryColor3dv(v);}
 void ge::gl::glVertexAttribI4sv(GLuint index,const GLshort* v){ge::gl::getDefaultContext()->glVertexAttribI4sv(index,v);}
@@ -450,6 +463,7 @@ void ge::gl::glProgramUniform1iEXT(GLuint program,GLint location,GLint v0){ge::g
 void ge::gl::glDeleteQueriesARB(GLsizei n,const GLuint* ids){ge::gl::getDefaultContext()->glDeleteQueriesARB(n,ids);}
 void ge::gl::glWindowPos3svARB(const GLshort* v){ge::gl::getDefaultContext()->glWindowPos3svARB(v);}
 void ge::gl::glVertex4s(GLshort x,GLshort y,GLshort z,GLshort w){ge::gl::getDefaultContext()->glVertex4s(x,y,z,w);}
+void ge::gl::glImportMemoryWin32NameEXT(GLuint memory,GLuint64 size,GLenum handleType,const void* name){ge::gl::getDefaultContext()->glImportMemoryWin32NameEXT(memory,size,handleType,name);}
 void ge::gl::glStringMarkerGREMEDY(GLsizei len,const void* string){ge::gl::getDefaultContext()->glStringMarkerGREMEDY(len,string);}
 GLboolean ge::gl::glIsTransformFeedback(GLuint id){return ge::gl::getDefaultContext()->glIsTransformFeedback(id);}
 void ge::gl::glProgramUniformMatrix2x3dvEXT(GLuint program,GLint location,GLsizei count,GLboolean transpose,const GLdouble* value){ge::gl::getDefaultContext()->glProgramUniformMatrix2x3dvEXT(program,location,count,transpose,value);}
@@ -464,6 +478,7 @@ void ge::gl::glVertexAttrib4sNV(GLuint index,GLshort x,GLshort y,GLshort z,GLsho
 void ge::gl::glProgramLocalParameter4dvARB(GLenum target,GLuint index,const GLdouble* params){ge::gl::getDefaultContext()->glProgramLocalParameter4dvARB(target,index,params);}
 void ge::gl::glReplacementCodeubSUN(GLubyte code){ge::gl::getDefaultContext()->glReplacementCodeubSUN(code);}
 void ge::gl::glMultiDrawElementsIndirectBindlessNV(GLenum mode,GLenum type,const void* indirect,GLsizei drawCount,GLsizei stride,GLint vertexBufferCount){ge::gl::getDefaultContext()->glMultiDrawElementsIndirectBindlessNV(mode,type,indirect,drawCount,stride,vertexBufferCount);}
+void ge::gl::glImportSemaphoreWin32HandleEXT(GLuint semaphore,GLenum handleType,void* handle){ge::gl::getDefaultContext()->glImportSemaphoreWin32HandleEXT(semaphore,handleType,handle);}
 void ge::gl::glUniformMatrix3fv(GLint location,GLsizei count,GLboolean transpose,const GLfloat* value){ge::gl::getDefaultContext()->glUniformMatrix3fv(location,count,transpose,value);}
 void ge::gl::glGetnMapfvARB(GLenum target,GLenum query,GLsizei bufSize,GLfloat* v){ge::gl::getDefaultContext()->glGetnMapfvARB(target,query,bufSize,v);}
 void ge::gl::glGetnUniformfv(GLuint program,GLint location,GLsizei bufSize,GLfloat* params){ge::gl::getDefaultContext()->glGetnUniformfv(program,location,bufSize,params);}
@@ -477,6 +492,7 @@ void ge::gl::glTexCoord4d(GLdouble s,GLdouble t,GLdouble r,GLdouble q){ge::gl::g
 void ge::gl::glBufferPageCommitmentARB(GLenum target,GLintptr offset,GLsizeiptr size,GLboolean commit){ge::gl::getDefaultContext()->glBufferPageCommitmentARB(target,offset,size,commit);}
 void ge::gl::glProgramLocalParameters4fvEXT(GLenum target,GLuint index,GLsizei count,const GLfloat* params){ge::gl::getDefaultContext()->glProgramLocalParameters4fvEXT(target,index,count,params);}
 void ge::gl::glStencilFunc(GLenum func,GLint ref,GLuint mask){ge::gl::getDefaultContext()->glStencilFunc(func,ref,mask);}
+void ge::gl::glSemaphoreParameterui64vEXT(GLuint semaphore,GLenum pname,const GLuint64* params){ge::gl::getDefaultContext()->glSemaphoreParameterui64vEXT(semaphore,pname,params);}
 void ge::gl::glGetVertexAttribdvNV(GLuint index,GLenum pname,GLdouble* params){ge::gl::getDefaultContext()->glGetVertexAttribdvNV(index,pname,params);}
 void ge::gl::glTexCoord3dv(const GLdouble* v){ge::gl::getDefaultContext()->glTexCoord3dv(v);}
 void ge::gl::glGetQueryBufferObjectiv(GLuint id,GLuint buffer,GLenum pname,GLintptr offset){ge::gl::getDefaultContext()->glGetQueryBufferObjectiv(id,buffer,pname,offset);}
@@ -548,6 +564,7 @@ void ge::gl::glGetMinmaxEXT(GLenum target,GLboolean reset,GLenum format,GLenum t
 GLboolean ge::gl::glIsFenceNV(GLuint fence){return ge::gl::getDefaultContext()->glIsFenceNV(fence);}
 void ge::gl::glMatrixFrustumEXT(GLenum mode,GLdouble left,GLdouble right,GLdouble bottom,GLdouble top,GLdouble zNear,GLdouble zFar){ge::gl::getDefaultContext()->glMatrixFrustumEXT(mode,left,right,bottom,top,zNear,zFar);}
 void ge::gl::glDispatchComputeIndirect(GLintptr indirect){ge::gl::getDefaultContext()->glDispatchComputeIndirect(indirect);}
+GLint ge::gl::glQueryResourceNV(GLenum queryType,GLint tagId,GLuint bufSize,GLint* buffer){return ge::gl::getDefaultContext()->glQueryResourceNV(queryType,tagId,bufSize,buffer);}
 void ge::gl::glMultiTexCoord4bOES(GLenum texture,GLbyte s,GLbyte t,GLbyte r,GLbyte q){ge::gl::getDefaultContext()->glMultiTexCoord4bOES(texture,s,t,r,q);}
 void ge::gl::glProgramEnvParameter4dARB(GLenum target,GLuint index,GLdouble x,GLdouble y,GLdouble z,GLdouble w){ge::gl::getDefaultContext()->glProgramEnvParameter4dARB(target,index,x,y,z,w);}
 void ge::gl::glProgramUniform1uiEXT(GLuint program,GLint location,GLuint v0){ge::gl::getDefaultContext()->glProgramUniform1uiEXT(program,location,v0);}
@@ -564,6 +581,7 @@ void ge::gl::glConvolutionParameterfEXT(GLenum target,GLenum pname,GLfloat param
 void ge::gl::glTexCoord1iv(const GLint* v){ge::gl::getDefaultContext()->glTexCoord1iv(v);}
 void ge::gl::glProgramUniform3fvEXT(GLuint program,GLint location,GLsizei count,const GLfloat* value){ge::gl::getDefaultContext()->glProgramUniform3fvEXT(program,location,count,value);}
 void ge::gl::glColor3uiv(const GLuint* v){ge::gl::getDefaultContext()->glColor3uiv(v);}
+void ge::gl::glRenderGpuMaskNV(GLbitfield mask){ge::gl::getDefaultContext()->glRenderGpuMaskNV(mask);}
 void ge::gl::glListBase(GLuint base){ge::gl::getDefaultContext()->glListBase(base);}
 void ge::gl::glTexCoord2bOES(GLbyte s,GLbyte t){ge::gl::getDefaultContext()->glTexCoord2bOES(s,t);}
 GLuint ge::gl::glBindMaterialParameterEXT(GLenum face,GLenum value){return ge::gl::getDefaultContext()->glBindMaterialParameterEXT(face,value);}
@@ -604,6 +622,7 @@ void ge::gl::glTexCoord1f(GLfloat s){ge::gl::getDefaultContext()->glTexCoord1f(s
 void ge::gl::glFragmentLightivSGIX(GLenum light,GLenum pname,const GLint* params){ge::gl::getDefaultContext()->glFragmentLightivSGIX(light,pname,params);}
 void ge::gl::glBindImageTexture(GLuint unit,GLuint texture,GLint level,GLboolean layered,GLint layer,GLenum access,GLenum format){ge::gl::getDefaultContext()->glBindImageTexture(unit,texture,level,layered,layer,access,format);}
 void ge::gl::glTransformFeedbackVaryings(GLuint program,GLsizei count,const GLchar*const* varyings,GLenum bufferMode){ge::gl::getDefaultContext()->glTransformFeedbackVaryings(program,count,varyings,bufferMode);}
+void ge::gl::glMulticastBufferSubDataNV(GLbitfield gpuMask,GLuint buffer,GLintptr offset,GLsizeiptr size,const GLvoid* data){ge::gl::getDefaultContext()->glMulticastBufferSubDataNV(gpuMask,buffer,offset,size,data);}
 void ge::gl::glDrawRangeElements(GLenum mode,GLuint start,GLuint end,GLsizei count,GLenum type,const GLvoid* indices){ge::gl::getDefaultContext()->glDrawRangeElements(mode,start,end,count,type,indices);}
 void ge::gl::glTexCoord1s(GLshort s){ge::gl::getDefaultContext()->glTexCoord1s(s);}
 void ge::gl::glBindBufferBase(GLenum target,GLuint index,GLuint buffer){ge::gl::getDefaultContext()->glBindBufferBase(target,index,buffer);}
@@ -616,8 +635,8 @@ void ge::gl::glMultiDrawArrays(GLenum mode,const GLint* first,const GLsizei* cou
 void ge::gl::glSampleMapATI(GLuint dst,GLuint interp,GLenum swizzle){ge::gl::getDefaultContext()->glSampleMapATI(dst,interp,swizzle);}
 void ge::gl::glProgramUniform2i64ARB(GLuint program,GLint location,GLint64 x,GLint64 y){ge::gl::getDefaultContext()->glProgramUniform2i64ARB(program,location,x,y);}
 void ge::gl::glBinormal3ivEXT(const GLint* v){ge::gl::getDefaultContext()->glBinormal3ivEXT(v);}
-void ge::gl::glMultiDrawArraysIndirectCountARB(GLenum mode,GLintptr indirect,GLintptr drawcount,GLsizei maxdrawcount,GLsizei stride){ge::gl::getDefaultContext()->glMultiDrawArraysIndirectCountARB(mode,indirect,drawcount,maxdrawcount,stride);}
-void ge::gl::glUniformBufferEXT(GLuint program,GLint location,GLuint buffer){ge::gl::getDefaultContext()->glUniformBufferEXT(program,location,buffer);}
+void ge::gl::glMultiDrawArraysIndirectCountARB(GLenum mode,const void* indirect,GLintptr drawcount,GLsizei maxdrawcount,GLsizei stride){ge::gl::getDefaultContext()->glMultiDrawArraysIndirectCountARB(mode,indirect,drawcount,maxdrawcount,stride);}
+void ge::gl::glTextureStorageMem1DEXT(GLuint texture,GLsizei levels,GLenum internalFormat,GLsizei width,GLuint memory,GLuint64 offset){ge::gl::getDefaultContext()->glTextureStorageMem1DEXT(texture,levels,internalFormat,width,memory,offset);}
 void ge::gl::glWindowPos2ivMESA(const GLint* v){ge::gl::getDefaultContext()->glWindowPos2ivMESA(v);}
 void ge::gl::glTexCoordP4ui(GLenum type,GLuint coords){ge::gl::getDefaultContext()->glTexCoordP4ui(type,coords);}
 void ge::gl::glMultiTexSubImage1DEXT(GLenum texunit,GLenum target,GLint level,GLint xoffset,GLsizei width,GLenum format,GLenum type,const void* pixels){ge::gl::getDefaultContext()->glMultiTexSubImage1DEXT(texunit,target,level,xoffset,width,format,type,pixels);}
@@ -639,7 +658,7 @@ void ge::gl::glMakeImageHandleResidentNV(GLuint64 handle,GLenum access){ge::gl::
 void ge::gl::glUniformMatrix2x4fv(GLint location,GLsizei count,GLboolean transpose,const GLfloat* value){ge::gl::getDefaultContext()->glUniformMatrix2x4fv(location,count,transpose,value);}
 void ge::gl::glGetMultiTexParameterfvEXT(GLenum texunit,GLenum target,GLenum pname,GLfloat* params){ge::gl::getDefaultContext()->glGetMultiTexParameterfvEXT(texunit,target,pname,params);}
 void ge::gl::glDepthRangeIndexed(GLuint index,GLdouble n,GLdouble f){ge::gl::getDefaultContext()->glDepthRangeIndexed(index,n,f);}
-void ge::gl::glMultiTexCoord1s(GLenum target,GLshort s){ge::gl::getDefaultContext()->glMultiTexCoord1s(target,s);}
+GLboolean ge::gl::glIsEnabled(GLenum cap){return ge::gl::getDefaultContext()->glIsEnabled(cap);}
 void ge::gl::glMatrixScalefEXT(GLenum mode,GLfloat x,GLfloat y,GLfloat z){ge::gl::getDefaultContext()->glMatrixScalefEXT(mode,x,y,z);}
 GLenum ge::gl::glGetError(){return ge::gl::getDefaultContext()->glGetError();}
 void ge::gl::glGetTexEnviv(GLenum target,GLenum pname,GLint* params){ge::gl::getDefaultContext()->glGetTexEnviv(target,pname,params);}
@@ -725,7 +744,7 @@ void ge::gl::glGetIntegerui64vNV(GLenum value,GLuint64EXT* result){ge::gl::getDe
 void ge::gl::glGetImageTransformParameterfvHP(GLenum target,GLenum pname,GLfloat* params){ge::gl::getDefaultContext()->glGetImageTransformParameterfvHP(target,pname,params);}
 void ge::gl::glRasterPos2fv(const GLfloat* v){ge::gl::getDefaultContext()->glRasterPos2fv(v);}
 void ge::gl::glVertex3xOES(GLfixed x,GLfixed y){ge::gl::getDefaultContext()->glVertex3xOES(x,y);}
-void ge::gl::glProgramUniform2dvEXT(GLuint program,GLint location,GLsizei count,const GLdouble* value){ge::gl::getDefaultContext()->glProgramUniform2dvEXT(program,location,count,value);}
+GLboolean ge::gl::glIsMemoryObjectEXT(GLuint memoryObject){return ge::gl::getDefaultContext()->glIsMemoryObjectEXT(memoryObject);}
 void ge::gl::glWeightPointerARB(GLint size,GLenum type,GLsizei stride,const void* pointer){ge::gl::getDefaultContext()->glWeightPointerARB(size,type,stride,pointer);}
 void ge::gl::glFinishFenceNV(GLuint fence){ge::gl::getDefaultContext()->glFinishFenceNV(fence);}
 void ge::gl::glDepthRangexOES(GLfixed n,GLfixed f){ge::gl::getDefaultContext()->glDepthRangexOES(n,f);}
@@ -771,7 +790,7 @@ void ge::gl::glTextureParameterivEXT(GLuint texture,GLenum target,GLenum pname,c
 void ge::gl::glUniform3d(GLint location,GLdouble x,GLdouble y,GLdouble z){ge::gl::getDefaultContext()->glUniform3d(location,x,y,z);}
 void ge::gl::glUniform3f(GLint location,GLfloat v0,GLfloat v1,GLfloat v2){ge::gl::getDefaultContext()->glUniform3f(location,v0,v1,v2);}
 void ge::gl::glActiveProgramEXT(GLuint program){ge::gl::getDefaultContext()->glActiveProgramEXT(program);}
-void ge::gl::glDeleteVertexArrays(GLsizei n,const GLuint* arrays){ge::gl::getDefaultContext()->glDeleteVertexArrays(n,arrays);}
+void ge::gl::glProgramUniform3uiv(GLuint program,GLint location,GLsizei count,const GLuint* value){ge::gl::getDefaultContext()->glProgramUniform3uiv(program,location,count,value);}
 void ge::gl::glUniform3ui64vARB(GLint location,GLsizei count,const GLuint64* value){ge::gl::getDefaultContext()->glUniform3ui64vARB(location,count,value);}
 void ge::gl::glProgramUniform1ui64vARB(GLuint program,GLint location,GLsizei count,const GLuint64* value){ge::gl::getDefaultContext()->glProgramUniform1ui64vARB(program,location,count,value);}
 void ge::gl::glTextureParameterfEXT(GLuint texture,GLenum target,GLenum pname,GLfloat param){ge::gl::getDefaultContext()->glTextureParameterfEXT(texture,target,pname,param);}
@@ -785,6 +804,7 @@ GLint ge::gl::glGetFragDataIndex(GLuint program,const GLchar* name){return ge::g
 void ge::gl::glMultiTexCoord2xOES(GLenum texture,GLfixed s,GLfixed t){ge::gl::getDefaultContext()->glMultiTexCoord2xOES(texture,s,t);}
 void ge::gl::glColor3sv(const GLshort* v){ge::gl::getDefaultContext()->glColor3sv(v);}
 void ge::gl::glTexCoord2fVertex3fSUN(GLfloat s,GLfloat t,GLfloat x,GLfloat y,GLfloat z){ge::gl::getDefaultContext()->glTexCoord2fVertex3fSUN(s,t,x,y,z);}
+void ge::gl::glGetMemoryObjectParameterivEXT(GLuint memoryObject,GLenum pname,GLint* params){ge::gl::getDefaultContext()->glGetMemoryObjectParameterivEXT(memoryObject,pname,params);}
 void ge::gl::glPolygonOffsetEXT(GLfloat factor,GLfloat bias){ge::gl::getDefaultContext()->glPolygonOffsetEXT(factor,bias);}
 void ge::gl::glWeightPathsNV(GLuint resultPath,GLsizei numPaths,const GLuint* paths,const GLfloat* weights){ge::gl::getDefaultContext()->glWeightPathsNV(resultPath,numPaths,paths,weights);}
 void ge::gl::glCombinerStageParameterfvNV(GLenum stage,GLenum pname,const GLfloat* params){ge::gl::getDefaultContext()->glCombinerStageParameterfvNV(stage,pname,params);}
@@ -851,6 +871,7 @@ void ge::gl::glVertexArrayVertexAttribFormatEXT(GLuint vaobj,GLuint attribindex,
 void ge::gl::glVertex2hNV(GLhalfNV x,GLhalfNV y){ge::gl::getDefaultContext()->glVertex2hNV(x,y);}
 void ge::gl::glDeleteVertexShaderEXT(GLuint id){ge::gl::getDefaultContext()->glDeleteVertexShaderEXT(id);}
 void ge::gl::glTexImage3DEXT(GLenum target,GLint level,GLenum internalformat,GLsizei width,GLsizei height,GLsizei depth,GLint border,GLenum format,GLenum type,const void* pixels){ge::gl::getDefaultContext()->glTexImage3DEXT(target,level,internalformat,width,height,depth,border,format,type,pixels);}
+void ge::gl::glSignalVkFenceNV(GLuint64 vkFence){ge::gl::getDefaultContext()->glSignalVkFenceNV(vkFence);}
 void ge::gl::glProgramLocalParameterI4ivNV(GLenum target,GLuint index,const GLint* params){ge::gl::getDefaultContext()->glProgramLocalParameterI4ivNV(target,index,params);}
 void ge::gl::glGlobalAlphaFactoriSUN(GLint factor){ge::gl::getDefaultContext()->glGlobalAlphaFactoriSUN(factor);}
 void ge::gl::glTextureStorage1D(GLuint texture,GLsizei levels,GLenum internalformat,GLsizei width){ge::gl::getDefaultContext()->glTextureStorage1D(texture,levels,internalformat,width);}
@@ -879,7 +900,7 @@ void ge::gl::glTexParameterxvOES(GLenum target,GLenum pname,const GLfixed* param
 void ge::gl::glPatchParameteri(GLenum pname,GLint value){ge::gl::getDefaultContext()->glPatchParameteri(pname,value);}
 void ge::gl::glMap1d(GLenum target,GLdouble u1,GLdouble u2,GLint stride,GLint order,const GLdouble* points){ge::gl::getDefaultContext()->glMap1d(target,u1,u2,stride,order,points);}
 void ge::gl::glGetTexFilterFuncSGIS(GLenum target,GLenum filter,GLfloat* weights){ge::gl::getDefaultContext()->glGetTexFilterFuncSGIS(target,filter,weights);}
-void ge::gl::glGetTexParameteriv(GLenum target,GLenum pname,GLint* params){ge::gl::getDefaultContext()->glGetTexParameteriv(target,pname,params);}
+void ge::gl::glVertexStream3dATI(GLenum stream,GLdouble x,GLdouble y,GLdouble z){ge::gl::getDefaultContext()->glVertexStream3dATI(stream,x,y,z);}
 void ge::gl::glVertexArrayVertexBindingDivisorEXT(GLuint vaobj,GLuint bindingindex,GLuint divisor){ge::gl::getDefaultContext()->glVertexArrayVertexBindingDivisorEXT(vaobj,bindingindex,divisor);}
 void ge::gl::glMultiTexCoord3svARB(GLenum target,const GLshort* v){ge::gl::getDefaultContext()->glMultiTexCoord3svARB(target,v);}
 void ge::gl::glBindProgramNV(GLenum target,GLuint id){ge::gl::getDefaultContext()->glBindProgramNV(target,id);}
@@ -896,6 +917,7 @@ void ge::gl::glProgramUniform1dv(GLuint program,GLint location,GLsizei count,con
 void ge::gl::glTextureStorage2DEXT(GLuint texture,GLenum target,GLsizei levels,GLenum internalformat,GLsizei width,GLsizei height){ge::gl::getDefaultContext()->glTextureStorage2DEXT(texture,target,levels,internalformat,width,height);}
 void ge::gl::glVertexArrayFogCoordOffsetEXT(GLuint vaobj,GLuint buffer,GLenum type,GLsizei stride,GLintptr offset){ge::gl::getDefaultContext()->glVertexArrayFogCoordOffsetEXT(vaobj,buffer,type,stride,offset);}
 void ge::gl::glDeleteNamedStringARB(GLint namelen,const GLchar* name){ge::gl::getDefaultContext()->glDeleteNamedStringARB(namelen,name);}
+void ge::gl::glMulticastGetQueryObjecti64vNV(GLuint gpu,GLuint id,GLenum pname,GLint64* params){ge::gl::getDefaultContext()->glMulticastGetQueryObjecti64vNV(gpu,id,pname,params);}
 void ge::gl::glGenOcclusionQueriesNV(GLsizei n,GLuint* ids){ge::gl::getDefaultContext()->glGenOcclusionQueriesNV(n,ids);}
 void ge::gl::glLighti(GLenum light,GLenum pname,GLint param){ge::gl::getDefaultContext()->glLighti(light,pname,param);}
 void ge::gl::glTexImage1D(GLenum target,GLint level,GLint internalFormat,GLsizei width,GLint border,GLenum format,GLenum type,const GLvoid* pixels){ge::gl::getDefaultContext()->glTexImage1D(target,level,internalFormat,width,border,format,type,pixels);}
@@ -912,7 +934,9 @@ void ge::gl::glRasterPos3xOES(GLfixed x,GLfixed y,GLfixed z){ge::gl::getDefaultC
 void ge::gl::glGetMapParameterivNV(GLenum target,GLenum pname,GLint* params){ge::gl::getDefaultContext()->glGetMapParameterivNV(target,pname,params);}
 void ge::gl::glSampleCoverage(GLclampf value,GLboolean invert){ge::gl::getDefaultContext()->glSampleCoverage(value,invert);}
 void ge::gl::glClearDepthxOES(GLfixed depth){ge::gl::getDefaultContext()->glClearDepthxOES(depth);}
+void ge::gl::glUniformBufferEXT(GLuint program,GLint location,GLuint buffer){ge::gl::getDefaultContext()->glUniformBufferEXT(program,location,buffer);}
 void ge::gl::glTexCoord2fNormal3fVertex3fvSUN(const GLfloat* tc,const GLfloat* n,const GLfloat* v){ge::gl::getDefaultContext()->glTexCoord2fNormal3fVertex3fvSUN(tc,n,v);}
+void ge::gl::glMulticastGetQueryObjectuivNV(GLuint gpu,GLuint id,GLenum pname,GLuint* params){ge::gl::getDefaultContext()->glMulticastGetQueryObjectuivNV(gpu,id,pname,params);}
 void ge::gl::glGetFirstPerfQueryIdINTEL(GLuint* queryId){ge::gl::getDefaultContext()->glGetFirstPerfQueryIdINTEL(queryId);}
 GLboolean ge::gl::glUnmapNamedBufferEXT(GLuint buffer){return ge::gl::getDefaultContext()->glUnmapNamedBufferEXT(buffer);}
 void ge::gl::glGetTransformFeedbacki_v(GLuint xfb,GLenum pname,GLuint index,GLint* param){ge::gl::getDefaultContext()->glGetTransformFeedbacki_v(xfb,pname,index,param);}
@@ -965,15 +989,16 @@ void ge::gl::glMatrixMultdEXT(GLenum mode,const GLdouble* m){ge::gl::getDefaultC
 void ge::gl::glBinormal3dvEXT(const GLdouble* v){ge::gl::getDefaultContext()->glBinormal3dvEXT(v);}
 GLsync ge::gl::glImportSyncEXT(GLenum external_sync_type,GLintptr external_sync,GLbitfield flags){return ge::gl::getDefaultContext()->glImportSyncEXT(external_sync_type,external_sync,flags);}
 void ge::gl::glGetMapiv(GLenum target,GLenum query,GLint* v){ge::gl::getDefaultContext()->glGetMapiv(target,query,v);}
-void ge::gl::glGetListParameterfvSGIX(GLuint list,GLenum pname,GLfloat* params){ge::gl::getDefaultContext()->glGetListParameterfvSGIX(list,pname,params);}
+void ge::gl::glImportSemaphoreFdEXT(GLuint semaphore,GLenum handleType,GLint fd){ge::gl::getDefaultContext()->glImportSemaphoreFdEXT(semaphore,handleType,fd);}
 void ge::gl::glMultiTexCoord4sv(GLenum target,const GLshort* v){ge::gl::getDefaultContext()->glMultiTexCoord4sv(target,v);}
 void ge::gl::glPNTrianglesiATI(GLenum pname,GLint param){ge::gl::getDefaultContext()->glPNTrianglesiATI(pname,param);}
 void ge::gl::glBindVertexArrayAPPLE(GLuint array){ge::gl::getDefaultContext()->glBindVertexArrayAPPLE(array);}
 void ge::gl::glObjectPtrLabel(const void* ptr,GLsizei length,const GLchar* label){ge::gl::getDefaultContext()->glObjectPtrLabel(ptr,length,label);}
 GLuint ge::gl::glGetDebugMessageLog(GLuint count,GLsizei bufSize,GLenum* sources,GLenum* types,GLuint* ids,GLenum* severities,GLsizei* lengths,GLchar* messageLog){return ge::gl::getDefaultContext()->glGetDebugMessageLog(count,bufSize,sources,types,ids,severities,lengths,messageLog);}
 void ge::gl::glTrackMatrixNV(GLenum target,GLuint address,GLenum matrix,GLenum transform){ge::gl::getDefaultContext()->glTrackMatrixNV(target,address,matrix,transform);}
-void ge::gl::glBindFragDataLocation(GLuint program,GLuint color,const GLchar* name){ge::gl::getDefaultContext()->glBindFragDataLocation(program,color,name);}
+void ge::gl::glProgramPathFragmentInputGenNV(GLuint program,GLint location,GLenum genMode,GLint components,const GLfloat* coeffs){ge::gl::getDefaultContext()->glProgramPathFragmentInputGenNV(program,location,genMode,components,coeffs);}
 void ge::gl::glTangent3ivEXT(const GLint* v){ge::gl::getDefaultContext()->glTangent3ivEXT(v);}
+void ge::gl::glGetUniformfv(GLuint program,GLint location,GLfloat* params){ge::gl::getDefaultContext()->glGetUniformfv(program,location,params);}
 void ge::gl::glSecondaryColor3ubv(const GLubyte* v){ge::gl::getDefaultContext()->glSecondaryColor3ubv(v);}
 void ge::gl::glMakeTextureHandleNonResidentNV(GLuint64 handle){ge::gl::getDefaultContext()->glMakeTextureHandleNonResidentNV(handle);}
 void ge::gl::glVertexAttribs4ubvNV(GLuint index,GLsizei count,const GLubyte* v){ge::gl::getDefaultContext()->glVertexAttribs4ubvNV(index,count,v);}
@@ -982,6 +1007,7 @@ void ge::gl::glMultiTexCoord3iv(GLenum target,const GLint* v){ge::gl::getDefault
 void ge::gl::glGetnPolygonStippleARB(GLsizei bufSize,GLubyte* pattern){ge::gl::getDefaultContext()->glGetnPolygonStippleARB(bufSize,pattern);}
 void ge::gl::glUniform2i64vNV(GLint location,GLsizei count,const GLint64EXT* value){ge::gl::getDefaultContext()->glUniform2i64vNV(location,count,value);}
 void ge::gl::glLightModelf(GLenum pname,GLfloat param){ge::gl::getDefaultContext()->glLightModelf(pname,param);}
+void ge::gl::glDeleteMemoryObjectsEXT(GLsizei n,const GLuint* memoryObjects){ge::gl::getDefaultContext()->glDeleteMemoryObjectsEXT(n,memoryObjects);}
 void ge::gl::glMultiTexSubImage2DEXT(GLenum texunit,GLenum target,GLint level,GLint xoffset,GLint yoffset,GLsizei width,GLsizei height,GLenum format,GLenum type,const void* pixels){ge::gl::getDefaultContext()->glMultiTexSubImage2DEXT(texunit,target,level,xoffset,yoffset,width,height,format,type,pixels);}
 void ge::gl::glReplacementCodeuiColor3fVertex3fSUN(GLuint rc,GLfloat r,GLfloat g,GLfloat b,GLfloat x,GLfloat y,GLfloat z){ge::gl::getDefaultContext()->glReplacementCodeuiColor3fVertex3fSUN(rc,r,g,b,x,y,z);}
 void ge::gl::glTangent3dvEXT(const GLdouble* v){ge::gl::getDefaultContext()->glTangent3dvEXT(v);}
@@ -1022,6 +1048,7 @@ void ge::gl::glVertexAttribI4iEXT(GLuint index,GLint x,GLint y,GLint z,GLint w){
 void ge::gl::glProgramUniform2f(GLuint program,GLint location,GLfloat v0,GLfloat v1){ge::gl::getDefaultContext()->glProgramUniform2f(program,location,v0,v1);}
 void ge::gl::glRasterPos4sv(const GLshort* v){ge::gl::getDefaultContext()->glRasterPos4sv(v);}
 void ge::gl::glColor4s(GLshort red,GLshort green,GLshort blue,GLshort alpha){ge::gl::getDefaultContext()->glColor4s(red,green,blue,alpha);}
+void ge::gl::glMulticastGetQueryObjectivNV(GLuint gpu,GLuint id,GLenum pname,GLint* params){ge::gl::getDefaultContext()->glMulticastGetQueryObjectivNV(gpu,id,pname,params);}
 void ge::gl::glColorFragmentOp3ATI(GLenum op,GLuint dst,GLuint dstMask,GLuint dstMod,GLuint arg1,GLuint arg1Rep,GLuint arg1Mod,GLuint arg2,GLuint arg2Rep,GLuint arg2Mod,GLuint arg3,GLuint arg3Rep,GLuint arg3Mod){ge::gl::getDefaultContext()->glColorFragmentOp3ATI(op,dst,dstMask,dstMod,arg1,arg1Rep,arg1Mod,arg2,arg2Rep,arg2Mod,arg3,arg3Rep,arg3Mod);}
 void ge::gl::glResizeBuffersMESA(){ge::gl::getDefaultContext()->glResizeBuffersMESA();}
 void ge::gl::glGetMinmaxParameterfv(GLenum target,GLenum pname,GLfloat* params){ge::gl::getDefaultContext()->glGetMinmaxParameterfv(target,pname,params);}
@@ -1060,6 +1087,7 @@ void ge::gl::glVertexAttribL1dvEXT(GLuint index,const GLdouble* v){ge::gl::getDe
 void ge::gl::glGetActiveSubroutineUniformiv(GLuint program,GLenum shadertype,GLuint index,GLenum pname,GLint* values){ge::gl::getDefaultContext()->glGetActiveSubroutineUniformiv(program,shadertype,index,pname,values);}
 void ge::gl::glVertexAttribPointerARB(GLuint index,GLint size,GLenum type,GLboolean normalized,GLsizei stride,const void* pointer){ge::gl::getDefaultContext()->glVertexAttribPointerARB(index,size,type,normalized,stride,pointer);}
 void ge::gl::glCompressedTexSubImage2DARB(GLenum target,GLint level,GLint xoffset,GLint yoffset,GLsizei width,GLsizei height,GLenum format,GLsizei imageSize,const void* data){ge::gl::getDefaultContext()->glCompressedTexSubImage2DARB(target,level,xoffset,yoffset,width,height,format,imageSize,data);}
+void ge::gl::glTexStorageMem1DEXT(GLenum target,GLsizei levels,GLenum internalFormat,GLsizei width,GLuint memory,GLuint64 offset){ge::gl::getDefaultContext()->glTexStorageMem1DEXT(target,levels,internalFormat,width,memory,offset);}
 void ge::gl::glVertex2hvNV(const GLhalfNV* v){ge::gl::getDefaultContext()->glVertex2hvNV(v);}
 void ge::gl::glTexBuffer(GLenum target,GLenum internalformat,GLuint buffer){ge::gl::getDefaultContext()->glTexBuffer(target,internalformat,buffer);}
 void ge::gl::glArrayElement(GLint i){ge::gl::getDefaultContext()->glArrayElement(i);}
@@ -1079,7 +1107,7 @@ void ge::gl::glRectd(GLdouble x1,GLdouble y1,GLdouble x2,GLdouble y2){ge::gl::ge
 void ge::gl::glMap1xOES(GLenum target,GLfixed u1,GLfixed u2,GLint stride,GLint order,GLfixed points){ge::gl::getDefaultContext()->glMap1xOES(target,u1,u2,stride,order,points);}
 void ge::gl::glVertexAttrib3fvNV(GLuint index,const GLfloat* v){ge::gl::getDefaultContext()->glVertexAttrib3fvNV(index,v);}
 void ge::gl::glReferencePlaneSGIX(const GLdouble* equation){ge::gl::getDefaultContext()->glReferencePlaneSGIX(equation);}
-void ge::gl::glGetMultiTexGendvEXT(GLenum texunit,GLenum coord,GLenum pname,GLdouble* params){ge::gl::getDefaultContext()->glGetMultiTexGendvEXT(texunit,coord,pname,params);}
+void ge::gl::glMulticastBlitFramebufferNV(GLuint srcGpu,GLuint dstGpu,GLint srcX0,GLint srcY0,GLint srcX1,GLint srcY1,GLint dstX0,GLint dstY0,GLint dstX1,GLint dstY1,GLbitfield mask,GLenum filter){ge::gl::getDefaultContext()->glMulticastBlitFramebufferNV(srcGpu,dstGpu,srcX0,srcY0,srcX1,srcY1,dstX0,dstY0,dstX1,dstY1,mask,filter);}
 void ge::gl::glGetCombinerInputParameterfvNV(GLenum stage,GLenum portion,GLenum variable,GLenum pname,GLfloat* params){ge::gl::getDefaultContext()->glGetCombinerInputParameterfvNV(stage,portion,variable,pname,params);}
 GLuint64 ge::gl::glGetTextureSamplerHandleARB(GLuint texture,GLuint sampler){return ge::gl::getDefaultContext()->glGetTextureSamplerHandleARB(texture,sampler);}
 void ge::gl::glBindTexture(GLenum target,GLuint texture){ge::gl::getDefaultContext()->glBindTexture(target,texture);}
@@ -1150,6 +1178,7 @@ void* ge::gl::glMapNamedBufferRangeEXT(GLuint buffer,GLintptr offset,GLsizeiptr 
 void ge::gl::glGetnUniformui64vARB(GLuint program,GLint location,GLsizei bufSize,GLuint64* params){ge::gl::getDefaultContext()->glGetnUniformui64vARB(program,location,bufSize,params);}
 GLuint ge::gl::glCreateShaderProgramv(GLenum type,GLsizei count,const GLchar*const* strings){return ge::gl::getDefaultContext()->glCreateShaderProgramv(type,count,strings);}
 void ge::gl::glGetQueryObjectiv(GLuint id,GLenum pname,GLint* params){ge::gl::getDefaultContext()->glGetQueryObjectiv(id,pname,params);}
+void ge::gl::glMaxShaderCompilerThreadsKHR(GLuint count){ge::gl::getDefaultContext()->glMaxShaderCompilerThreadsKHR(count);}
 void ge::gl::glPNTrianglesfATI(GLenum pname,GLfloat param){ge::gl::getDefaultContext()->glPNTrianglesfATI(pname,param);}
 void ge::gl::glGlobalAlphaFactorusSUN(GLushort factor){ge::gl::getDefaultContext()->glGlobalAlphaFactorusSUN(factor);}
 void ge::gl::glVertexAttrib3dvNV(GLuint index,const GLdouble* v){ge::gl::getDefaultContext()->glVertexAttrib3dvNV(index,v);}
@@ -1163,6 +1192,7 @@ void ge::gl::glBlendEquationIndexedAMD(GLuint buf,GLenum mode){ge::gl::getDefaul
 void ge::gl::glTexCoord2d(GLdouble s,GLdouble t){ge::gl::getDefaultContext()->glTexCoord2d(s,t);}
 void ge::gl::glPointParameteri(GLenum pname,GLint param){ge::gl::getDefaultContext()->glPointParameteri(pname,param);}
 void ge::gl::glTexCoord2f(GLfloat s,GLfloat t){ge::gl::getDefaultContext()->glTexCoord2f(s,t);}
+void ge::gl::glGetUnsignedBytei_vEXT(GLenum target,GLuint index,GLubyte* data){ge::gl::getDefaultContext()->glGetUnsignedBytei_vEXT(target,index,data);}
 void ge::gl::glColor4iv(const GLint* v){ge::gl::getDefaultContext()->glColor4iv(v);}
 void* ge::gl::glMapNamedBufferRange(GLuint buffer,GLintptr offset,GLsizeiptr length,GLbitfield access){return ge::gl::getDefaultContext()->glMapNamedBufferRange(buffer,offset,length,access);}
 GLboolean ge::gl::glUnmapBuffer(GLenum target){return ge::gl::getDefaultContext()->glUnmapBuffer(target);}
@@ -1179,8 +1209,10 @@ void ge::gl::glTexCoord4dv(const GLdouble* v){ge::gl::getDefaultContext()->glTex
 void ge::gl::glVertexAttrib1svNV(GLuint index,const GLshort* v){ge::gl::getDefaultContext()->glVertexAttrib1svNV(index,v);}
 void ge::gl::glNamedFramebufferTextureFaceEXT(GLuint framebuffer,GLenum attachment,GLuint texture,GLint level,GLenum face){ge::gl::getDefaultContext()->glNamedFramebufferTextureFaceEXT(framebuffer,attachment,texture,level,face);}
 void ge::gl::glProgramUniform2ui64vNV(GLuint program,GLint location,GLsizei count,const GLuint64EXT* value){ge::gl::getDefaultContext()->glProgramUniform2ui64vNV(program,location,count,value);}
+void ge::gl::glStencilFillPathNV(GLuint path,GLenum fillMode,GLuint mask){ge::gl::getDefaultContext()->glStencilFillPathNV(path,fillMode,mask);}
 void ge::gl::glNormal3dv(const GLdouble* v){ge::gl::getDefaultContext()->glNormal3dv(v);}
 void ge::gl::glReleaseShaderCompiler(){ge::gl::getDefaultContext()->glReleaseShaderCompiler();}
+void ge::gl::glTexStorageMem3DEXT(GLenum target,GLsizei levels,GLenum internalFormat,GLsizei width,GLsizei height,GLsizei depth,GLuint memory,GLuint64 offset){ge::gl::getDefaultContext()->glTexStorageMem3DEXT(target,levels,internalFormat,width,height,depth,memory,offset);}
 void ge::gl::glTexCoord3bvOES(const GLbyte* coords){ge::gl::getDefaultContext()->glTexCoord3bvOES(coords);}
 GLboolean ge::gl::glIsVertexAttribEnabledAPPLE(GLuint index,GLenum pname){return ge::gl::getDefaultContext()->glIsVertexAttribEnabledAPPLE(index,pname);}
 void ge::gl::glTexCoord1dv(const GLdouble* v){ge::gl::getDefaultContext()->glTexCoord1dv(v);}
@@ -1189,6 +1221,7 @@ void ge::gl::glVertexAttribI3iv(GLuint index,const GLint* v){ge::gl::getDefaultC
 void ge::gl::glSetFenceAPPLE(GLuint fence){ge::gl::getDefaultContext()->glSetFenceAPPLE(fence);}
 void ge::gl::glWeightsvARB(GLint size,const GLshort* weights){ge::gl::getDefaultContext()->glWeightsvARB(size,weights);}
 void ge::gl::glShadeModel(GLenum mode){ge::gl::getDefaultContext()->glShadeModel(mode);}
+void ge::gl::glTextureStorageMem3DMultisampleEXT(GLuint texture,GLsizei samples,GLenum internalFormat,GLsizei width,GLsizei height,GLsizei depth,GLboolean fixedSampleLocations,GLuint memory,GLuint64 offset){ge::gl::getDefaultContext()->glTextureStorageMem3DMultisampleEXT(texture,samples,internalFormat,width,height,depth,fixedSampleLocations,memory,offset);}
 void ge::gl::glMapGrid1d(GLint un,GLdouble u1,GLdouble u2){ge::gl::getDefaultContext()->glMapGrid1d(un,u1,u2);}
 void ge::gl::glGetHistogramParameterivEXT(GLenum target,GLenum pname,GLint* params){ge::gl::getDefaultContext()->glGetHistogramParameterivEXT(target,pname,params);}
 void ge::gl::glConservativeRasterParameteriNV(GLenum pname,GLint param){ge::gl::getDefaultContext()->glConservativeRasterParameteriNV(pname,param);}
@@ -1248,6 +1281,7 @@ void ge::gl::glGetnPixelMapuivARB(GLenum map,GLsizei bufSize,GLuint* values){ge:
 void ge::gl::glMultiTexEnviEXT(GLenum texunit,GLenum target,GLenum pname,GLint param){ge::gl::getDefaultContext()->glMultiTexEnviEXT(texunit,target,pname,param);}
 void ge::gl::glVertexAttribI2iEXT(GLuint index,GLint x,GLint y){ge::gl::getDefaultContext()->glVertexAttribI2iEXT(index,x,y);}
 void ge::gl::glProgramParameter4fvNV(GLenum target,GLuint index,const GLfloat* v){ge::gl::getDefaultContext()->glProgramParameter4fvNV(target,index,v);}
+void ge::gl::glWaitSemaphoreEXT(GLuint semaphore,GLuint numBufferBarriers,const GLuint* buffers,GLuint numTextureBarriers,const GLuint* textures,const GLenum* srcLayouts){ge::gl::getDefaultContext()->glWaitSemaphoreEXT(semaphore,numBufferBarriers,buffers,numTextureBarriers,textures,srcLayouts);}
 void ge::gl::glNamedFramebufferSampleLocationsfvNV(GLuint framebuffer,GLuint start,GLsizei count,const GLfloat* v){ge::gl::getDefaultContext()->glNamedFramebufferSampleLocationsfvNV(framebuffer,start,count,v);}
 void ge::gl::glTexCoordP4uiv(GLenum type,const GLuint* coords){ge::gl::getDefaultContext()->glTexCoordP4uiv(type,coords);}
 void ge::gl::glRectxvOES(const GLfixed* v1,const GLfixed* v2){ge::gl::getDefaultContext()->glRectxvOES(v1,v2);}
@@ -1269,7 +1303,6 @@ void ge::gl::glVDPAUFiniNV(){ge::gl::getDefaultContext()->glVDPAUFiniNV();}
 void ge::gl::glMakeBufferNonResidentNV(GLenum target){ge::gl::getDefaultContext()->glMakeBufferNonResidentNV(target);}
 void ge::gl::glUniform1ui64ARB(GLint location,GLuint64 x){ge::gl::getDefaultContext()->glUniform1ui64ARB(location,x);}
 void ge::gl::glStencilStrokePathNV(GLuint path,GLint reference,GLuint mask){ge::gl::getDefaultContext()->glStencilStrokePathNV(path,reference,mask);}
-void ge::gl::glProgramUniform3uiv(GLuint program,GLint location,GLsizei count,const GLuint* value){ge::gl::getDefaultContext()->glProgramUniform3uiv(program,location,count,value);}
 void ge::gl::glVariantuivEXT(GLuint id,const GLuint* addr){ge::gl::getDefaultContext()->glVariantuivEXT(id,addr);}
 void ge::gl::glCopyTexSubImage3DEXT(GLenum target,GLint level,GLint xoffset,GLint yoffset,GLint zoffset,GLint x,GLint y,GLsizei width,GLsizei height){ge::gl::getDefaultContext()->glCopyTexSubImage3DEXT(target,level,xoffset,yoffset,zoffset,x,y,width,height);}
 void ge::gl::glSpriteParameteriSGIX(GLenum pname,GLint param){ge::gl::getDefaultContext()->glSpriteParameteriSGIX(pname,param);}
@@ -1347,7 +1380,7 @@ void ge::gl::glGetTexGendv(GLenum coord,GLenum pname,GLdouble* params){ge::gl::g
 void ge::gl::glVertex4xOES(GLfixed x,GLfixed y,GLfixed z){ge::gl::getDefaultContext()->glVertex4xOES(x,y,z);}
 void ge::gl::glVertexAttribI2uivEXT(GLuint index,const GLuint* v){ge::gl::getDefaultContext()->glVertexAttribI2uivEXT(index,v);}
 void ge::gl::glNamedProgramLocalParameter4fvEXT(GLuint program,GLenum target,GLuint index,const GLfloat* params){ge::gl::getDefaultContext()->glNamedProgramLocalParameter4fvEXT(program,target,index,params);}
-void ge::gl::glPointParameterfvSGIS(GLenum pname,const GLfloat* params){ge::gl::getDefaultContext()->glPointParameterfvSGIS(pname,params);}
+void ge::gl::glColor3usv(const GLushort* v){ge::gl::getDefaultContext()->glColor3usv(v);}
 void ge::gl::glGetPixelTransformParameterfvEXT(GLenum target,GLenum pname,GLfloat* params){ge::gl::getDefaultContext()->glGetPixelTransformParameterfvEXT(target,pname,params);}
 void ge::gl::glIndexxvOES(const GLfixed* component){ge::gl::getDefaultContext()->glIndexxvOES(component);}
 void ge::gl::glDepthMask(GLboolean flag){ge::gl::getDefaultContext()->glDepthMask(flag);}
@@ -1359,6 +1392,7 @@ void ge::gl::glVertexStream1dvATI(GLenum stream,const GLdouble* coords){ge::gl::
 void ge::gl::glGetMultiTexEnvfvEXT(GLenum texunit,GLenum target,GLenum pname,GLfloat* params){ge::gl::getDefaultContext()->glGetMultiTexEnvfvEXT(texunit,target,pname,params);}
 void ge::gl::glDeleteFencesNV(GLsizei n,const GLuint* fences){ge::gl::getDefaultContext()->glDeleteFencesNV(n,fences);}
 void ge::gl::glVertexAttribs1dvNV(GLuint index,GLsizei count,const GLdouble* v){ge::gl::getDefaultContext()->glVertexAttribs1dvNV(index,count,v);}
+void ge::gl::glBufferStorageExternalEXT(GLenum target,GLintptr offset,GLsizeiptr size,GLeglClientBufferEXT clientBuffer,GLbitfield flags){ge::gl::getDefaultContext()->glBufferStorageExternalEXT(target,offset,size,clientBuffer,flags);}
 void ge::gl::glVertexStream2sATI(GLenum stream,GLshort x,GLshort y){ge::gl::getDefaultContext()->glVertexStream2sATI(stream,x,y);}
 void ge::gl::glGetnSeparableFilterARB(GLenum target,GLenum format,GLenum type,GLsizei rowBufSize,void* row,GLsizei columnBufSize,void* column,void* span){ge::gl::getDefaultContext()->glGetnSeparableFilterARB(target,format,type,rowBufSize,row,columnBufSize,column,span);}
 void ge::gl::glProgramUniform2dv(GLuint program,GLint location,GLsizei count,const GLdouble* value){ge::gl::getDefaultContext()->glProgramUniform2dv(program,location,count,value);}
@@ -1418,8 +1452,10 @@ void ge::gl::glProgramStringARB(GLenum target,GLenum format,GLsizei len,const vo
 void ge::gl::glProgramUniformMatrix3dvEXT(GLuint program,GLint location,GLsizei count,GLboolean transpose,const GLdouble* value){ge::gl::getDefaultContext()->glProgramUniformMatrix3dvEXT(program,location,count,transpose,value);}
 void ge::gl::glSeparableFilter2D(GLenum target,GLenum internalformat,GLsizei width,GLsizei height,GLenum format,GLenum type,const GLvoid* row,const GLvoid* column){ge::gl::getDefaultContext()->glSeparableFilter2D(target,internalformat,width,height,format,type,row,column);}
 void ge::gl::glVertexAttribI1uiv(GLuint index,const GLuint* v){ge::gl::getDefaultContext()->glVertexAttribI1uiv(index,v);}
+void ge::gl::glLGPUCopyImageSubDataNVX(GLuint sourceGpu,GLbitfield destinationGpuMask,GLuint srcName,GLenum srcTarget,GLint srcLevel,GLint srcX,GLint srxY,GLint srcZ,GLuint dstName,GLenum dstTarget,GLint dstLevel,GLint dstX,GLint dstY,GLint dstZ,GLsizei width,GLsizei height,GLsizei depth){ge::gl::getDefaultContext()->glLGPUCopyImageSubDataNVX(sourceGpu,destinationGpuMask,srcName,srcTarget,srcLevel,srcX,srxY,srcZ,dstName,dstTarget,dstLevel,dstX,dstY,dstZ,width,height,depth);}
 void ge::gl::glTexStorage2D(GLenum target,GLsizei levels,GLenum internalformat,GLsizei width,GLsizei height){ge::gl::getDefaultContext()->glTexStorage2D(target,levels,internalformat,width,height);}
 void ge::gl::glColor3fv(const GLfloat* v){ge::gl::getDefaultContext()->glColor3fv(v);}
+void ge::gl::glGetMultiTexGendvEXT(GLenum texunit,GLenum coord,GLenum pname,GLdouble* params){ge::gl::getDefaultContext()->glGetMultiTexGendvEXT(texunit,coord,pname,params);}
 void ge::gl::glVertexAttribL4dvEXT(GLuint index,const GLdouble* v){ge::gl::getDefaultContext()->glVertexAttribL4dvEXT(index,v);}
 void ge::gl::glGetActiveUniform(GLuint program,GLuint index,GLsizei bufSize,GLsizei* length,GLint* size,GLenum* type,GLchar* name){ge::gl::getDefaultContext()->glGetActiveUniform(program,index,bufSize,length,size,type,name);}
 void ge::gl::glUniform2ui64vARB(GLint location,GLsizei count,const GLuint64* value){ge::gl::getDefaultContext()->glUniform2ui64vARB(location,count,value);}
@@ -1427,6 +1463,7 @@ void ge::gl::glMakeNamedBufferResidentNV(GLuint buffer,GLenum access){ge::gl::ge
 GLenum ge::gl::glPathGlyphIndexRangeNV(GLenum fontTarget,const void* fontName,GLbitfield fontStyle,GLuint pathParameterTemplate,GLfloat emScale,GLuint baseAndCount[2]){return ge::gl::getDefaultContext()->glPathGlyphIndexRangeNV(fontTarget,fontName,fontStyle,pathParameterTemplate,emScale,baseAndCount);}
 void ge::gl::glColorPointer(GLint size,GLenum type,GLsizei stride,const GLvoid* ptr){ge::gl::getDefaultContext()->glColorPointer(size,type,stride,ptr);}
 void ge::gl::glProgramEnvParameterI4ivNV(GLenum target,GLuint index,const GLint* params){ge::gl::getDefaultContext()->glProgramEnvParameterI4ivNV(target,index,params);}
+void ge::gl::glMulticastGetQueryObjectui64vNV(GLuint gpu,GLuint id,GLenum pname,GLuint64* params){ge::gl::getDefaultContext()->glMulticastGetQueryObjectui64vNV(gpu,id,pname,params);}
 void ge::gl::glMultiTexParameterfEXT(GLenum texunit,GLenum target,GLenum pname,GLfloat param){ge::gl::getDefaultContext()->glMultiTexParameterfEXT(texunit,target,pname,param);}
 void ge::gl::glNamedFramebufferTextureLayer(GLuint framebuffer,GLenum attachment,GLuint texture,GLint level,GLint layer){ge::gl::getDefaultContext()->glNamedFramebufferTextureLayer(framebuffer,attachment,texture,level,layer);}
 void ge::gl::glGetVertexArrayIntegervEXT(GLuint vaobj,GLenum pname,GLint* param){ge::gl::getDefaultContext()->glGetVertexArrayIntegervEXT(vaobj,pname,param);}
@@ -1521,6 +1558,7 @@ void ge::gl::glFragmentLightfSGIX(GLenum light,GLenum pname,GLfloat param){ge::g
 void ge::gl::glTexStorage3D(GLenum target,GLsizei levels,GLenum internalformat,GLsizei width,GLsizei height,GLsizei depth){ge::gl::getDefaultContext()->glTexStorage3D(target,levels,internalformat,width,height,depth);}
 void ge::gl::glTextureParameteriv(GLuint texture,GLenum pname,const GLint* param){ge::gl::getDefaultContext()->glTextureParameteriv(texture,pname,param);}
 void ge::gl::glNamedBufferDataEXT(GLuint buffer,GLsizeiptr size,const void* data,GLenum usage){ge::gl::getDefaultContext()->glNamedBufferDataEXT(buffer,size,data,usage);}
+void ge::gl::glImportSemaphoreWin32NameEXT(GLuint semaphore,GLenum handleType,const void* name){ge::gl::getDefaultContext()->glImportSemaphoreWin32NameEXT(semaphore,handleType,name);}
 void ge::gl::glMultiTexCoord3fvARB(GLenum target,const GLfloat* v){ge::gl::getDefaultContext()->glMultiTexCoord3fvARB(target,v);}
 void ge::gl::glUniformMatrix3x4fv(GLint location,GLsizei count,GLboolean transpose,const GLfloat* value){ge::gl::getDefaultContext()->glUniformMatrix3x4fv(location,count,transpose,value);}
 void ge::gl::glSubpixelPrecisionBiasNV(GLuint xbits,GLuint ybits){ge::gl::getDefaultContext()->glSubpixelPrecisionBiasNV(xbits,ybits);}
@@ -1627,14 +1665,17 @@ void ge::gl::glClearIndex(GLfloat c){ge::gl::getDefaultContext()->glClearIndex(c
 void ge::gl::glProvokingVertexEXT(GLenum mode){ge::gl::getDefaultContext()->glProvokingVertexEXT(mode);}
 void ge::gl::glVariantubvEXT(GLuint id,const GLubyte* addr){ge::gl::getDefaultContext()->glVariantubvEXT(id,addr);}
 void ge::gl::glFlush(){ge::gl::getDefaultContext()->glFlush();}
+void ge::gl::glFramebufferTexture2DEXT(GLenum target,GLenum attachment,GLenum textarget,GLuint texture,GLint level){ge::gl::getDefaultContext()->glFramebufferTexture2DEXT(target,attachment,textarget,texture,level);}
 void ge::gl::glGetColorTableParameterivEXT(GLenum target,GLenum pname,GLint* params){ge::gl::getDefaultContext()->glGetColorTableParameterivEXT(target,pname,params);}
 void ge::gl::glPresentFrameDualFillNV(GLuint video_slot,GLuint64EXT minPresentTime,GLuint beginPresentTimeId,GLuint presentDurationId,GLenum type,GLenum target0,GLuint fill0,GLenum target1,GLuint fill1,GLenum target2,GLuint fill2,GLenum target3,GLuint fill3){ge::gl::getDefaultContext()->glPresentFrameDualFillNV(video_slot,minPresentTime,beginPresentTimeId,presentDurationId,type,target0,fill0,target1,fill1,target2,fill2,target3,fill3);}
 GLuint ge::gl::glGenVertexShadersEXT(GLuint range){return ge::gl::getDefaultContext()->glGenVertexShadersEXT(range);}
+void ge::gl::glSpecializeShaderARB(GLuint shader,const GLchar* pEntryPoint,GLuint numSpecializationConstants,const GLuint* pConstantIndex,const GLuint* pConstantValue){ge::gl::getDefaultContext()->glSpecializeShaderARB(shader,pEntryPoint,numSpecializationConstants,pConstantIndex,pConstantValue);}
 void ge::gl::glProgramUniformHandleui64vARB(GLuint program,GLint location,GLsizei count,const GLuint64* values){ge::gl::getDefaultContext()->glProgramUniformHandleui64vARB(program,location,count,values);}
 void ge::gl::glDepthRangefOES(GLclampf n,GLclampf f){ge::gl::getDefaultContext()->glDepthRangefOES(n,f);}
+void ge::gl::glDeleteVertexArrays(GLsizei n,const GLuint* arrays){ge::gl::getDefaultContext()->glDeleteVertexArrays(n,arrays);}
 void ge::gl::glDrawElementsInstancedBaseVertexBaseInstance(GLenum mode,GLsizei count,GLenum type,const void* indices,GLsizei instancecount,GLint basevertex,GLuint baseinstance){ge::gl::getDefaultContext()->glDrawElementsInstancedBaseVertexBaseInstance(mode,count,type,indices,instancecount,basevertex,baseinstance);}
 void ge::gl::glGetTexLevelParameteriv(GLenum target,GLint level,GLenum pname,GLint* params){ge::gl::getDefaultContext()->glGetTexLevelParameteriv(target,level,pname,params);}
-void ge::gl::glStencilFillPathNV(GLuint path,GLenum fillMode,GLuint mask){ge::gl::getDefaultContext()->glStencilFillPathNV(path,fillMode,mask);}
+void ge::gl::glDrawVkImageNV(GLuint64 vkImage,GLuint sampler,GLfloat x0,GLfloat y0,GLfloat x1,GLfloat y1,GLfloat z,GLfloat s0,GLfloat t0,GLfloat s1,GLfloat t1){ge::gl::getDefaultContext()->glDrawVkImageNV(vkImage,sampler,x0,y0,x1,y1,z,s0,t0,s1,t1);}
 void ge::gl::glWindowPos3iARB(GLint x,GLint y,GLint z){ge::gl::getDefaultContext()->glWindowPos3iARB(x,y,z);}
 void ge::gl::glPrioritizeTextures(GLsizei n,const GLuint* textures,const GLclampf* priorities){ge::gl::getDefaultContext()->glPrioritizeTextures(n,textures,priorities);}
 void ge::gl::glWindowPos3fvMESA(const GLfloat* v){ge::gl::getDefaultContext()->glWindowPos3fvMESA(v);}
@@ -1735,6 +1776,8 @@ void ge::gl::glClearTexImage(GLuint texture,GLint level,GLenum format,GLenum typ
 void ge::gl::glBinormal3bvEXT(const GLbyte* v){ge::gl::getDefaultContext()->glBinormal3bvEXT(v);}
 void ge::gl::glUniform3fv(GLint location,GLsizei count,const GLfloat* value){ge::gl::getDefaultContext()->glUniform3fv(location,count,value);}
 void ge::gl::glGetnPixelMapusvARB(GLenum map,GLsizei bufSize,GLushort* values){ge::gl::getDefaultContext()->glGetnPixelMapusvARB(map,bufSize,values);}
+void ge::gl::glMemoryObjectParameterivEXT(GLuint memoryObject,GLenum pname,const GLint* params){ge::gl::getDefaultContext()->glMemoryObjectParameterivEXT(memoryObject,pname,params);}
+void ge::gl::glGenSemaphoresEXT(GLsizei n,GLuint* semaphores){ge::gl::getDefaultContext()->glGenSemaphoresEXT(n,semaphores);}
 void ge::gl::glMultiTexCoordP1ui(GLenum texture,GLenum type,GLuint coords){ge::gl::getDefaultContext()->glMultiTexCoordP1ui(texture,type,coords);}
 void ge::gl::glClearNamedBufferDataEXT(GLuint buffer,GLenum internalformat,GLenum format,GLenum type,const void* data){ge::gl::getDefaultContext()->glClearNamedBufferDataEXT(buffer,internalformat,format,type,data);}
 void ge::gl::glUniformMatrix4dv(GLint location,GLsizei count,GLboolean transpose,const GLdouble* value){ge::gl::getDefaultContext()->glUniformMatrix4dv(location,count,transpose,value);}
@@ -1880,6 +1923,7 @@ void ge::gl::glClientActiveTexture(GLenum texture){ge::gl::getDefaultContext()->
 void ge::gl::glMultiTexParameterIivEXT(GLenum texunit,GLenum target,GLenum pname,const GLint* params){ge::gl::getDefaultContext()->glMultiTexParameterIivEXT(texunit,target,pname,params);}
 void ge::gl::glUniform1i64ARB(GLint location,GLint64 x){ge::gl::getDefaultContext()->glUniform1i64ARB(location,x);}
 void ge::gl::glUniform1iv(GLint location,GLsizei count,const GLint* value){ge::gl::getDefaultContext()->glUniform1iv(location,count,value);}
+void ge::gl::glMulticastBarrierNV(){ge::gl::getDefaultContext()->glMulticastBarrierNV();}
 void ge::gl::glVertexAttribArrayObjectATI(GLuint index,GLint size,GLenum type,GLboolean normalized,GLsizei stride,GLuint buffer,GLuint offset){ge::gl::getDefaultContext()->glVertexAttribArrayObjectATI(index,size,type,normalized,stride,buffer,offset);}
 void ge::gl::glUniform2iARB(GLint location,GLint v0,GLint v1){ge::gl::getDefaultContext()->glUniform2iARB(location,v0,v1);}
 void ge::gl::glDrawArraysInstanced(GLenum mode,GLint first,GLsizei count,GLsizei instancecount){ge::gl::getDefaultContext()->glDrawArraysInstanced(mode,first,count,instancecount);}
@@ -1943,6 +1987,7 @@ void ge::gl::glGetUniformivARB(GLhandleARB programObj,GLint location,GLint* para
 void ge::gl::glLoadTransposeMatrixd(const GLdouble m[16]){ge::gl::getDefaultContext()->glLoadTransposeMatrixd(m);}
 void ge::gl::glLoadTransposeMatrixf(const GLfloat m[16]){ge::gl::getDefaultContext()->glLoadTransposeMatrixf(m);}
 void ge::gl::glGetPointervEXT(GLenum pname,void** params){ge::gl::getDefaultContext()->glGetPointervEXT(pname,params);}
+void ge::gl::glSignalVkSemaphoreNV(GLuint64 vkSemaphore){ge::gl::getDefaultContext()->glSignalVkSemaphoreNV(vkSemaphore);}
 void ge::gl::glEndConditionalRenderNV(){ge::gl::getDefaultContext()->glEndConditionalRenderNV();}
 void ge::gl::glTexCoord2fNormal3fVertex3fSUN(GLfloat s,GLfloat t,GLfloat nx,GLfloat ny,GLfloat nz,GLfloat x,GLfloat y,GLfloat z){ge::gl::getDefaultContext()->glTexCoord2fNormal3fVertex3fSUN(s,t,nx,ny,nz,x,y,z);}
 void ge::gl::glUniform3i64vARB(GLint location,GLsizei count,const GLint64* value){ge::gl::getDefaultContext()->glUniform3i64vARB(location,count,value);}
@@ -2062,11 +2107,13 @@ void ge::gl::glGetPixelMapxv(GLenum map,GLint size,GLfixed* values){ge::gl::getD
 void ge::gl::glFramebufferSampleLocationsfvARB(GLenum target,GLuint start,GLsizei count,const GLfloat* v){ge::gl::getDefaultContext()->glFramebufferSampleLocationsfvARB(target,start,count,v);}
 void ge::gl::glGetLightiv(GLenum light,GLenum pname,GLint* params){ge::gl::getDefaultContext()->glGetLightiv(light,pname,params);}
 void ge::gl::glBlendFuncSeparatei(GLuint buf,GLenum srcRGB,GLenum dstRGB,GLenum srcAlpha,GLenum dstAlpha){ge::gl::getDefaultContext()->glBlendFuncSeparatei(buf,srcRGB,dstRGB,srcAlpha,dstAlpha);}
+GLboolean ge::gl::glAcquireKeyedMutexWin32EXT(GLuint memory,GLuint64 key,GLuint timeout){return ge::gl::getDefaultContext()->glAcquireKeyedMutexWin32EXT(memory,key,timeout);}
 void ge::gl::glGetBooleanIndexedvEXT(GLenum target,GLuint index,GLboolean* data){ge::gl::getDefaultContext()->glGetBooleanIndexedvEXT(target,index,data);}
 void ge::gl::glGetProgramSubroutineParameteruivNV(GLenum target,GLuint index,GLuint* param){ge::gl::getDefaultContext()->glGetProgramSubroutineParameteruivNV(target,index,param);}
 void ge::gl::glUniform2ui(GLint location,GLuint v0,GLuint v1){ge::gl::getDefaultContext()->glUniform2ui(location,v0,v1);}
 void ge::gl::glApplyFramebufferAttachmentCMAAINTEL(){ge::gl::getDefaultContext()->glApplyFramebufferAttachmentCMAAINTEL();}
 void ge::gl::glWindowPos2fv(const GLfloat* v){ge::gl::getDefaultContext()->glWindowPos2fv(v);}
+void ge::gl::glWaitVkSemaphoreNV(GLuint64 vkSemaphore){ge::gl::getDefaultContext()->glWaitVkSemaphoreNV(vkSemaphore);}
 void ge::gl::glDisablei(GLenum target,GLuint index){ge::gl::getDefaultContext()->glDisablei(target,index);}
 void ge::gl::glSelectPerfMonitorCountersAMD(GLuint monitor,GLboolean enable,GLuint group,GLint numCounters,GLuint* counterList){ge::gl::getDefaultContext()->glSelectPerfMonitorCountersAMD(monitor,enable,group,numCounters,counterList);}
 void ge::gl::glGetVertexAttribLi64vNV(GLuint index,GLenum pname,GLint64EXT* params){ge::gl::getDefaultContext()->glGetVertexAttribLi64vNV(index,pname,params);}
@@ -2075,6 +2122,7 @@ void ge::gl::glWeightuivARB(GLint size,const GLuint* weights){ge::gl::getDefault
 void ge::gl::glWindowPos2iARB(GLint x,GLint y){ge::gl::getDefaultContext()->glWindowPos2iARB(x,y);}
 void ge::gl::glGetProgramLocalParameterdvARB(GLenum target,GLuint index,GLdouble* params){ge::gl::getDefaultContext()->glGetProgramLocalParameterdvARB(target,index,params);}
 void ge::gl::glGetUniformui64vARB(GLuint program,GLint location,GLuint64* params){ge::gl::getDefaultContext()->glGetUniformui64vARB(program,location,params);}
+void ge::gl::glSecondaryColor3us(GLushort red,GLushort green,GLushort blue){ge::gl::getDefaultContext()->glSecondaryColor3us(red,green,blue);}
 void ge::gl::glGetSynciv(GLsync sync,GLenum pname,GLsizei bufSize,GLsizei* length,GLint* values){ge::gl::getDefaultContext()->glGetSynciv(sync,pname,bufSize,length,values);}
 void ge::gl::glMakeImageHandleResidentARB(GLuint64 handle,GLenum access){ge::gl::getDefaultContext()->glMakeImageHandleResidentARB(handle,access);}
 void ge::gl::glGetProgramNamedParameterfvNV(GLuint id,GLsizei len,const GLubyte* name,GLfloat* params){ge::gl::getDefaultContext()->glGetProgramNamedParameterfvNV(id,len,name,params);}
@@ -2099,7 +2147,7 @@ void ge::gl::glConvolutionParameterfvEXT(GLenum target,GLenum pname,const GLfloa
 void ge::gl::glBlitFramebufferEXT(GLint srcX0,GLint srcY0,GLint srcX1,GLint srcY1,GLint dstX0,GLint dstY0,GLint dstX1,GLint dstY1,GLbitfield mask,GLenum filter){ge::gl::getDefaultContext()->glBlitFramebufferEXT(srcX0,srcY0,srcX1,srcY1,dstX0,dstY0,dstX1,dstY1,mask,filter);}
 void ge::gl::glUniformMatrix4fvARB(GLint location,GLsizei count,GLboolean transpose,const GLfloat* value){ge::gl::getDefaultContext()->glUniformMatrix4fvARB(location,count,transpose,value);}
 void ge::gl::glProgramEnvParameter4dvARB(GLenum target,GLuint index,const GLdouble* params){ge::gl::getDefaultContext()->glProgramEnvParameter4dvARB(target,index,params);}
-void ge::gl::glSecondaryColor3hNV(GLhalfNV red,GLhalfNV green,GLhalfNV blue){ge::gl::getDefaultContext()->glSecondaryColor3hNV(red,green,blue);}
+void ge::gl::glTextureStorageMem2DEXT(GLuint texture,GLsizei levels,GLenum internalFormat,GLsizei width,GLsizei height,GLuint memory,GLuint64 offset){ge::gl::getDefaultContext()->glTextureStorageMem2DEXT(texture,levels,internalFormat,width,height,memory,offset);}
 void ge::gl::glVertexAttribP3uiv(GLuint index,GLenum type,GLboolean normalized,const GLuint* value){ge::gl::getDefaultContext()->glVertexAttribP3uiv(index,type,normalized,value);}
 void ge::gl::glFogCoordFormatNV(GLenum type,GLsizei stride){ge::gl::getDefaultContext()->glFogCoordFormatNV(type,stride);}
 void ge::gl::glGetMultiTexLevelParameterivEXT(GLenum texunit,GLenum target,GLint level,GLenum pname,GLint* params){ge::gl::getDefaultContext()->glGetMultiTexLevelParameterivEXT(texunit,target,level,pname,params);}
@@ -2173,6 +2221,7 @@ void ge::gl::glGetCompressedTextureImage(GLuint texture,GLint level,GLsizei bufS
 void ge::gl::glGetUniformuivEXT(GLuint program,GLint location,GLuint* params){ge::gl::getDefaultContext()->glGetUniformuivEXT(program,location,params);}
 void ge::gl::glGetnPixelMapfvARB(GLenum map,GLsizei bufSize,GLfloat* values){ge::gl::getDefaultContext()->glGetnPixelMapfvARB(map,bufSize,values);}
 void ge::gl::glFramebufferTextureEXT(GLenum target,GLenum attachment,GLuint texture,GLint level){ge::gl::getDefaultContext()->glFramebufferTextureEXT(target,attachment,texture,level);}
+void ge::gl::glMultiDrawElementsIndirectCount(GLenum mode,GLenum type,const void* indirect,GLintptr drawcount,GLsizei maxdrawcount,GLsizei stride){ge::gl::getDefaultContext()->glMultiDrawElementsIndirectCount(mode,type,indirect,drawcount,maxdrawcount,stride);}
 void ge::gl::glVertexAttribIPointer(GLuint index,GLint size,GLenum type,GLsizei stride,const void* pointer){ge::gl::getDefaultContext()->glVertexAttribIPointer(index,size,type,stride,pointer);}
 void ge::gl::glMultiTexCoordP3ui(GLenum texture,GLenum type,GLuint coords){ge::gl::getDefaultContext()->glMultiTexCoordP3ui(texture,type,coords);}
 void ge::gl::glEvaluateDepthValuesARB(){ge::gl::getDefaultContext()->glEvaluateDepthValuesARB();}
@@ -2286,6 +2335,7 @@ GLboolean ge::gl::glIsShader(GLuint shader){return ge::gl::getDefaultContext()->
 void ge::gl::glConvolutionParameteriv(GLenum target,GLenum pname,const GLint* params){ge::gl::getDefaultContext()->glConvolutionParameteriv(target,pname,params);}
 void ge::gl::glCopyMultiTexSubImage2DEXT(GLenum texunit,GLenum target,GLint level,GLint xoffset,GLint yoffset,GLint x,GLint y,GLsizei width,GLsizei height){ge::gl::getDefaultContext()->glCopyMultiTexSubImage2DEXT(texunit,target,level,xoffset,yoffset,x,y,width,height);}
 void ge::gl::glEnableVertexAttribArrayARB(GLuint index){ge::gl::getDefaultContext()->glEnableVertexAttribArrayARB(index);}
+void ge::gl::glMulticastCopyBufferSubDataNV(GLuint readGpu,GLbitfield writeGpuMask,GLuint readBuffer,GLuint writeBuffer,GLintptr readOffset,GLintptr writeOffset,GLsizeiptr size){ge::gl::getDefaultContext()->glMulticastCopyBufferSubDataNV(readGpu,writeGpuMask,readBuffer,writeBuffer,readOffset,writeOffset,size);}
 void ge::gl::glEnable(GLenum cap){ge::gl::getDefaultContext()->glEnable(cap);}
 void ge::gl::glGetActiveUniformsiv(GLuint program,GLsizei uniformCount,const GLuint* uniformIndices,GLenum pname,GLint* params){ge::gl::getDefaultContext()->glGetActiveUniformsiv(program,uniformCount,uniformIndices,pname,params);}
 void ge::gl::glGetVertexAttribivARB(GLuint index,GLenum pname,GLint* params){ge::gl::getDefaultContext()->glGetVertexAttribivARB(index,pname,params);}
@@ -2294,6 +2344,7 @@ void ge::gl::glUseProgramObjectARB(GLhandleARB programObj){ge::gl::getDefaultCon
 GLint ge::gl::glGetAttribLocation(GLuint program,const GLchar* name){return ge::gl::getDefaultContext()->glGetAttribLocation(program,name);}
 void ge::gl::glVertexAttrib4dv(GLuint index,const GLdouble* v){ge::gl::getDefaultContext()->glVertexAttrib4dv(index,v);}
 void ge::gl::glGetTextureParameteriv(GLuint texture,GLenum pname,GLint* params){ge::gl::getDefaultContext()->glGetTextureParameteriv(texture,pname,params);}
+void ge::gl::glNamedBufferStorageMemEXT(GLuint buffer,GLsizeiptr size,GLuint memory,GLuint64 offset){ge::gl::getDefaultContext()->glNamedBufferStorageMemEXT(buffer,size,memory,offset);}
 void ge::gl::glPathSubCoordsNV(GLuint path,GLsizei coordStart,GLsizei numCoords,GLenum coordType,const void* coords){ge::gl::getDefaultContext()->glPathSubCoordsNV(path,coordStart,numCoords,coordType,coords);}
 void ge::gl::glMatrixIndexusvARB(GLint size,const GLushort* indices){ge::gl::getDefaultContext()->glMatrixIndexusvARB(size,indices);}
 void ge::gl::glGetVideouivNV(GLuint video_slot,GLenum pname,GLuint* params){ge::gl::getDefaultContext()->glGetVideouivNV(video_slot,pname,params);}
@@ -2304,6 +2355,7 @@ void ge::gl::glGetNamedBufferParameterivEXT(GLuint buffer,GLenum pname,GLint* pa
 void ge::gl::glMatrixScaledEXT(GLenum mode,GLdouble x,GLdouble y,GLdouble z){ge::gl::getDefaultContext()->glMatrixScaledEXT(mode,x,y,z);}
 void ge::gl::glProgramUniformMatrix2x3fv(GLuint program,GLint location,GLsizei count,GLboolean transpose,const GLfloat* value){ge::gl::getDefaultContext()->glProgramUniformMatrix2x3fv(program,location,count,transpose,value);}
 void ge::gl::glGetFragmentLightivSGIX(GLenum light,GLenum pname,GLint* params){ge::gl::getDefaultContext()->glGetFragmentLightivSGIX(light,pname,params);}
+const GLubyte* ge::gl::glGetStringi(GLenum name,GLuint index){return ge::gl::getDefaultContext()->glGetStringi(name,index);}
 void ge::gl::glWindowPos2svARB(const GLshort* v){ge::gl::getDefaultContext()->glWindowPos2svARB(v);}
 void ge::gl::glVertexAttrib2svNV(GLuint index,const GLshort* v){ge::gl::getDefaultContext()->glVertexAttrib2svNV(index,v);}
 void ge::gl::glWindowPos2ivARB(const GLint* v){ge::gl::getDefaultContext()->glWindowPos2ivARB(v);}
@@ -2328,8 +2380,8 @@ void ge::gl::glFramebufferReadBufferEXT(GLuint framebuffer,GLenum mode){ge::gl::
 void ge::gl::glExtractComponentEXT(GLuint res,GLuint src,GLuint num){ge::gl::getDefaultContext()->glExtractComponentEXT(res,src,num);}
 void ge::gl::glCombinerParameterivNV(GLenum pname,const GLint* params){ge::gl::getDefaultContext()->glCombinerParameterivNV(pname,params);}
 void ge::gl::glMinmax(GLenum target,GLenum internalformat,GLboolean sink){ge::gl::getDefaultContext()->glMinmax(target,internalformat,sink);}
-void ge::gl::glGenBuffersARB(GLsizei n,GLuint* buffers){ge::gl::getDefaultContext()->glGenBuffersARB(n,buffers);}
-void ge::gl::glColor3usv(const GLushort* v){ge::gl::getDefaultContext()->glColor3usv(v);}
+void ge::gl::glColorP3ui(GLenum type,GLuint color){ge::gl::getDefaultContext()->glColorP3ui(type,color);}
+void ge::gl::glPointParameterfvSGIS(GLenum pname,const GLfloat* params){ge::gl::getDefaultContext()->glPointParameterfvSGIS(pname,params);}
 void ge::gl::glBlendEquationi(GLuint buf,GLenum mode){ge::gl::getDefaultContext()->glBlendEquationi(buf,mode);}
 void ge::gl::glGetFogFuncSGIS(GLfloat* points){ge::gl::getDefaultContext()->glGetFogFuncSGIS(points);}
 void ge::gl::glVertexAttrib4fvNV(GLuint index,const GLfloat* v){ge::gl::getDefaultContext()->glVertexAttrib4fvNV(index,v);}
@@ -2339,6 +2391,7 @@ void ge::gl::glMultiTexCoord1bvOES(GLenum texture,const GLbyte* coords){ge::gl::
 void ge::gl::glSecondaryColorPointerEXT(GLint size,GLenum type,GLsizei stride,const void* pointer){ge::gl::getDefaultContext()->glSecondaryColorPointerEXT(size,type,stride,pointer);}
 void ge::gl::glMultiTexCoordP4uiv(GLenum texture,GLenum type,const GLuint* coords){ge::gl::getDefaultContext()->glMultiTexCoordP4uiv(texture,type,coords);}
 void ge::gl::glGetBufferSubDataARB(GLenum target,GLintptrARB offset,GLsizeiptrARB size,void* data){ge::gl::getDefaultContext()->glGetBufferSubDataARB(target,offset,size,data);}
+void ge::gl::glSecondaryColor3hNV(GLhalfNV red,GLhalfNV green,GLhalfNV blue){ge::gl::getDefaultContext()->glSecondaryColor3hNV(red,green,blue);}
 void ge::gl::glGetPathParameterivNV(GLuint path,GLenum pname,GLint* value){ge::gl::getDefaultContext()->glGetPathParameterivNV(path,pname,value);}
 void ge::gl::glFlushRasterSGIX(){ge::gl::getDefaultContext()->glFlushRasterSGIX();}
 void ge::gl::glElementPointerATI(GLenum type,const void* pointer){ge::gl::getDefaultContext()->glElementPointerATI(type,pointer);}
@@ -2348,6 +2401,7 @@ void ge::gl::glFogxOES(GLenum pname,GLfixed param){ge::gl::getDefaultContext()->
 void ge::gl::glSharpenTexFuncSGIS(GLenum target,GLsizei n,const GLfloat* points){ge::gl::getDefaultContext()->glSharpenTexFuncSGIS(target,n,points);}
 void ge::gl::glClearDepthfOES(GLclampf depth){ge::gl::getDefaultContext()->glClearDepthfOES(depth);}
 void ge::gl::glDeleteCommandListsNV(GLsizei n,const GLuint* lists){ge::gl::getDefaultContext()->glDeleteCommandListsNV(n,lists);}
+void ge::gl::glSpecializeShader(GLuint shader,const GLchar* pEntryPoint,GLuint numSpecializationConstants,const GLuint* pConstantIndex,const GLuint* pConstantValue){ge::gl::getDefaultContext()->glSpecializeShader(shader,pEntryPoint,numSpecializationConstants,pConstantIndex,pConstantValue);}
 void ge::gl::glVertex4hNV(GLhalfNV x,GLhalfNV y,GLhalfNV z,GLhalfNV w){ge::gl::getDefaultContext()->glVertex4hNV(x,y,z,w);}
 void ge::gl::glSecondaryColor3dvEXT(const GLdouble* v){ge::gl::getDefaultContext()->glSecondaryColor3dvEXT(v);}
 void ge::gl::glGenTextures(GLsizei n,GLuint* textures){ge::gl::getDefaultContext()->glGenTextures(n,textures);}
@@ -2423,14 +2477,17 @@ void ge::gl::glFragmentMaterialivSGIX(GLenum face,GLenum pname,const GLint* para
 void ge::gl::glLinkProgramARB(GLhandleARB programObj){ge::gl::getDefaultContext()->glLinkProgramARB(programObj);}
 void ge::gl::glFinishFenceAPPLE(GLuint fence){ge::gl::getDefaultContext()->glFinishFenceAPPLE(fence);}
 void ge::gl::glVertexArrayVertexAttribBindingEXT(GLuint vaobj,GLuint attribindex,GLuint bindingindex){ge::gl::getDefaultContext()->glVertexArrayVertexAttribBindingEXT(vaobj,attribindex,bindingindex);}
+void ge::gl::glTexStorageMem3DMultisampleEXT(GLenum target,GLsizei samples,GLenum internalFormat,GLsizei width,GLsizei height,GLsizei depth,GLboolean fixedSampleLocations,GLuint memory,GLuint64 offset){ge::gl::getDefaultContext()->glTexStorageMem3DMultisampleEXT(target,samples,internalFormat,width,height,depth,fixedSampleLocations,memory,offset);}
+void ge::gl::glUniform1ui64vARB(GLint location,GLsizei count,const GLuint64* value){ge::gl::getDefaultContext()->glUniform1ui64vARB(location,count,value);}
 void ge::gl::glMultiTexCoord4fv(GLenum target,const GLfloat* v){ge::gl::getDefaultContext()->glMultiTexCoord4fv(target,v);}
-void ge::gl::glRasterPos3i(GLint x,GLint y,GLint z){ge::gl::getDefaultContext()->glRasterPos3i(x,y,z);}
+void ge::gl::glMulticastFramebufferSampleLocationsfvNV(GLuint gpu,GLuint framebuffer,GLuint start,GLsizei count,const GLfloat* v){ge::gl::getDefaultContext()->glMulticastFramebufferSampleLocationsfvNV(gpu,framebuffer,start,count,v);}
 void ge::gl::glRasterPos3d(GLdouble x,GLdouble y,GLdouble z){ge::gl::getDefaultContext()->glRasterPos3d(x,y,z);}
 GLint ge::gl::glPollAsyncSGIX(GLuint* markerp){return ge::gl::getDefaultContext()->glPollAsyncSGIX(markerp);}
 void ge::gl::glRasterPos3f(GLfloat x,GLfloat y,GLfloat z){ge::gl::getDefaultContext()->glRasterPos3f(x,y,z);}
 void ge::gl::glCompressedTexImage3D(GLenum target,GLint level,GLenum internalformat,GLsizei width,GLsizei height,GLsizei depth,GLint border,GLsizei imageSize,const GLvoid* data){ge::gl::getDefaultContext()->glCompressedTexImage3D(target,level,internalformat,width,height,depth,border,imageSize,data);}
 void ge::gl::glVariantivEXT(GLuint id,const GLint* addr){ge::gl::getDefaultContext()->glVariantivEXT(id,addr);}
 void ge::gl::glUnmapTexture2DINTEL(GLuint texture,GLint level){ge::gl::getDefaultContext()->glUnmapTexture2DINTEL(texture,level);}
+void ge::gl::glMulticastWaitSyncNV(GLuint signalGpu,GLbitfield waitGpuMask){ge::gl::getDefaultContext()->glMulticastWaitSyncNV(signalGpu,waitGpuMask);}
 void ge::gl::glGetVertexAttribiv(GLuint index,GLenum pname,GLint* params){ge::gl::getDefaultContext()->glGetVertexAttribiv(index,pname,params);}
 void ge::gl::glGetPathCoordsNV(GLuint path,GLfloat* coords){ge::gl::getDefaultContext()->glGetPathCoordsNV(path,coords);}
 void ge::gl::glColor4xvOES(const GLfixed* components){ge::gl::getDefaultContext()->glColor4xvOES(components);}
@@ -2466,6 +2523,7 @@ void ge::gl::glCompressedTexSubImage1D(GLenum target,GLint level,GLint xoffset,G
 void ge::gl::glSetFenceNV(GLuint fence,GLenum condition){ge::gl::getDefaultContext()->glSetFenceNV(fence,condition);}
 void ge::gl::glAttachObjectARB(GLhandleARB containerObj,GLhandleARB obj){ge::gl::getDefaultContext()->glAttachObjectARB(containerObj,obj);}
 void ge::gl::glCopyConvolutionFilter1D(GLenum target,GLenum internalformat,GLint x,GLint y,GLsizei width){ge::gl::getDefaultContext()->glCopyConvolutionFilter1D(target,internalformat,x,y,width);}
+void ge::gl::glTexStorageMem2DMultisampleEXT(GLenum target,GLsizei samples,GLenum internalFormat,GLsizei width,GLsizei height,GLboolean fixedSampleLocations,GLuint memory,GLuint64 offset){ge::gl::getDefaultContext()->glTexStorageMem2DMultisampleEXT(target,samples,internalFormat,width,height,fixedSampleLocations,memory,offset);}
 void ge::gl::glProgramParameters4fvNV(GLenum target,GLuint index,GLsizei count,const GLfloat* v){ge::gl::getDefaultContext()->glProgramParameters4fvNV(target,index,count,v);}
 void ge::gl::glNamedFramebufferParameteriEXT(GLuint framebuffer,GLenum pname,GLint param){ge::gl::getDefaultContext()->glNamedFramebufferParameteriEXT(framebuffer,pname,param);}
 void ge::gl::glVertexAttrib4Nsv(GLuint index,const GLshort* v){ge::gl::getDefaultContext()->glVertexAttrib4Nsv(index,v);}
@@ -2499,9 +2557,9 @@ void ge::gl::glGetNamedFramebufferAttachmentParameterivEXT(GLuint framebuffer,GL
 void ge::gl::glGetFloatv(GLenum pname,GLfloat* params){ge::gl::getDefaultContext()->glGetFloatv(pname,params);}
 void ge::gl::glVertexArrayVertexAttribIFormatEXT(GLuint vaobj,GLuint attribindex,GLint size,GLenum type,GLuint relativeoffset){ge::gl::getDefaultContext()->glVertexArrayVertexAttribIFormatEXT(vaobj,attribindex,size,type,relativeoffset);}
 void ge::gl::glHint(GLenum target,GLenum mode){ge::gl::getDefaultContext()->glHint(target,mode);}
-GLboolean ge::gl::glPointAlongPathNV(GLuint path,GLsizei startSegment,GLsizei numSegments,GLfloat distance,GLfloat* x,GLfloat* y,GLfloat* tangentX,GLfloat* tangentY){return ge::gl::getDefaultContext()->glPointAlongPathNV(path,startSegment,numSegments,distance,x,y,tangentX,tangentY);}
 void ge::gl::glVertexStream2svATI(GLenum stream,const GLshort* coords){ge::gl::getDefaultContext()->glVertexStream2svATI(stream,coords);}
 void ge::gl::glMultiDrawArraysIndirect(GLenum mode,const void* indirect,GLsizei drawcount,GLsizei stride){ge::gl::getDefaultContext()->glMultiDrawArraysIndirect(mode,indirect,drawcount,stride);}
+void ge::gl::glMultiTexEnvfvEXT(GLenum texunit,GLenum target,GLenum pname,const GLfloat* params){ge::gl::getDefaultContext()->glMultiTexEnvfvEXT(texunit,target,pname,params);}
 void ge::gl::glVertexAttribP2uiv(GLuint index,GLenum type,GLboolean normalized,const GLuint* value){ge::gl::getDefaultContext()->glVertexAttribP2uiv(index,type,normalized,value);}
 void ge::gl::glProgramUniform1i64vARB(GLuint program,GLint location,GLsizei count,const GLint64* value){ge::gl::getDefaultContext()->glProgramUniform1i64vARB(program,location,count,value);}
 void ge::gl::glFramebufferTextureARB(GLenum target,GLenum attachment,GLuint texture,GLint level){ge::gl::getDefaultContext()->glFramebufferTextureARB(target,attachment,texture,level);}
@@ -2519,11 +2577,13 @@ void ge::gl::glStencilOpSeparate(GLenum face,GLenum sfail,GLenum dpfail,GLenum d
 void ge::gl::glVertexAttrib4fNV(GLuint index,GLfloat x,GLfloat y,GLfloat z,GLfloat w){ge::gl::getDefaultContext()->glVertexAttrib4fNV(index,x,y,z,w);}
 void ge::gl::glGetColorTableParameterivSGI(GLenum target,GLenum pname,GLint* params){ge::gl::getDefaultContext()->glGetColorTableParameterivSGI(target,pname,params);}
 void ge::gl::glVertexArrayAttribBinding(GLuint vaobj,GLuint attribindex,GLuint bindingindex){ge::gl::getDefaultContext()->glVertexArrayAttribBinding(vaobj,attribindex,bindingindex);}
+GLboolean ge::gl::glIsSemaphoreEXT(GLuint semaphore){return ge::gl::getDefaultContext()->glIsSemaphoreEXT(semaphore);}
 void ge::gl::glProgramParameters4dvNV(GLenum target,GLuint index,GLsizei count,const GLdouble* v){ge::gl::getDefaultContext()->glProgramParameters4dvNV(target,index,count,v);}
 void ge::gl::glVertexAttribL4dv(GLuint index,const GLdouble* v){ge::gl::getDefaultContext()->glVertexAttribL4dv(index,v);}
-void ge::gl::glVertexStream3dATI(GLenum stream,GLdouble x,GLdouble y,GLdouble z){ge::gl::getDefaultContext()->glVertexStream3dATI(stream,x,y,z);}
+void ge::gl::glGetTexParameteriv(GLenum target,GLenum pname,GLint* params){ge::gl::getDefaultContext()->glGetTexParameteriv(target,pname,params);}
 GLintptr ge::gl::glGetUniformOffsetEXT(GLuint program,GLint location){return ge::gl::getDefaultContext()->glGetUniformOffsetEXT(program,location);}
 void ge::gl::glGetVertexAttribPointerv(GLuint index,GLenum pname,void** pointer){ge::gl::getDefaultContext()->glGetVertexAttribPointerv(index,pname,pointer);}
+void ge::gl::glResumeTransformFeedbackNV(){ge::gl::getDefaultContext()->glResumeTransformFeedbackNV();}
 void ge::gl::glProgramUniform3i64vNV(GLuint program,GLint location,GLsizei count,const GLint64EXT* value){ge::gl::getDefaultContext()->glProgramUniform3i64vNV(program,location,count,value);}
 void ge::gl::glTangent3fEXT(GLfloat tx,GLfloat ty,GLfloat tz){ge::gl::getDefaultContext()->glTangent3fEXT(tx,ty,tz);}
 void ge::gl::glGetPathMetricRangeNV(GLbitfield metricQueryMask,GLuint firstPathName,GLsizei numPaths,GLsizei stride,GLfloat* metrics){ge::gl::getDefaultContext()->glGetPathMetricRangeNV(metricQueryMask,firstPathName,numPaths,stride,metrics);}
@@ -2547,6 +2607,7 @@ void ge::gl::glCopyTextureSubImage2D(GLuint texture,GLint level,GLint xoffset,GL
 void ge::gl::glGetProgramResourcefvNV(GLuint program,GLenum programInterface,GLuint index,GLsizei propCount,const GLenum* props,GLsizei bufSize,GLsizei* length,GLfloat* params){ge::gl::getDefaultContext()->glGetProgramResourcefvNV(program,programInterface,index,propCount,props,bufSize,length,params);}
 void ge::gl::glBinormalPointerEXT(GLenum type,GLsizei stride,const void* pointer){ge::gl::getDefaultContext()->glBinormalPointerEXT(type,stride,pointer);}
 void ge::gl::glGetLightfv(GLenum light,GLenum pname,GLfloat* params){ge::gl::getDefaultContext()->glGetLightfv(light,pname,params);}
+void ge::gl::glMulticastCopyImageSubDataNV(GLuint srcGpu,GLbitfield dstGpuMask,GLuint srcName,GLenum srcTarget,GLint srcLevel,GLint srcX,GLint srcY,GLint srcZ,GLuint dstName,GLenum dstTarget,GLint dstLevel,GLint dstX,GLint dstY,GLint dstZ,GLsizei srcWidth,GLsizei srcHeight,GLsizei srcDepth){ge::gl::getDefaultContext()->glMulticastCopyImageSubDataNV(srcGpu,dstGpuMask,srcName,srcTarget,srcLevel,srcX,srcY,srcZ,dstName,dstTarget,dstLevel,dstX,dstY,dstZ,srcWidth,srcHeight,srcDepth);}
 void ge::gl::glVertex2bOES(GLbyte x,GLbyte y){ge::gl::getDefaultContext()->glVertex2bOES(x,y);}
 void ge::gl::glUniform2ivARB(GLint location,GLsizei count,const GLint* value){ge::gl::getDefaultContext()->glUniform2ivARB(location,count,value);}
 void ge::gl::glMultiTexCoord3s(GLenum target,GLshort s,GLshort t,GLshort r){ge::gl::getDefaultContext()->glMultiTexCoord3s(target,s,t,r);}
@@ -2563,6 +2624,7 @@ void ge::gl::glFogCoorddv(const GLdouble* coord){ge::gl::getDefaultContext()->gl
 void ge::gl::glGetBufferPointerv(GLenum target,GLenum pname,void** params){ge::gl::getDefaultContext()->glGetBufferPointerv(target,pname,params);}
 void ge::gl::glProgramUniform1fEXT(GLuint program,GLint location,GLfloat v0){ge::gl::getDefaultContext()->glProgramUniform1fEXT(program,location,v0);}
 void ge::gl::glWindowPos2fvMESA(const GLfloat* v){ge::gl::getDefaultContext()->glWindowPos2fvMESA(v);}
+void ge::gl::glAlphaToCoverageDitherControlNV(GLenum mode){ge::gl::getDefaultContext()->glAlphaToCoverageDitherControlNV(mode);}
 void ge::gl::glPolygonOffsetxOES(GLfixed factor,GLfixed units){ge::gl::getDefaultContext()->glPolygonOffsetxOES(factor,units);}
 void ge::gl::glVertexAttrib4dARB(GLuint index,GLdouble x,GLdouble y,GLdouble z,GLdouble w){ge::gl::getDefaultContext()->glVertexAttrib4dARB(index,x,y,z,w);}
 void ge::gl::glUniformHandleui64vARB(GLint location,GLsizei count,const GLuint64* value){ge::gl::getDefaultContext()->glUniformHandleui64vARB(location,count,value);}
@@ -2570,7 +2632,8 @@ void ge::gl::glFragmentLightModelfvSGIX(GLenum pname,const GLfloat* params){ge::
 void ge::gl::glSwizzleEXT(GLuint res,GLuint in,GLenum outX,GLenum outY,GLenum outZ,GLenum outW){ge::gl::getDefaultContext()->glSwizzleEXT(res,in,outX,outY,outZ,outW);}
 void ge::gl::glBindFragmentShaderATI(GLuint id){ge::gl::getDefaultContext()->glBindFragmentShaderATI(id);}
 void ge::gl::glVertexAttribs3hvNV(GLuint index,GLsizei n,const GLhalfNV* v){ge::gl::getDefaultContext()->glVertexAttribs3hvNV(index,n,v);}
-void ge::gl::glColorP3ui(GLenum type,GLuint color){ge::gl::getDefaultContext()->glColorP3ui(type,color);}
+void ge::gl::glGenBuffersARB(GLsizei n,GLuint* buffers){ge::gl::getDefaultContext()->glGenBuffersARB(n,buffers);}
+void ge::gl::glTextureStorageMem2DMultisampleEXT(GLuint texture,GLsizei samples,GLenum internalFormat,GLsizei width,GLsizei height,GLboolean fixedSampleLocations,GLuint memory,GLuint64 offset){ge::gl::getDefaultContext()->glTextureStorageMem2DMultisampleEXT(texture,samples,internalFormat,width,height,fixedSampleLocations,memory,offset);}
 void ge::gl::glListParameterfvSGIX(GLuint list,GLenum pname,const GLfloat* params){ge::gl::getDefaultContext()->glListParameterfvSGIX(list,pname,params);}
 void ge::gl::glNamedRenderbufferStorageMultisample(GLuint renderbuffer,GLsizei samples,GLenum internalformat,GLsizei width,GLsizei height){ge::gl::getDefaultContext()->glNamedRenderbufferStorageMultisample(renderbuffer,samples,internalformat,width,height);}
 void ge::gl::glVertexAttribI1iEXT(GLuint index,GLint x){ge::gl::getDefaultContext()->glVertexAttribI1iEXT(index,x);}
@@ -2650,7 +2713,7 @@ void ge::gl::glGetCompressedTextureImageEXT(GLuint texture,GLenum target,GLint l
 void ge::gl::glIndexMaterialEXT(GLenum face,GLenum mode){ge::gl::getDefaultContext()->glIndexMaterialEXT(face,mode);}
 void ge::gl::glFogCoorddEXT(GLdouble coord){ge::gl::getDefaultContext()->glFogCoorddEXT(coord);}
 void ge::gl::glTexCoord2hvNV(const GLhalfNV* v){ge::gl::getDefaultContext()->glTexCoord2hvNV(v);}
-void ge::gl::glFramebufferTexture2DEXT(GLenum target,GLenum attachment,GLenum textarget,GLuint texture,GLint level){ge::gl::getDefaultContext()->glFramebufferTexture2DEXT(target,attachment,textarget,texture,level);}
+void ge::gl::glGetFramebufferParameterfvAMD(GLenum target,GLenum pname,GLuint numsamples,GLuint pixelindex,GLsizei size,GLfloat* values){ge::gl::getDefaultContext()->glGetFramebufferParameterfvAMD(target,pname,numsamples,pixelindex,size,values);}
 void ge::gl::glTexEnviv(GLenum target,GLenum pname,const GLint* params){ge::gl::getDefaultContext()->glTexEnviv(target,pname,params);}
 void ge::gl::glEndTransformFeedbackNV(){ge::gl::getDefaultContext()->glEndTransformFeedbackNV();}
 void ge::gl::glGlobalAlphaFactoruiSUN(GLuint factor){ge::gl::getDefaultContext()->glGlobalAlphaFactoruiSUN(factor);}
@@ -2661,6 +2724,7 @@ void ge::gl::glBlendFunc(GLenum sfactor,GLenum dfactor){ge::gl::getDefaultContex
 GLuint ge::gl::glCreateProgram(){return ge::gl::getDefaultContext()->glCreateProgram();}
 void ge::gl::glVertexStream2dATI(GLenum stream,GLdouble x,GLdouble y){ge::gl::getDefaultContext()->glVertexStream2dATI(stream,x,y);}
 void ge::gl::glUniform4ui64vARB(GLint location,GLsizei count,const GLuint64* value){ge::gl::getDefaultContext()->glUniform4ui64vARB(location,count,value);}
+void ge::gl::glGetSemaphoreParameterui64vEXT(GLuint semaphore,GLenum pname,GLuint64* params){ge::gl::getDefaultContext()->glGetSemaphoreParameterui64vEXT(semaphore,pname,params);}
 void ge::gl::glPrimitiveRestartIndex(GLuint index){ge::gl::getDefaultContext()->glPrimitiveRestartIndex(index);}
 void ge::gl::glNormalStream3fATI(GLenum stream,GLfloat nx,GLfloat ny,GLfloat nz){ge::gl::getDefaultContext()->glNormalStream3fATI(stream,nx,ny,nz);}
 void ge::gl::glProgramUniformMatrix2fv(GLuint program,GLint location,GLsizei count,GLboolean transpose,const GLfloat* value){ge::gl::getDefaultContext()->glProgramUniformMatrix2fv(program,location,count,transpose,value);}
@@ -2690,7 +2754,7 @@ void ge::gl::glInterleavedArrays(GLenum format,GLsizei stride,const GLvoid* poin
 void ge::gl::glGetPerfMonitorGroupStringAMD(GLuint group,GLsizei bufSize,GLsizei* length,GLchar* groupString){ge::gl::getDefaultContext()->glGetPerfMonitorGroupStringAMD(group,bufSize,length,groupString);}
 void ge::gl::glUniform3ui(GLint location,GLuint v0,GLuint v1,GLuint v2){ge::gl::getDefaultContext()->glUniform3ui(location,v0,v1,v2);}
 void ge::gl::glGetNamedProgramLocalParameterdvEXT(GLuint program,GLenum target,GLuint index,GLdouble* params){ge::gl::getDefaultContext()->glGetNamedProgramLocalParameterdvEXT(program,target,index,params);}
-void ge::gl::glSecondaryColor3us(GLushort red,GLushort green,GLushort blue){ge::gl::getDefaultContext()->glSecondaryColor3us(red,green,blue);}
+void ge::gl::glDeleteQueryResourceTagNV(GLsizei n,const GLint* tagIds){ge::gl::getDefaultContext()->glDeleteQueryResourceTagNV(n,tagIds);}
 void ge::gl::glVertexAttribI4uiv(GLuint index,const GLuint* v){ge::gl::getDefaultContext()->glVertexAttribI4uiv(index,v);}
 void ge::gl::glVertexAttrib4bv(GLuint index,const GLbyte* v){ge::gl::getDefaultContext()->glVertexAttrib4bv(index,v);}
 void ge::gl::glMultiTexCoord3xOES(GLenum texture,GLfixed s,GLfixed t,GLfixed r){ge::gl::getDefaultContext()->glMultiTexCoord3xOES(texture,s,t,r);}
@@ -2746,10 +2810,12 @@ void ge::gl::glVertexAttribDivisor(GLuint index,GLuint divisor){ge::gl::getDefau
 void ge::gl::glCopyBufferSubData(GLenum readTarget,GLenum writeTarget,GLintptr readOffset,GLintptr writeOffset,GLsizeiptr size){ge::gl::getDefaultContext()->glCopyBufferSubData(readTarget,writeTarget,readOffset,writeOffset,size);}
 GLuint ge::gl::glBindTexGenParameterEXT(GLenum unit,GLenum coord,GLenum value){return ge::gl::getDefaultContext()->glBindTexGenParameterEXT(unit,coord,value);}
 void ge::gl::glNormalStream3bATI(GLenum stream,GLbyte nx,GLbyte ny,GLbyte nz){ge::gl::getDefaultContext()->glNormalStream3bATI(stream,nx,ny,nz);}
+void ge::gl::glTexStorageMem2DEXT(GLenum target,GLsizei levels,GLenum internalFormat,GLsizei width,GLsizei height,GLuint memory,GLuint64 offset){ge::gl::getDefaultContext()->glTexStorageMem2DEXT(target,levels,internalFormat,width,height,memory,offset);}
 void ge::gl::glTextureImage2DEXT(GLuint texture,GLenum target,GLint level,GLint internalformat,GLsizei width,GLsizei height,GLint border,GLenum format,GLenum type,const void* pixels){ge::gl::getDefaultContext()->glTextureImage2DEXT(texture,target,level,internalformat,width,height,border,format,type,pixels);}
 void ge::gl::glGetColorTableParameteriv(GLenum target,GLenum pname,GLint* params){ge::gl::getDefaultContext()->glGetColorTableParameteriv(target,pname,params);}
 void ge::gl::glActiveTextureARB(GLenum texture){ge::gl::getDefaultContext()->glActiveTextureARB(texture);}
 void ge::gl::glTexCoord4xOES(GLfixed s,GLfixed t,GLfixed r,GLfixed q){ge::gl::getDefaultContext()->glTexCoord4xOES(s,t,r,q);}
+void ge::gl::glNamedBufferStorageExternalEXT(GLuint buffer,GLintptr offset,GLsizeiptr size,GLeglClientBufferEXT clientBuffer,GLbitfield flags){ge::gl::getDefaultContext()->glNamedBufferStorageExternalEXT(buffer,offset,size,clientBuffer,flags);}
 void ge::gl::glSecondaryColor3fvEXT(const GLfloat* v){ge::gl::getDefaultContext()->glSecondaryColor3fvEXT(v);}
 void ge::gl::glUniformMatrix4x2fv(GLint location,GLsizei count,GLboolean transpose,const GLfloat* value){ge::gl::getDefaultContext()->glUniformMatrix4x2fv(location,count,transpose,value);}
 void ge::gl::glStartInstrumentsSGIX(){ge::gl::getDefaultContext()->glStartInstrumentsSGIX();}
@@ -2759,7 +2825,7 @@ GLuint ge::gl::glGenLists(GLsizei range){return ge::gl::getDefaultContext()->glG
 void ge::gl::glUniform1fARB(GLint location,GLfloat v0){ge::gl::getDefaultContext()->glUniform1fARB(location,v0);}
 void ge::gl::glNamedFramebufferTexture1DEXT(GLuint framebuffer,GLenum attachment,GLenum textarget,GLuint texture,GLint level){ge::gl::getDefaultContext()->glNamedFramebufferTexture1DEXT(framebuffer,attachment,textarget,texture,level);}
 void* ge::gl::glMapBufferRange(GLenum target,GLintptr offset,GLsizeiptr length,GLbitfield access){return ge::gl::getDefaultContext()->glMapBufferRange(target,offset,length,access);}
-void ge::gl::glMultiDrawElementsIndirectCountARB(GLenum mode,GLenum type,GLintptr indirect,GLintptr drawcount,GLsizei maxdrawcount,GLsizei stride){ge::gl::getDefaultContext()->glMultiDrawElementsIndirectCountARB(mode,type,indirect,drawcount,maxdrawcount,stride);}
+void ge::gl::glMultiDrawElementsIndirectCountARB(GLenum mode,GLenum type,const void* indirect,GLintptr drawcount,GLsizei maxdrawcount,GLsizei stride){ge::gl::getDefaultContext()->glMultiDrawElementsIndirectCountARB(mode,type,indirect,drawcount,maxdrawcount,stride);}
 void ge::gl::glProgramUniformMatrix4x2fv(GLuint program,GLint location,GLsizei count,GLboolean transpose,const GLfloat* value){ge::gl::getDefaultContext()->glProgramUniformMatrix4x2fv(program,location,count,transpose,value);}
 void ge::gl::glGetTextureParameterIivEXT(GLuint texture,GLenum target,GLenum pname,GLint* params){ge::gl::getDefaultContext()->glGetTextureParameterIivEXT(texture,target,pname,params);}
 void ge::gl::glMultiTexCoord3hNV(GLenum target,GLhalfNV s,GLhalfNV t,GLhalfNV r){ge::gl::getDefaultContext()->glMultiTexCoord3hNV(target,s,t,r);}
@@ -2783,6 +2849,7 @@ void ge::gl::glIndexMask(GLuint mask){ge::gl::getDefaultContext()->glIndexMask(m
 void ge::gl::glPushClientAttrib(GLbitfield mask){ge::gl::getDefaultContext()->glPushClientAttrib(mask);}
 void ge::gl::glShaderSource(GLuint shader,GLsizei count,const GLchar*const* string,const GLint* length){ge::gl::getDefaultContext()->glShaderSource(shader,count,string,length);}
 void ge::gl::glDispatchComputeGroupSizeARB(GLuint num_groups_x,GLuint num_groups_y,GLuint num_groups_z,GLuint group_size_x,GLuint group_size_y,GLuint group_size_z){ge::gl::getDefaultContext()->glDispatchComputeGroupSizeARB(num_groups_x,num_groups_y,num_groups_z,group_size_x,group_size_y,group_size_z);}
+void ge::gl::glLGPUNamedBufferSubDataNVX(GLbitfield gpuMask,GLuint buffer,GLintptr offset,GLsizeiptr size,const void* data){ge::gl::getDefaultContext()->glLGPUNamedBufferSubDataNVX(gpuMask,buffer,offset,size,data);}
 void ge::gl::glGetnPixelMapfv(GLenum map,GLsizei bufSize,GLfloat* values){ge::gl::getDefaultContext()->glGetnPixelMapfv(map,bufSize,values);}
 void ge::gl::glTexCoordP2uiv(GLenum type,const GLuint* coords){ge::gl::getDefaultContext()->glTexCoordP2uiv(type,coords);}
 void ge::gl::glUniform2f(GLint location,GLfloat v0,GLfloat v1){ge::gl::getDefaultContext()->glUniform2f(location,v0,v1);}
@@ -2803,9 +2870,10 @@ void ge::gl::glUniformMatrix3fvARB(GLint location,GLsizei count,GLboolean transp
 void ge::gl::glTexCoordP1ui(GLenum type,GLuint coords){ge::gl::getDefaultContext()->glTexCoordP1ui(type,coords);}
 void ge::gl::glPointParameterfvEXT(GLenum pname,const GLfloat* params){ge::gl::getDefaultContext()->glPointParameterfvEXT(pname,params);}
 void ge::gl::glUniform4fARB(GLint location,GLfloat v0,GLfloat v1,GLfloat v2,GLfloat v3){ge::gl::getDefaultContext()->glUniform4fARB(location,v0,v1,v2,v3);}
+void ge::gl::glImportMemoryFdEXT(GLuint memory,GLuint64 size,GLenum handleType,GLint fd){ge::gl::getDefaultContext()->glImportMemoryFdEXT(memory,size,handleType,fd);}
 void ge::gl::glCopyTextureSubImage3D(GLuint texture,GLint level,GLint xoffset,GLint yoffset,GLint zoffset,GLint x,GLint y,GLsizei width,GLsizei height){ge::gl::getDefaultContext()->glCopyTextureSubImage3D(texture,level,xoffset,yoffset,zoffset,x,y,width,height);}
 void ge::gl::glMultiTexCoord2fv(GLenum target,const GLfloat* v){ge::gl::getDefaultContext()->glMultiTexCoord2fv(target,v);}
-void ge::gl::glMultiTexEnvfvEXT(GLenum texunit,GLenum target,GLenum pname,const GLfloat* params){ge::gl::getDefaultContext()->glMultiTexEnvfvEXT(texunit,target,pname,params);}
+void ge::gl::glNamedFramebufferSamplePositionsfvAMD(GLuint framebuffer,GLuint numsamples,GLuint pixelindex,const GLfloat* values){ge::gl::getDefaultContext()->glNamedFramebufferSamplePositionsfvAMD(framebuffer,numsamples,pixelindex,values);}
 void ge::gl::glNormalP3ui(GLenum type,GLuint coords){ge::gl::getDefaultContext()->glNormalP3ui(type,coords);}
 void ge::gl::glDrawRangeElementArrayATI(GLenum mode,GLuint start,GLuint end,GLsizei count){ge::gl::getDefaultContext()->glDrawRangeElementArrayATI(mode,start,end,count);}
 void ge::gl::glVertexAttribI1i(GLuint index,GLint x){ge::gl::getDefaultContext()->glVertexAttribI1i(index,x);}
@@ -2814,12 +2882,14 @@ void ge::gl::glEnableVertexAttribAPPLE(GLuint index,GLenum pname){ge::gl::getDef
 GLuint ge::gl::glGetDebugMessageLogARB(GLuint count,GLsizei bufSize,GLenum* sources,GLenum* types,GLuint* ids,GLenum* severities,GLsizei* lengths,GLchar* messageLog){return ge::gl::getDefaultContext()->glGetDebugMessageLogARB(count,bufSize,sources,types,ids,severities,lengths,messageLog);}
 void ge::gl::glGetPathTexGenfvNV(GLenum texCoordSet,GLenum pname,GLfloat* value){ge::gl::getDefaultContext()->glGetPathTexGenfvNV(texCoordSet,pname,value);}
 void ge::gl::glNamedProgramLocalParameters4fvEXT(GLuint program,GLenum target,GLuint index,GLsizei count,const GLfloat* params){ge::gl::getDefaultContext()->glNamedProgramLocalParameters4fvEXT(program,target,index,count,params);}
+void ge::gl::glQueryResourceTagNV(GLint tagId,const GLchar* tagString){ge::gl::getDefaultContext()->glQueryResourceTagNV(tagId,tagString);}
 void ge::gl::glVertexStream3fvATI(GLenum stream,const GLfloat* coords){ge::gl::getDefaultContext()->glVertexStream3fvATI(stream,coords);}
 void ge::gl::glFramebufferTexture3D(GLenum target,GLenum attachment,GLenum textarget,GLuint texture,GLint level,GLint zoffset){ge::gl::getDefaultContext()->glFramebufferTexture3D(target,attachment,textarget,texture,level,zoffset);}
 void ge::gl::glCompressedTextureSubImage2DEXT(GLuint texture,GLenum target,GLint level,GLint xoffset,GLint yoffset,GLsizei width,GLsizei height,GLenum format,GLsizei imageSize,const void* bits){ge::gl::getDefaultContext()->glCompressedTextureSubImage2DEXT(texture,target,level,xoffset,yoffset,width,height,format,imageSize,bits);}
 void ge::gl::glWindowPos3dv(const GLdouble* v){ge::gl::getDefaultContext()->glWindowPos3dv(v);}
 void ge::gl::glCopyConvolutionFilter2D(GLenum target,GLenum internalformat,GLint x,GLint y,GLsizei width,GLsizei height){ge::gl::getDefaultContext()->glCopyConvolutionFilter2D(target,internalformat,x,y,width,height);}
 void ge::gl::glReadInstrumentsSGIX(GLint marker){ge::gl::getDefaultContext()->glReadInstrumentsSGIX(marker);}
+void ge::gl::glProgramUniform2dvEXT(GLuint program,GLint location,GLsizei count,const GLdouble* value){ge::gl::getDefaultContext()->glProgramUniform2dvEXT(program,location,count,value);}
 void ge::gl::glSamplerParameterfv(GLuint sampler,GLenum pname,const GLfloat* param){ge::gl::getDefaultContext()->glSamplerParameterfv(sampler,pname,param);}
 void ge::gl::glBindBufferARB(GLenum target,GLuint buffer){ge::gl::getDefaultContext()->glBindBufferARB(target,buffer);}
 void ge::gl::glVertexAttrib1sNV(GLuint index,GLshort x){ge::gl::getDefaultContext()->glVertexAttrib1sNV(index,x);}
@@ -2851,6 +2921,7 @@ void ge::gl::glMultiTexCoord2bOES(GLenum texture,GLbyte s,GLbyte t){ge::gl::getD
 void ge::gl::glVertexAttrib2s(GLuint index,GLshort x,GLshort y){ge::gl::getDefaultContext()->glVertexAttrib2s(index,x,y);}
 void ge::gl::glTexImage3DMultisample(GLenum target,GLsizei samples,GLenum internalformat,GLsizei width,GLsizei height,GLsizei depth,GLboolean fixedsamplelocations){ge::gl::getDefaultContext()->glTexImage3DMultisample(target,samples,internalformat,width,height,depth,fixedsamplelocations);}
 GLuint ge::gl::glGetUniformBlockIndex(GLuint program,const GLchar* uniformBlockName){return ge::gl::getDefaultContext()->glGetUniformBlockIndex(program,uniformBlockName);}
+GLboolean ge::gl::glReleaseKeyedMutexWin32EXT(GLuint memory,GLuint64 key){return ge::gl::getDefaultContext()->glReleaseKeyedMutexWin32EXT(memory,key);}
 void ge::gl::glFrontFace(GLenum mode){ge::gl::getDefaultContext()->glFrontFace(mode);}
 void ge::gl::glEvalCoord1xOES(GLfixed u){ge::gl::getDefaultContext()->glEvalCoord1xOES(u);}
 void ge::gl::glDrawArraysInstancedBaseInstance(GLenum mode,GLint first,GLsizei count,GLsizei instancecount,GLuint baseinstance){ge::gl::getDefaultContext()->glDrawArraysInstancedBaseInstance(mode,first,count,instancecount,baseinstance);}
