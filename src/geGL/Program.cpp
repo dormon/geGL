@@ -781,6 +781,10 @@ GLuint Program::getBufferBinding(std::string const&name)const{
 Program const*Program::bindBuffer(
     std::string            const&name  ,
     std::shared_ptr<Buffer>const&buffer)const{
+  return bindBuffer(name,&*buffer);
+}
+
+Program const*Program::bindBuffer(std::string const&name,Buffer*const&buffer)const{
   assert(this   != nullptr);
   assert(buffer != nullptr);
   auto const& binding = this->getBufferBinding(name);

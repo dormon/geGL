@@ -115,6 +115,7 @@ class GEGL_EXPORT ge::gl::Program: public OpenGLObject{
     void set3v(std::string const&name,uint32_t const*v0,GLsizei count = 1);
     void set4v(std::string const&name,uint32_t const*v0,GLsizei count = 1);
     Program const*bindBuffer(std::string const&name,std::shared_ptr<Buffer>const&buffer)const;
+    Program const*bindBuffer(std::string const&name,Buffer*const&buffer)const;
     Program const*dispatch(GLuint nofWorkGroupsX = 1,GLuint nofWorkGroupsY = 1,GLuint nofWorkGroupsZ = 1)const;
 
     std::shared_ptr<ProgramInfo> const&getInfo()const;
