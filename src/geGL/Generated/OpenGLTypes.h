@@ -27,7 +27,11 @@ typedef void ( *GLDEBUGPROC)(GLenum source,GLenum type,GLuint id,GLenum severity
 typedef uint64_t GLuint64EXT;
 typedef void ( *GLDEBUGPROCARB)(GLenum source,GLenum type,GLuint id,GLenum severity,GLsizei length,const GLchar *message,const void *userParam);
 typedef unsigned short GLhalfARB;
+#if __APPLE__
+typedef void* GLhandleARB;
+#else
 typedef unsigned int GLhandleARB;
+#endif
 typedef char GLcharARB;
 typedef ptrdiff_t GLsizeiptrARB;
 typedef ptrdiff_t GLintptrARB;

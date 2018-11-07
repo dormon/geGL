@@ -121,6 +121,9 @@ set_property(TARGET ${PROJECT_NAME} PROPERTY SOVERSION ${PROJECT_VERSION_MAJOR})
 set_property(TARGET ${PROJECT_NAME} PROPERTY INTERFACE_${PROJECT_NAME}_MAJOR_VERSION ${PROJECT_VERSION_MAJOR})
 set_property(TARGET ${PROJECT_NAME} APPEND PROPERTY COMPATIBLE_INTERFACE_STRING ${PROJECT_NAME}_MAJOR_VERSION)
 
+# Suppress warnings 'tautological-undefined-compare' for lines containing assert 'assert(this!=nullptr)'
+# Semantic issue: 'this' pointer cannot be null in well-defined C++ code; comparison may be assumed to always evaluate to true
+set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -Wno-tautological-undefined-compare")
 
 install(TARGETS ${PROJECT_NAME} EXPORT ${PROJECT_NAME}Targets
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
