@@ -123,7 +123,9 @@ set_property(TARGET ${PROJECT_NAME} APPEND PROPERTY COMPATIBLE_INTERFACE_STRING 
 
 # Suppress warnings 'tautological-undefined-compare' for lines containing assert 'assert(this!=nullptr)'
 # Semantic issue: 'this' pointer cannot be null in well-defined C++ code; comparison may be assumed to always evaluate to true
-set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -Wno-tautological-undefined-compare")
+if(CMAKE_COMPILER_IS_GNUCXX)
+   set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -Wno-tautological-undefined-compare")
+endif()
 
 install(TARGETS ${PROJECT_NAME} EXPORT ${PROJECT_NAME}Targets
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
