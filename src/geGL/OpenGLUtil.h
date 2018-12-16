@@ -33,6 +33,14 @@ namespace ge{
     GEGL_EXPORT std::string translateTextureSwizzle    (GLint swizzle );
     GEGL_EXPORT std::string translateTextureChannelType(GLenum type   );
     GEGL_EXPORT unsigned internalFormatSize(GLenum internalFormat);
+
+    GEGL_EXPORT char const*internalFormatName           (GLenum internalFormat);
+    GEGL_EXPORT char const*internalFormatNamePadding    (GLenum internalFormat);
+    GEGL_EXPORT size_t     nofInternalFormatChannels    (GLenum internalFormat);
+    GEGL_EXPORT size_t     internalFormatChannelSize    (GLenum internalFormat,size_t n);
+    GEGL_EXPORT bool       internalFormatColorRenderable(GLenum internalFormat);
+    GEGL_EXPORT bool       internalFormatReqRend        (GLenum internalFormat);
+
     GEGL_EXPORT std::string translateInternalFormat(GLenum internalFormat);
     GEGL_EXPORT std::string translateImageFormatCompatibilityType(GLenum type);
 
