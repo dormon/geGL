@@ -755,106 +755,149 @@ size_t convertComplexShaderType(size_t what){
   return -1;
 }
 
+enum InternalFormatTableParts{
+  INTERNAL_FORMAT_FORMAT           = 0,
+  INTERNAL_FORMAT_NAME                ,
+  INTERNAL_FORMAT_PADDING             ,
+  INTERNAL_FORMAT_CHANNELS            ,
+  INTERNAL_FORMAT_CHANNEL0_SIZE       ,
+  INTERNAL_FORMAT_CHANNEL1_SIZE       ,
+  INTERNAL_FORMAT_CHANNEL2_SIZE       ,
+  INTERNAL_FORMAT_CHANNEL3_SIZE       ,
+  INTERNAL_FORMAT_COLOR_RENDERABLE    ,
+  INTERNAL_FORMAT_REQ_REND            ,
+  INTERNAL_FORMAT_FLOAT               ,
+  INTERNAL_FORMAT_FIXED_POINT         ,
+  INTERNAL_FORMAT_SIGNED              ,
+};
+
 template<size_t WHAT,typename RETURN = size_t>
 RETURN internalFormatTable(GLenum internalFormat){
   //internal name namePadding channels chsize0 chsize1 chsize2 chsize3 colorRenderable req.rend. 
-  using Element = std::tuple<GLenum,char const*,char const*,size_t,size_t,size_t,size_t,size_t,bool,bool>;
+  using Element = std::tuple<
+    GLenum     ,
+    char const*,
+    char const*,
+    size_t     ,
+    size_t     ,
+    size_t     ,
+    size_t     ,
+    size_t     ,
+    bool       ,
+    bool       ,
+    bool       ,
+    bool       ,
+    bool       >;
   Element const elements[] = {
-    Element(GL_R8            ,"GL_R8"            ,"            ",1,8 ,0 ,0 ,0 ,true ,true ), 
-    Element(GL_R8_SNORM      ,"GL_R8_SNORM"      ,"      "      ,1,8 ,0 ,0 ,0 ,true ,false), 
-    Element(GL_R16           ,"GL_R16"           ,"           " ,1,16,0 ,0 ,0 ,true ,true ), 
-    Element(GL_R16_SNORM     ,"GL_R16_SNORM"     ,"     "       ,1,16,0 ,0 ,0 ,true ,false), 
-    Element(GL_RG8           ,"GL_RG8"           ,"           " ,2,8 ,8 ,0 ,0 ,true ,true ), 
-    Element(GL_RG8_SNORM     ,"GL_RG8_SNORM"     ,"     "       ,2,8 ,8 ,0 ,0 ,true ,false), 
-    Element(GL_RG16          ,"GL_RG16"          ,"          "  ,2,16,16,0 ,0 ,true ,true ), 
-    Element(GL_RG16_SNORM    ,"GL_RG16_SNORM"    ,"    "        ,2,16,16,0 ,0 ,true ,false), 
-    Element(GL_R3_G3_B2      ,"GL_R3_G3_B2"      ,"      "      ,3,3 ,3 ,2 ,0 ,true ,false), 
-    Element(GL_RGB4          ,"GL_RGB4"          ,"          "  ,3,4 ,4 ,4 ,0 ,true ,false), 
-    Element(GL_RGB5          ,"GL_RGB5"          ,"          "  ,3,5 ,5 ,5 ,0 ,true ,false), 
-    Element(GL_RGB565        ,"GL_RGB565"        ,"        "    ,3,5 ,6 ,5 ,0 ,true ,true ), 
-    Element(GL_RGB8          ,"GL_RGB8"          ,"          "  ,3,8 ,8 ,8 ,0 ,true ,false), 
-    Element(GL_RGB8_SNORM    ,"GL_RGB8_SNORM"    ,"    "        ,3,8 ,8 ,8 ,0 ,true ,false), 
-    Element(GL_RGB10         ,"GL_RGB10"         ,"         "   ,3,10,10,10,0 ,true ,false), 
-    Element(GL_RGB12         ,"GL_RGB12"         ,"         "   ,3,12,12,12,0 ,true ,false), 
-    Element(GL_RGB16         ,"GL_RGB16"         ,"         "   ,3,16,16,16,0 ,true ,false), 
-    Element(GL_RGB16_SNORM   ,"GL_RGB16_SNORM"   ,"   "         ,3,16,16,16,0 ,true ,false), 
-    Element(GL_RGBA2         ,"GL_RGBA2"         ,"         "   ,4,2 ,2 ,2 ,2 ,true ,false), 
-    Element(GL_RGBA4         ,"GL_RGBA4"         ,"         "   ,4,4 ,4 ,4 ,4 ,true ,true ), 
-    Element(GL_RGB5_A1       ,"GL_RGB5_A1"       ,"       "     ,4,5 ,5 ,5 ,1 ,true ,true ), 
-    Element(GL_RGBA8         ,"GL_RGBA8"         ,"         "   ,4,8 ,8 ,8 ,8 ,true ,true ),   
-    Element(GL_RGBA8_SNORM   ,"GL_RGBA8_SNORM"   ,"   "         ,4,8 ,8 ,8 ,8 ,true ,false),   
-    Element(GL_RGB10_A2      ,"GL_RGB10_A2"      ,"      "      ,4,10,10,10,2 ,true ,true ),   
-    Element(GL_RGB10_A2UI    ,"GL_RGB10_A2UI"    ,"    "        ,4,10,10,10,2 ,true ,true ),   
-    Element(GL_RGBA12        ,"GL_RGBA12"        ,"        "    ,4,12,12,12,12,true ,false),   
-    Element(GL_RGBA16        ,"GL_RGBA16"        ,"        "    ,4,16,16,16,16,true ,true ),   
-    Element(GL_RGBA16_SNORM  ,"GL_RGBA16_SNORM"  ,"  "          ,4,16,16,16,16,true ,false), 
-    Element(GL_SRGB8         ,"GL_SRGB8"         ,"         "   ,3,8 ,8 ,8 ,0 ,true ,false), 
-    Element(GL_SRGB8_ALPHA8  ,"GL_SRGB8_ALPHA8"  ,"  "          ,4,8 ,8 ,8 ,8 ,true ,true ), 
-    Element(GL_R16F          ,"GL_R16F"          ,"          "  ,1,16,0 ,0 ,0 ,true ,true ), 
-    Element(GL_RG16F         ,"GL_RG16F"         ,"         "   ,2,16,16,0 ,0 ,true ,true ), 
-    Element(GL_RGB16F        ,"GL_RGB16F"        ,"        "    ,3,16,16,16,0 ,true ,false), 
-    Element(GL_RGBA16F       ,"GL_RGBA16F"       ,"       "     ,4,16,16,16,16,true ,true ), 
-    Element(GL_R32F          ,"GL_R32F"          ,"          "  ,1,32,0 ,0 ,0 ,true ,true ), 
-    Element(GL_RG32F         ,"GL_RG32F"         ,"         "   ,2,32,32,0 ,0 ,true ,true ), 
-    Element(GL_RGB32F        ,"GL_RGB32F"        ,"        "    ,3,32,32,32,0 ,true ,false), 
-    Element(GL_RGBA32F       ,"GL_RGBA32F"       ,"       "     ,4,32,32,32,32,true ,true ), 
-    Element(GL_R11F_G11F_B10F,"GL_R11F_G11F_B10F",""            ,3,11,11,10,0 ,true ,true ),
-    Element(GL_RGB9_E5       ,"GL_RGB9_E5"       ,"       "     ,4,9 ,9 ,9 ,5 ,false,false), 
-    Element(GL_R8I           ,"GL_R8I"           ,"           " ,1,8 ,0 ,0 ,0 ,true ,true ), 
-    Element(GL_R8UI          ,"GL_R8UI"          ,"          "  ,1,8 ,0 ,0 ,0 ,true ,true ), 
-    Element(GL_R16I          ,"GL_R16I"          ,"          "  ,1,16,0 ,0 ,0 ,true ,true ), 
-    Element(GL_R16UI         ,"GL_R16UI"         ,"         "   ,1,16,0 ,0 ,0 ,true ,true ), 
-    Element(GL_R32I          ,"GL_R32I"          ,"          "  ,1,32,0 ,0 ,0 ,true ,true ), 
-    Element(GL_R32UI         ,"GL_R32UI"         ,"         "   ,1,32,0 ,0 ,0 ,true ,true ), 
-    Element(GL_RG8I          ,"GL_RG8I"          ,"          "  ,2,8 ,8 ,0 ,0 ,true ,true ), 
-    Element(GL_RG8UI         ,"GL_RG8UI"         ,"         "   ,2,8 ,8 ,0 ,0 ,true ,true ), 
-    Element(GL_RG16I         ,"GL_RG16I"         ,"         "   ,2,16,16,0 ,0 ,true ,true ), 
-    Element(GL_RG16UI        ,"GL_RG16UI"        ,"        "    ,2,16,16,0 ,0 ,true ,true ), 
-    Element(GL_RG32I         ,"GL_RG32I"         ,"         "   ,2,32,32,0 ,0 ,true ,true ), 
-    Element(GL_RG32UI        ,"GL_RG32UI"        ,"        "    ,2,32,32,0 ,0 ,true ,true ), 
-    Element(GL_RGB8I         ,"GL_RGB8I"         ,"         "   ,3,8 ,8 ,8 ,0 ,true ,false), 
-    Element(GL_RGB8UI        ,"GL_RGB8UI"        ,"        "    ,3,8 ,8 ,8 ,0 ,true ,false), 
-    Element(GL_RGB16I        ,"GL_RGB16I"        ,"        "    ,3,16,16,16,0 ,true ,false),
-    Element(GL_RGB16UI       ,"GL_RGB16UI"       ,"       "     ,3,16,16,16,0 ,true ,false),
-    Element(GL_RGB32I        ,"GL_RGB32I"        ,"        "    ,3,32,32,32,0 ,true ,false),
-    Element(GL_RGB32UI       ,"GL_RGB32UI"       ,"       "     ,3,32,32,32,0 ,true ,false),
-    Element(GL_RGBA8I        ,"GL_RGBA8I"        ,"        "    ,4,8 ,8 ,8 ,8 ,true ,true ),
-    Element(GL_RGBA8UI       ,"GL_RGBA8UI"       ,"       "     ,4,8 ,8 ,8 ,8 ,true ,true ),
-    Element(GL_RGBA16I       ,"GL_RGBA16I"       ,"       "     ,4,16,16,16,16,true ,true ),
-    Element(GL_RGBA16UI      ,"GL_RGBA16UI"      ,"      "      ,4,16,16,16,16,true ,true ),
-    Element(GL_RGBA32I       ,"GL_RGBA32I"       ,"       "     ,4,32,32,32,32,true ,true ),
-    Element(GL_RGBA32UI      ,"GL_RGBA32UI"      ,"      "      ,4,32,32,32,32,true ,true ),
+    Element(GL_R8            ,"GL_R8"            ,"            ",1,8 ,0 ,0 ,0 ,true ,true ,false,true ,false), 
+    Element(GL_R8_SNORM      ,"GL_R8_SNORM"      ,"      "      ,1,8 ,0 ,0 ,0 ,true ,false,false,true ,true ), 
+    Element(GL_R16           ,"GL_R16"           ,"           " ,1,16,0 ,0 ,0 ,true ,true ,false,true ,false), 
+    Element(GL_R16_SNORM     ,"GL_R16_SNORM"     ,"     "       ,1,16,0 ,0 ,0 ,true ,false,false,true ,true ), 
+    Element(GL_RG8           ,"GL_RG8"           ,"           " ,2,8 ,8 ,0 ,0 ,true ,true ,false,true ,false), 
+    Element(GL_RG8_SNORM     ,"GL_RG8_SNORM"     ,"     "       ,2,8 ,8 ,0 ,0 ,true ,false,false,true ,true ), 
+    Element(GL_RG16          ,"GL_RG16"          ,"          "  ,2,16,16,0 ,0 ,true ,true ,false,true ,false), 
+    Element(GL_RG16_SNORM    ,"GL_RG16_SNORM"    ,"    "        ,2,16,16,0 ,0 ,true ,false,false,true ,true ), 
+    Element(GL_R3_G3_B2      ,"GL_R3_G3_B2"      ,"      "      ,3,3 ,3 ,2 ,0 ,true ,false,false,true ,false), 
+    Element(GL_RGB4          ,"GL_RGB4"          ,"          "  ,3,4 ,4 ,4 ,0 ,true ,false,false,true ,false), 
+    Element(GL_RGB5          ,"GL_RGB5"          ,"          "  ,3,5 ,5 ,5 ,0 ,true ,false,false,true ,false), 
+    Element(GL_RGB565        ,"GL_RGB565"        ,"        "    ,3,5 ,6 ,5 ,0 ,true ,true ,false,true ,false), 
+    Element(GL_RGB8          ,"GL_RGB8"          ,"          "  ,3,8 ,8 ,8 ,0 ,true ,false,false,true ,false), 
+    Element(GL_RGB8_SNORM    ,"GL_RGB8_SNORM"    ,"    "        ,3,8 ,8 ,8 ,0 ,true ,false,false,true ,true ), 
+    Element(GL_RGB10         ,"GL_RGB10"         ,"         "   ,3,10,10,10,0 ,true ,false,false,true ,false), 
+    Element(GL_RGB12         ,"GL_RGB12"         ,"         "   ,3,12,12,12,0 ,true ,false,false,true ,false), 
+    Element(GL_RGB16         ,"GL_RGB16"         ,"         "   ,3,16,16,16,0 ,true ,false,false,true ,false), 
+    Element(GL_RGB16_SNORM   ,"GL_RGB16_SNORM"   ,"   "         ,3,16,16,16,0 ,true ,false,false,true ,true ), 
+    Element(GL_RGBA2         ,"GL_RGBA2"         ,"         "   ,4,2 ,2 ,2 ,2 ,true ,false,false,true ,false), 
+    Element(GL_RGBA4         ,"GL_RGBA4"         ,"         "   ,4,4 ,4 ,4 ,4 ,true ,true ,false,true ,false), 
+    Element(GL_RGB5_A1       ,"GL_RGB5_A1"       ,"       "     ,4,5 ,5 ,5 ,1 ,true ,true ,false,true ,false), 
+
+    Element(GL_RGBA8         ,"GL_RGBA8"         ,"         "   ,4,8 ,8 ,8 ,8 ,true ,true ,false,true ,false),   
+    Element(GL_RGBA8_SNORM   ,"GL_RGBA8_SNORM"   ,"   "         ,4,8 ,8 ,8 ,8 ,true ,false,false,true ,true ),   
+    Element(GL_RGB10_A2      ,"GL_RGB10_A2"      ,"      "      ,4,10,10,10,2 ,true ,true ,false,true ,false),   
+    Element(GL_RGB10_A2UI    ,"GL_RGB10_A2UI"    ,"    "        ,4,10,10,10,2 ,true ,true ,false,false,false),   
+    Element(GL_RGBA12        ,"GL_RGBA12"        ,"        "    ,4,12,12,12,12,true ,false,false,true ,false),   
+    Element(GL_RGBA16        ,"GL_RGBA16"        ,"        "    ,4,16,16,16,16,true ,true ,false,true ,false),   
+    Element(GL_RGBA16_SNORM  ,"GL_RGBA16_SNORM"  ,"  "          ,4,16,16,16,16,true ,false,false,true ,true ), 
+    Element(GL_SRGB8         ,"GL_SRGB8"         ,"         "   ,3,8 ,8 ,8 ,0 ,true ,false,false,true ,false), 
+    Element(GL_SRGB8_ALPHA8  ,"GL_SRGB8_ALPHA8"  ,"  "          ,4,8 ,8 ,8 ,8 ,true ,true ,false,true ,false), 
+    Element(GL_R16F          ,"GL_R16F"          ,"          "  ,1,16,0 ,0 ,0 ,true ,true ,true ,false,false), 
+    Element(GL_RG16F         ,"GL_RG16F"         ,"         "   ,2,16,16,0 ,0 ,true ,true ,true ,false,false), 
+    Element(GL_RGB16F        ,"GL_RGB16F"        ,"        "    ,3,16,16,16,0 ,true ,false,true ,false,false), 
+    Element(GL_RGBA16F       ,"GL_RGBA16F"       ,"       "     ,4,16,16,16,16,true ,true ,true ,false,false), 
+    Element(GL_R32F          ,"GL_R32F"          ,"          "  ,1,32,0 ,0 ,0 ,true ,true ,true ,false,false), 
+    Element(GL_RG32F         ,"GL_RG32F"         ,"         "   ,2,32,32,0 ,0 ,true ,true ,true ,false,false), 
+    Element(GL_RGB32F        ,"GL_RGB32F"        ,"        "    ,3,32,32,32,0 ,true ,false,true ,false,false), 
+    Element(GL_RGBA32F       ,"GL_RGBA32F"       ,"       "     ,4,32,32,32,32,true ,true ,true ,false,false), 
+    Element(GL_R11F_G11F_B10F,"GL_R11F_G11F_B10F",""            ,3,11,11,10,0 ,true ,true ,true ,false,false),
+    Element(GL_RGB9_E5       ,"GL_RGB9_E5"       ,"       "     ,4,9 ,9 ,9 ,5 ,false,false,false,true ,false), 
+    Element(GL_R8I           ,"GL_R8I"           ,"           " ,1,8 ,0 ,0 ,0 ,true ,true ,false,false,true ), 
+    Element(GL_R8UI          ,"GL_R8UI"          ,"          "  ,1,8 ,0 ,0 ,0 ,true ,true ,false,false,false), 
+    Element(GL_R16I          ,"GL_R16I"          ,"          "  ,1,16,0 ,0 ,0 ,true ,true ,false,false,true ), 
+    Element(GL_R16UI         ,"GL_R16UI"         ,"         "   ,1,16,0 ,0 ,0 ,true ,true ,false,false,false), 
+    Element(GL_R32I          ,"GL_R32I"          ,"          "  ,1,32,0 ,0 ,0 ,true ,true ,false,false,true ), 
+    Element(GL_R32UI         ,"GL_R32UI"         ,"         "   ,1,32,0 ,0 ,0 ,true ,true ,false,false,false), 
+    Element(GL_RG8I          ,"GL_RG8I"          ,"          "  ,2,8 ,8 ,0 ,0 ,true ,true ,false,false,true ), 
+    Element(GL_RG8UI         ,"GL_RG8UI"         ,"         "   ,2,8 ,8 ,0 ,0 ,true ,true ,false,false,false), 
+    Element(GL_RG16I         ,"GL_RG16I"         ,"         "   ,2,16,16,0 ,0 ,true ,true ,false,false,true ), 
+    Element(GL_RG16UI        ,"GL_RG16UI"        ,"        "    ,2,16,16,0 ,0 ,true ,true ,false,false,false), 
+    Element(GL_RG32I         ,"GL_RG32I"         ,"         "   ,2,32,32,0 ,0 ,true ,true ,false,false,true ), 
+    Element(GL_RG32UI        ,"GL_RG32UI"        ,"        "    ,2,32,32,0 ,0 ,true ,true ,false,false,false), 
+    Element(GL_RGB8I         ,"GL_RGB8I"         ,"         "   ,3,8 ,8 ,8 ,0 ,true ,false,false,false,true ), 
+    Element(GL_RGB8UI        ,"GL_RGB8UI"        ,"        "    ,3,8 ,8 ,8 ,0 ,true ,false,false,false,false), 
+    
+    Element(GL_RGB16I        ,"GL_RGB16I"        ,"        "    ,3,16,16,16,0 ,true ,false,false,false,true ),
+    Element(GL_RGB16UI       ,"GL_RGB16UI"       ,"       "     ,3,16,16,16,0 ,true ,false,false,false,false),
+    Element(GL_RGB32I        ,"GL_RGB32I"        ,"        "    ,3,32,32,32,0 ,true ,false,false,false,true ),
+    Element(GL_RGB32UI       ,"GL_RGB32UI"       ,"       "     ,3,32,32,32,0 ,true ,false,false,false,false),
+    Element(GL_RGBA8I        ,"GL_RGBA8I"        ,"        "    ,4,8 ,8 ,8 ,8 ,true ,true ,false,false,true ),
+    Element(GL_RGBA8UI       ,"GL_RGBA8UI"       ,"       "     ,4,8 ,8 ,8 ,8 ,true ,true ,false,false,false),
+    Element(GL_RGBA16I       ,"GL_RGBA16I"       ,"       "     ,4,16,16,16,16,true ,true ,false,false,true ),
+    Element(GL_RGBA16UI      ,"GL_RGBA16UI"      ,"      "      ,4,16,16,16,16,true ,true ,false,false,false),
+    Element(GL_RGBA32I       ,"GL_RGBA32I"       ,"       "     ,4,32,32,32,32,true ,true ,false,false,true ),
+    Element(GL_RGBA32UI      ,"GL_RGBA32UI"      ,"      "      ,4,32,32,32,32,true ,true ,false,false,false),
   };
   for(auto const&x:elements)
     if(std::get<0>(x) == internalFormat)
-      return std::get<WHAT+1>(x);
+      return std::get<WHAT>(x);
 }
 
 
 char const*ge::gl::internalFormatName           (GLenum internalFormat){
-  return internalFormatTable<0,char const*>(internalFormat);
+  return internalFormatTable<INTERNAL_FORMAT_NAME,char const*>(internalFormat);
 }
 
 char const*ge::gl::internalFormatNamePadding    (GLenum internalFormat){
-  return internalFormatTable<1,char const*>(internalFormat);
+  return internalFormatTable<INTERNAL_FORMAT_PADDING,char const*>(internalFormat);
 }
 
 size_t ge::gl::nofInternalFormatChannels(GLenum internalFormat){
-  return internalFormatTable<2>(internalFormat);
+  return internalFormatTable<INTERNAL_FORMAT_CHANNELS>(internalFormat);
 }
 
 size_t ge::gl::internalFormatChannelSize(GLenum internalFormat,size_t n){
-  if(n==0)return internalFormatTable<3>(internalFormat);
-  if(n==1)return internalFormatTable<4>(internalFormat);
-  if(n==2)return internalFormatTable<5>(internalFormat);
-  /*    */return internalFormatTable<6>(internalFormat);
+  if(n==0)return internalFormatTable<INTERNAL_FORMAT_CHANNEL0_SIZE>(internalFormat);
+  if(n==1)return internalFormatTable<INTERNAL_FORMAT_CHANNEL1_SIZE>(internalFormat);
+  if(n==2)return internalFormatTable<INTERNAL_FORMAT_CHANNEL2_SIZE>(internalFormat);
+  /*    */return internalFormatTable<INTERNAL_FORMAT_CHANNEL3_SIZE>(internalFormat);
 }
 
 
 bool ge::gl::internalFormatColorRenderable(GLenum internalFormat){
-  return internalFormat<7>(internalFormat);
+  return internalFormat<INTERNAL_FORMAT_COLOR_RENDERABLE>(internalFormat);
 }
 
 bool ge::gl::internalFormatReqRend(GLenum internalFormat){
-  return internalFormat<8>(internalFormat);
+  return internalFormat<INTERNAL_FORMAT_REQ_REND>(internalFormat);
+}
+
+bool ge::gl::internalFormatFloatingPoint  (GLenum internalFormat){
+  return internalFormatTable<INTERNAL_FORMAT_FLOAT>(internalFormat);
+}
+
+bool ge::gl::internalFormatSigned         (GLenum internalFormat){
+  return internalFormatTable<INTERNAL_FORMAT_SIGNED>(internalFormat);
+}
+
+bool ge::gl::internalFormatFixedPoint     (GLenum internalFormat){
+  return internalFormatTable<INTERNAL_FORMAT_FIXED_POINT>(internalFormat);
 }

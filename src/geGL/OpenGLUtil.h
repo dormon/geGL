@@ -40,6 +40,9 @@ namespace ge{
     GEGL_EXPORT size_t     internalFormatChannelSize    (GLenum internalFormat,size_t n);
     GEGL_EXPORT bool       internalFormatColorRenderable(GLenum internalFormat);
     GEGL_EXPORT bool       internalFormatReqRend        (GLenum internalFormat);
+    GEGL_EXPORT bool       internalFormatFloatingPoint  (GLenum internalFormat);
+    GEGL_EXPORT bool       internalFormatSigned         (GLenum internalFormat);
+    GEGL_EXPORT bool       internalFormatFixedPoint     (GLenum internalFormat);
 
     GEGL_EXPORT std::string translateInternalFormat(GLenum internalFormat);
     GEGL_EXPORT std::string translateImageFormatCompatibilityType(GLenum type);
