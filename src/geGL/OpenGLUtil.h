@@ -34,15 +34,58 @@ namespace ge{
     GEGL_EXPORT std::string translateTextureChannelType(GLenum type   );
     GEGL_EXPORT unsigned internalFormatSize(GLenum internalFormat);
 
-    GEGL_EXPORT char const*internalFormatName           (GLenum internalFormat);
-    GEGL_EXPORT char const*internalFormatNamePadding    (GLenum internalFormat);
-    GEGL_EXPORT size_t     nofInternalFormatChannels    (GLenum internalFormat);
-    GEGL_EXPORT size_t     internalFormatChannelSize    (GLenum internalFormat,size_t n);
-    GEGL_EXPORT bool       internalFormatColorRenderable(GLenum internalFormat);
-    GEGL_EXPORT bool       internalFormatReqRend        (GLenum internalFormat);
-    GEGL_EXPORT bool       internalFormatFloatingPoint  (GLenum internalFormat);
-    GEGL_EXPORT bool       internalFormatSigned         (GLenum internalFormat);
-    GEGL_EXPORT bool       internalFormatFixedPoint     (GLenum internalFormat);
+
+    struct DepthInternalFormatElement{
+      GLenum      format       ;
+      std::string name         ;
+      std::string namePadding  ;
+      GLenum      baseFormat   ;
+      size_t      depthSize    ;
+      bool        depthFloating;
+      size_t      stencilSize  ;
+      bool        reqFormat    ;
+    };
+
+    GEGL_EXPORT bool isInternalFormatDepth(GLenum internalFormat);
+    GEGL_EXPORT DepthInternalFormatElement getDepthInternalFormatInformation(GLenum internalFormat);
+
+    struct CompressedInternalFormatElement{
+      GLenum      format     ;
+      std::string name       ;
+      std::string namePadding;
+      GLenum      baseFormat ;
+      bool        generic    ;
+      enum BorderType{
+        UNORM,
+        SNORM,
+        FLOAT,
+      }borderType;
+    };
+
+    GEGL_EXPORT bool isInternalFormatCompressed(GLenum internalFormat);
+    GEGL_EXPORT CompressedInternalFormatElement getCompressedInternalFormatInformation(GLenum internalFormat);
+
+    struct BasicInternalFormatElement{
+      GLenum      format         ;
+      std::string name           ;
+      std::string namePadding    ;
+      GLenum      baseFormat     ;
+      size_t      nofChannels    ;
+      size_t      channelSize[4] ;
+      bool        colorRenderable;
+      bool        reqRend        ;
+      bool        reqTex         ;
+      enum Type{
+        FLOAT               ,
+        FIXED_POINT         ,
+        UNSIGNED_FIXED_POINT,
+        INT                 ,
+        UNSIGNED_INT        ,
+      }type;
+    };
+
+    GEGL_EXPORT bool isInternalFormatBasic(GLenum internalFormat);
+    GEGL_EXPORT BasicInternalFormatElement getBasicInternalFormatInformation(GLenum internalFormat);
 
     GEGL_EXPORT std::string translateInternalFormat(GLenum internalFormat);
     GEGL_EXPORT std::string translateImageFormatCompatibilityType(GLenum type);

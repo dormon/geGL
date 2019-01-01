@@ -755,149 +755,169 @@ size_t convertComplexShaderType(size_t what){
   return -1;
 }
 
-enum InternalFormatTableParts{
-  INTERNAL_FORMAT_FORMAT           = 0,
-  INTERNAL_FORMAT_NAME                ,
-  INTERNAL_FORMAT_PADDING             ,
-  INTERNAL_FORMAT_CHANNELS            ,
-  INTERNAL_FORMAT_CHANNEL0_SIZE       ,
-  INTERNAL_FORMAT_CHANNEL1_SIZE       ,
-  INTERNAL_FORMAT_CHANNEL2_SIZE       ,
-  INTERNAL_FORMAT_CHANNEL3_SIZE       ,
-  INTERNAL_FORMAT_COLOR_RENDERABLE    ,
-  INTERNAL_FORMAT_REQ_REND            ,
-  INTERNAL_FORMAT_FLOAT               ,
-  INTERNAL_FORMAT_FIXED_POINT         ,
-  INTERNAL_FORMAT_SIGNED              ,
-};
-
-template<size_t WHAT,typename RETURN = size_t>
-RETURN internalFormatTable(GLenum internalFormat){
-  //internal name namePadding channels chsize0 chsize1 chsize2 chsize3 colorRenderable req.rend. 
-  using Element = std::tuple<
-    GLenum     ,
-    char const*,
-    char const*,
-    size_t     ,
-    size_t     ,
-    size_t     ,
-    size_t     ,
-    size_t     ,
-    bool       ,
-    bool       ,
-    bool       ,
-    bool       ,
-    bool       >;
-  Element const elements[] = {
-    Element(GL_R8            ,"GL_R8"            ,"            ",1,8 ,0 ,0 ,0 ,true ,true ,false,true ,false), 
-    Element(GL_R8_SNORM      ,"GL_R8_SNORM"      ,"      "      ,1,8 ,0 ,0 ,0 ,true ,false,false,true ,true ), 
-    Element(GL_R16           ,"GL_R16"           ,"           " ,1,16,0 ,0 ,0 ,true ,true ,false,true ,false), 
-    Element(GL_R16_SNORM     ,"GL_R16_SNORM"     ,"     "       ,1,16,0 ,0 ,0 ,true ,false,false,true ,true ), 
-    Element(GL_RG8           ,"GL_RG8"           ,"           " ,2,8 ,8 ,0 ,0 ,true ,true ,false,true ,false), 
-    Element(GL_RG8_SNORM     ,"GL_RG8_SNORM"     ,"     "       ,2,8 ,8 ,0 ,0 ,true ,false,false,true ,true ), 
-    Element(GL_RG16          ,"GL_RG16"          ,"          "  ,2,16,16,0 ,0 ,true ,true ,false,true ,false), 
-    Element(GL_RG16_SNORM    ,"GL_RG16_SNORM"    ,"    "        ,2,16,16,0 ,0 ,true ,false,false,true ,true ), 
-    Element(GL_R3_G3_B2      ,"GL_R3_G3_B2"      ,"      "      ,3,3 ,3 ,2 ,0 ,true ,false,false,true ,false), 
-    Element(GL_RGB4          ,"GL_RGB4"          ,"          "  ,3,4 ,4 ,4 ,0 ,true ,false,false,true ,false), 
-    Element(GL_RGB5          ,"GL_RGB5"          ,"          "  ,3,5 ,5 ,5 ,0 ,true ,false,false,true ,false), 
-    Element(GL_RGB565        ,"GL_RGB565"        ,"        "    ,3,5 ,6 ,5 ,0 ,true ,true ,false,true ,false), 
-    Element(GL_RGB8          ,"GL_RGB8"          ,"          "  ,3,8 ,8 ,8 ,0 ,true ,false,false,true ,false), 
-    Element(GL_RGB8_SNORM    ,"GL_RGB8_SNORM"    ,"    "        ,3,8 ,8 ,8 ,0 ,true ,false,false,true ,true ), 
-    Element(GL_RGB10         ,"GL_RGB10"         ,"         "   ,3,10,10,10,0 ,true ,false,false,true ,false), 
-    Element(GL_RGB12         ,"GL_RGB12"         ,"         "   ,3,12,12,12,0 ,true ,false,false,true ,false), 
-    Element(GL_RGB16         ,"GL_RGB16"         ,"         "   ,3,16,16,16,0 ,true ,false,false,true ,false), 
-    Element(GL_RGB16_SNORM   ,"GL_RGB16_SNORM"   ,"   "         ,3,16,16,16,0 ,true ,false,false,true ,true ), 
-    Element(GL_RGBA2         ,"GL_RGBA2"         ,"         "   ,4,2 ,2 ,2 ,2 ,true ,false,false,true ,false), 
-    Element(GL_RGBA4         ,"GL_RGBA4"         ,"         "   ,4,4 ,4 ,4 ,4 ,true ,true ,false,true ,false), 
-    Element(GL_RGB5_A1       ,"GL_RGB5_A1"       ,"       "     ,4,5 ,5 ,5 ,1 ,true ,true ,false,true ,false), 
-
-    Element(GL_RGBA8         ,"GL_RGBA8"         ,"         "   ,4,8 ,8 ,8 ,8 ,true ,true ,false,true ,false),   
-    Element(GL_RGBA8_SNORM   ,"GL_RGBA8_SNORM"   ,"   "         ,4,8 ,8 ,8 ,8 ,true ,false,false,true ,true ),   
-    Element(GL_RGB10_A2      ,"GL_RGB10_A2"      ,"      "      ,4,10,10,10,2 ,true ,true ,false,true ,false),   
-    Element(GL_RGB10_A2UI    ,"GL_RGB10_A2UI"    ,"    "        ,4,10,10,10,2 ,true ,true ,false,false,false),   
-    Element(GL_RGBA12        ,"GL_RGBA12"        ,"        "    ,4,12,12,12,12,true ,false,false,true ,false),   
-    Element(GL_RGBA16        ,"GL_RGBA16"        ,"        "    ,4,16,16,16,16,true ,true ,false,true ,false),   
-    Element(GL_RGBA16_SNORM  ,"GL_RGBA16_SNORM"  ,"  "          ,4,16,16,16,16,true ,false,false,true ,true ), 
-    Element(GL_SRGB8         ,"GL_SRGB8"         ,"         "   ,3,8 ,8 ,8 ,0 ,true ,false,false,true ,false), 
-    Element(GL_SRGB8_ALPHA8  ,"GL_SRGB8_ALPHA8"  ,"  "          ,4,8 ,8 ,8 ,8 ,true ,true ,false,true ,false), 
-    Element(GL_R16F          ,"GL_R16F"          ,"          "  ,1,16,0 ,0 ,0 ,true ,true ,true ,false,false), 
-    Element(GL_RG16F         ,"GL_RG16F"         ,"         "   ,2,16,16,0 ,0 ,true ,true ,true ,false,false), 
-    Element(GL_RGB16F        ,"GL_RGB16F"        ,"        "    ,3,16,16,16,0 ,true ,false,true ,false,false), 
-    Element(GL_RGBA16F       ,"GL_RGBA16F"       ,"       "     ,4,16,16,16,16,true ,true ,true ,false,false), 
-    Element(GL_R32F          ,"GL_R32F"          ,"          "  ,1,32,0 ,0 ,0 ,true ,true ,true ,false,false), 
-    Element(GL_RG32F         ,"GL_RG32F"         ,"         "   ,2,32,32,0 ,0 ,true ,true ,true ,false,false), 
-    Element(GL_RGB32F        ,"GL_RGB32F"        ,"        "    ,3,32,32,32,0 ,true ,false,true ,false,false), 
-    Element(GL_RGBA32F       ,"GL_RGBA32F"       ,"       "     ,4,32,32,32,32,true ,true ,true ,false,false), 
-    Element(GL_R11F_G11F_B10F,"GL_R11F_G11F_B10F",""            ,3,11,11,10,0 ,true ,true ,true ,false,false),
-    Element(GL_RGB9_E5       ,"GL_RGB9_E5"       ,"       "     ,4,9 ,9 ,9 ,5 ,false,false,false,true ,false), 
-    Element(GL_R8I           ,"GL_R8I"           ,"           " ,1,8 ,0 ,0 ,0 ,true ,true ,false,false,true ), 
-    Element(GL_R8UI          ,"GL_R8UI"          ,"          "  ,1,8 ,0 ,0 ,0 ,true ,true ,false,false,false), 
-    Element(GL_R16I          ,"GL_R16I"          ,"          "  ,1,16,0 ,0 ,0 ,true ,true ,false,false,true ), 
-    Element(GL_R16UI         ,"GL_R16UI"         ,"         "   ,1,16,0 ,0 ,0 ,true ,true ,false,false,false), 
-    Element(GL_R32I          ,"GL_R32I"          ,"          "  ,1,32,0 ,0 ,0 ,true ,true ,false,false,true ), 
-    Element(GL_R32UI         ,"GL_R32UI"         ,"         "   ,1,32,0 ,0 ,0 ,true ,true ,false,false,false), 
-    Element(GL_RG8I          ,"GL_RG8I"          ,"          "  ,2,8 ,8 ,0 ,0 ,true ,true ,false,false,true ), 
-    Element(GL_RG8UI         ,"GL_RG8UI"         ,"         "   ,2,8 ,8 ,0 ,0 ,true ,true ,false,false,false), 
-    Element(GL_RG16I         ,"GL_RG16I"         ,"         "   ,2,16,16,0 ,0 ,true ,true ,false,false,true ), 
-    Element(GL_RG16UI        ,"GL_RG16UI"        ,"        "    ,2,16,16,0 ,0 ,true ,true ,false,false,false), 
-    Element(GL_RG32I         ,"GL_RG32I"         ,"         "   ,2,32,32,0 ,0 ,true ,true ,false,false,true ), 
-    Element(GL_RG32UI        ,"GL_RG32UI"        ,"        "    ,2,32,32,0 ,0 ,true ,true ,false,false,false), 
-    Element(GL_RGB8I         ,"GL_RGB8I"         ,"         "   ,3,8 ,8 ,8 ,0 ,true ,false,false,false,true ), 
-    Element(GL_RGB8UI        ,"GL_RGB8UI"        ,"        "    ,3,8 ,8 ,8 ,0 ,true ,false,false,false,false), 
-    
-    Element(GL_RGB16I        ,"GL_RGB16I"        ,"        "    ,3,16,16,16,0 ,true ,false,false,false,true ),
-    Element(GL_RGB16UI       ,"GL_RGB16UI"       ,"       "     ,3,16,16,16,0 ,true ,false,false,false,false),
-    Element(GL_RGB32I        ,"GL_RGB32I"        ,"        "    ,3,32,32,32,0 ,true ,false,false,false,true ),
-    Element(GL_RGB32UI       ,"GL_RGB32UI"       ,"       "     ,3,32,32,32,0 ,true ,false,false,false,false),
-    Element(GL_RGBA8I        ,"GL_RGBA8I"        ,"        "    ,4,8 ,8 ,8 ,8 ,true ,true ,false,false,true ),
-    Element(GL_RGBA8UI       ,"GL_RGBA8UI"       ,"       "     ,4,8 ,8 ,8 ,8 ,true ,true ,false,false,false),
-    Element(GL_RGBA16I       ,"GL_RGBA16I"       ,"       "     ,4,16,16,16,16,true ,true ,false,false,true ),
-    Element(GL_RGBA16UI      ,"GL_RGBA16UI"      ,"      "      ,4,16,16,16,16,true ,true ,false,false,false),
-    Element(GL_RGBA32I       ,"GL_RGBA32I"       ,"       "     ,4,32,32,32,32,true ,true ,false,false,true ),
-    Element(GL_RGBA32UI      ,"GL_RGBA32UI"      ,"      "      ,4,32,32,32,32,true ,true ,false,false,false),
+bool depthInternalFormatTable(DepthInternalFormatElement&info,GLenum internalFormat){
+  DepthInternalFormatElement const static elements[] = {
+    {GL_DEPTH_COMPONENT16 ,"GL_DEPTH_COMPONENT16"," ",GL_DEPTH_COMPONENT,16,false,0 ,true ,},
+    {GL_DEPTH_COMPONENT24 ,"GL_DEPTH_COMPONENT24"," ",GL_DEPTH_COMPONENT,24,false,0 ,true ,},
+    {GL_DEPTH_COMPONENT32 ,"GL_DEPTH_COMPONENT32"," ",GL_DEPTH_COMPONENT,32,false,0 ,false,},
+    {GL_DEPTH_COMPONENT32F,"GL_DEPTH_COMPONENT32F","",GL_DEPTH_COMPONENT,32,true ,0 ,true ,},
+    {GL_DEPTH24_STENCIL8  ,"GL_DEPTH24_STENCIL8","  ",GL_DEPTH_STENCIL  ,24,false,8 ,true ,},
+    {GL_DEPTH32F_STENCIL8 ,"GL_DEPTH32F_STENCIL8"," ",GL_DEPTH_STENCIL  ,32,true ,8 ,true ,},
+    {GL_STENCIL_INDEX1    ,"GL_STENCIL_INDEX1","    ",GL_STENCIL_INDEX  ,0 ,false,1 ,false,},
+    {GL_STENCIL_INDEX4    ,"GL_STENCIL_INDEX4","    ",GL_STENCIL_INDEX  ,0 ,false,4 ,false,},
+    {GL_STENCIL_INDEX8    ,"GL_STENCIL_INDEX8","    ",GL_STENCIL_INDEX  ,0 ,false,8 ,true ,},
+    {GL_STENCIL_INDEX16   ,"GL_STENCIL_INDEX16","   ",GL_STENCIL_INDEX  ,0 ,false,16,false,},
   };
-  for(auto const&x:elements)
-    if(std::get<0>(x) == internalFormat)
-      return std::get<WHAT>(x);
+  for(auto const&i:elements)
+    if(i.format == internalFormat){
+      info = i;
+      return true;
+    }
+  return false;
 }
 
-
-char const*ge::gl::internalFormatName           (GLenum internalFormat){
-  return internalFormatTable<INTERNAL_FORMAT_NAME,char const*>(internalFormat);
+bool ge::gl::isInternalFormatDepth(GLenum internalFormat){
+  DepthInternalFormatElement info;
+  return depthInternalFormatTable(info,internalFormat);
 }
 
-char const*ge::gl::internalFormatNamePadding    (GLenum internalFormat){
-  return internalFormatTable<INTERNAL_FORMAT_PADDING,char const*>(internalFormat);
+DepthInternalFormatElement ge::gl::getDepthInternalFormatInformation(GLenum internalFormat){
+  DepthInternalFormatElement info;
+  depthInternalFormatTable(info,internalFormat);
+  return info;
 }
 
-size_t ge::gl::nofInternalFormatChannels(GLenum internalFormat){
-  return internalFormatTable<INTERNAL_FORMAT_CHANNELS>(internalFormat);
+bool compressedInternalFormatTable(CompressedInternalFormatElement&info,GLenum internalFormat){
+  CompressedInternalFormatElement const static elements[] = {
+    {GL_COMPRESSED_RED                           ,"GL_COMPRESSED_RED","                           ",GL_RED ,true ,CompressedInternalFormatElement::UNORM,},
+    {GL_COMPRESSED_RG                            ,"GL_COMPRESSED_RG","                            ",GL_RG  ,true ,CompressedInternalFormatElement::UNORM,},
+    {GL_COMPRESSED_RGB                           ,"GL_COMPRESSED_RGB","                           ",GL_RGB ,true ,CompressedInternalFormatElement::UNORM,},
+    {GL_COMPRESSED_RGBA                          ,"GL_COMPRESSED_RGBA","                          ",GL_RGBA,true ,CompressedInternalFormatElement::UNORM,},
+    {GL_COMPRESSED_SRGB                          ,"GL_COMPRESSED_SRGB","                          ",GL_RGB ,true ,CompressedInternalFormatElement::UNORM,},
+    {GL_COMPRESSED_SRGB_ALPHA                    ,"GL_COMPRESSED_SRGB_ALPHA","                    ",GL_RGBA,true ,CompressedInternalFormatElement::UNORM,},
+    {GL_COMPRESSED_RED_RGTC1                     ,"GL_COMPRESSED_RED_RGTC1","                     ",GL_RED ,false,CompressedInternalFormatElement::UNORM,},
+    {GL_COMPRESSED_SIGNED_RED_RGTC1              ,"GL_COMPRESSED_SIGNED_RED_RGTC1","              ",GL_RED ,false,CompressedInternalFormatElement::SNORM,},
+    {GL_COMPRESSED_RG_RGTC2                      ,"GL_COMPRESSED_RG_RGTC2","                      ",GL_RG  ,false,CompressedInternalFormatElement::UNORM,},
+    {GL_COMPRESSED_SIGNED_RG_RGTC2               ,"GL_COMPRESSED_SIGNED_RG_RGTC2","               ",GL_RG  ,false,CompressedInternalFormatElement::SNORM,},
+    {GL_COMPRESSED_RGBA_BPTC_UNORM               ,"GL_COMPRESSED_RGBA_BPTC_UNORM","               ",GL_RGBA,false,CompressedInternalFormatElement::UNORM,},
+    {GL_COMPRESSED_SRGB_ALPHA_BPTC_UNORM         ,"GL_COMPRESSED_SRGB_ALPHA_BPTC_UNORM","         ",GL_RGBA,false,CompressedInternalFormatElement::UNORM,},
+    {GL_COMPRESSED_RGB_BPTC_SIGNED_FLOAT         ,"GL_COMPRESSED_RGB_BPTC_SIGNED_FLOAT","         ",GL_RGB ,false,CompressedInternalFormatElement::FLOAT,},
+    {GL_COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT       ,"GL_COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT","       ",GL_RGB ,false,CompressedInternalFormatElement::FLOAT,},
+    {GL_COMPRESSED_RGB8_ETC2                     ,"GL_COMPRESSED_RGB8_ETC2","                     ",GL_RGB ,false,CompressedInternalFormatElement::UNORM,},
+    {GL_COMPRESSED_SRGB8_ETC2                    ,"GL_COMPRESSED_SRGB8_ETC2","                    ",GL_RGB ,false,CompressedInternalFormatElement::UNORM,},
+    {GL_COMPRESSED_RGB8_PUNCHTHROUGH_ALPHA1_ETC2 ,"GL_COMPRESSED_RGB8_PUNCHTHROUGH_ALPHA1_ETC2"," ",GL_RGB ,false,CompressedInternalFormatElement::UNORM,},
+    {GL_COMPRESSED_SRGB8_PUNCHTHROUGH_ALPHA1_ETC2,"GL_COMPRESSED_SRGB8_PUNCHTHROUGH_ALPHA1_ETC2","",GL_RGB ,false,CompressedInternalFormatElement::UNORM,},
+    {GL_COMPRESSED_RGBA8_ETC2_EAC                ,"GL_COMPRESSED_RGBA8_ETC2_EAC","                ",GL_RGBA,false,CompressedInternalFormatElement::UNORM,},
+    {GL_COMPRESSED_SRGB8_ALPHA8_ETC2_EAC         ,"GL_COMPRESSED_SRGB8_ALPHA8_ETC2_EAC","         ",GL_RGBA,false,CompressedInternalFormatElement::UNORM,},
+    {GL_COMPRESSED_R11_EAC                       ,"GL_COMPRESSED_R11_EAC","                       ",GL_RED ,false,CompressedInternalFormatElement::UNORM,},
+    {GL_COMPRESSED_SIGNED_R11_EAC                ,"GL_COMPRESSED_SIGNED_R11_EAC","                ",GL_RED ,false,CompressedInternalFormatElement::SNORM,},
+    {GL_COMPRESSED_RG11_EAC                      ,"GL_COMPRESSED_RG11_EAC","                      ",GL_RG  ,false,CompressedInternalFormatElement::UNORM,},
+    {GL_COMPRESSED_SIGNED_RG11_EAC               ,"GL_COMPRESSED_SIGNED_RG11_EAC","               ",GL_RG  ,false,CompressedInternalFormatElement::SNORM,},
+  };
+  for(auto const&i:elements)
+    if(i.format == internalFormat){
+      info = i;
+      return true;
+    }
+  return false;
 }
 
-size_t ge::gl::internalFormatChannelSize(GLenum internalFormat,size_t n){
-  if(n==0)return internalFormatTable<INTERNAL_FORMAT_CHANNEL0_SIZE>(internalFormat);
-  if(n==1)return internalFormatTable<INTERNAL_FORMAT_CHANNEL1_SIZE>(internalFormat);
-  if(n==2)return internalFormatTable<INTERNAL_FORMAT_CHANNEL2_SIZE>(internalFormat);
-  /*    */return internalFormatTable<INTERNAL_FORMAT_CHANNEL3_SIZE>(internalFormat);
+bool ge::gl::isInternalFormatCompressed(GLenum internalFormat){
+  CompressedInternalFormatElement info;
+  return compressedInternalFormatTable(info,internalFormat);
 }
 
-
-bool ge::gl::internalFormatColorRenderable(GLenum internalFormat){
-  return internalFormat<INTERNAL_FORMAT_COLOR_RENDERABLE>(internalFormat);
+CompressedInternalFormatElement ge::gl::getCompressedInternalFormatInformation(GLenum internalFormat){
+  CompressedInternalFormatElement info;
+  compressedInternalFormatTable(info,internalFormat);
+  return info;
 }
 
-bool ge::gl::internalFormatReqRend(GLenum internalFormat){
-  return internalFormat<INTERNAL_FORMAT_REQ_REND>(internalFormat);
+bool basicInternalFormatTable(BasicInternalFormatElement&info,GLenum internalFormat){
+  BasicInternalFormatElement const static elements[] = {
+    {GL_R8            ,"GL_R8","            ",GL_RED ,1,{8 ,0 ,0 ,0 ,},true ,true ,true ,BasicInternalFormatElement::UNSIGNED_FIXED_POINT}, 
+    {GL_R8_SNORM      ,"GL_R8_SNORM","      ",GL_RED ,1,{8 ,0 ,0 ,0 ,},true ,false,true ,BasicInternalFormatElement::FIXED_POINT         }, 
+    {GL_R16           ,"GL_R16","           ",GL_RED ,1,{16,0 ,0 ,0 ,},true ,true ,true ,BasicInternalFormatElement::UNSIGNED_FIXED_POINT}, 
+    {GL_R16_SNORM     ,"GL_R16_SNORM","     ",GL_RED ,1,{16,0 ,0 ,0 ,},true ,false,true ,BasicInternalFormatElement::FIXED_POINT         }, 
+    {GL_RG8           ,"GL_RG8","           ",GL_RG  ,2,{8 ,8 ,0 ,0 ,},true ,true ,true ,BasicInternalFormatElement::UNSIGNED_FIXED_POINT}, 
+    {GL_RG8_SNORM     ,"GL_RG8_SNORM","     ",GL_RG  ,2,{8 ,8 ,0 ,0 ,},true ,false,true ,BasicInternalFormatElement::FIXED_POINT         }, 
+    {GL_RG16          ,"GL_RG16","          ",GL_RG  ,2,{16,16,0 ,0 ,},true ,true ,true ,BasicInternalFormatElement::UNSIGNED_FIXED_POINT}, 
+    {GL_RG16_SNORM    ,"GL_RG16_SNORM","    ",GL_RG  ,2,{16,16,0 ,0 ,},true ,false,true ,BasicInternalFormatElement::FIXED_POINT         }, 
+    {GL_R3_G3_B2      ,"GL_R3_G3_B2","      ",GL_RGB ,3,{3 ,3 ,2 ,0 ,},true ,false,true ,BasicInternalFormatElement::UNSIGNED_FIXED_POINT}, 
+    {GL_RGB4          ,"GL_RGB4","          ",GL_RGB ,3,{4 ,4 ,4 ,0 ,},true ,false,true ,BasicInternalFormatElement::UNSIGNED_FIXED_POINT}, 
+    {GL_RGB5          ,"GL_RGB5","          ",GL_RGB ,3,{5 ,5 ,5 ,0 ,},true ,false,true ,BasicInternalFormatElement::UNSIGNED_FIXED_POINT}, 
+    {GL_RGB565        ,"GL_RGB565","        ",GL_RGB ,3,{5 ,6 ,5 ,0 ,},true ,true ,true ,BasicInternalFormatElement::UNSIGNED_FIXED_POINT}, 
+    {GL_RGB8          ,"GL_RGB8","          ",GL_RGB ,3,{8 ,8 ,8 ,0 ,},true ,false,true ,BasicInternalFormatElement::UNSIGNED_FIXED_POINT}, 
+    {GL_RGB8_SNORM    ,"GL_RGB8_SNORM","    ",GL_RGB ,3,{8 ,8 ,8 ,0 ,},true ,false,true ,BasicInternalFormatElement::FIXED_POINT         }, 
+    {GL_RGB10         ,"GL_RGB10","         ",GL_RGB ,3,{10,10,10,0 ,},true ,false,true ,BasicInternalFormatElement::UNSIGNED_FIXED_POINT}, 
+    {GL_RGB12         ,"GL_RGB12","         ",GL_RGB ,3,{12,12,12,0 ,},true ,false,true ,BasicInternalFormatElement::UNSIGNED_FIXED_POINT}, 
+    {GL_RGB16         ,"GL_RGB16","         ",GL_RGB ,3,{16,16,16,0 ,},true ,false,true ,BasicInternalFormatElement::UNSIGNED_FIXED_POINT}, 
+    {GL_RGB16_SNORM   ,"GL_RGB16_SNORM","   ",GL_RGB ,3,{16,16,16,0 ,},true ,false,true ,BasicInternalFormatElement::FIXED_POINT         }, 
+    {GL_RGBA2         ,"GL_RGBA2","         ",GL_RGBA,4,{2 ,2 ,2 ,2 ,},true ,false,true ,BasicInternalFormatElement::UNSIGNED_FIXED_POINT}, 
+    {GL_RGBA4         ,"GL_RGBA4","         ",GL_RGBA,4,{4 ,4 ,4 ,4 ,},true ,true ,true ,BasicInternalFormatElement::UNSIGNED_FIXED_POINT}, 
+    {GL_RGB5_A1       ,"GL_RGB5_A1","       ",GL_RGBA,4,{5 ,5 ,5 ,1 ,},true ,true ,true ,BasicInternalFormatElement::UNSIGNED_FIXED_POINT}, 
+
+    {GL_RGBA8         ,"GL_RGBA8","         ",GL_RGBA,4,{8 ,8 ,8 ,8 ,},true ,true ,true ,BasicInternalFormatElement::UNSIGNED_FIXED_POINT},   
+    {GL_RGBA8_SNORM   ,"GL_RGBA8_SNORM","   ",GL_RGBA,4,{8 ,8 ,8 ,8 ,},true ,false,true ,BasicInternalFormatElement::FIXED_POINT},   
+    {GL_RGB10_A2      ,"GL_RGB10_A2","      ",GL_RGBA,4,{10,10,10,2 ,},true ,true ,true ,BasicInternalFormatElement::UNSIGNED_FIXED_POINT},   
+    {GL_RGB10_A2UI    ,"GL_RGB10_A2UI","    ",GL_RGBA,4,{10,10,10,2 ,},true ,true ,true ,BasicInternalFormatElement::UNSIGNED_INT},   
+    {GL_RGBA12        ,"GL_RGBA12","        ",GL_RGBA,4,{12,12,12,12,},true ,false,true ,BasicInternalFormatElement::UNSIGNED_FIXED_POINT},   
+    {GL_RGBA16        ,"GL_RGBA16","        ",GL_RGBA,4,{16,16,16,16,},true ,true ,true ,BasicInternalFormatElement::UNSIGNED_FIXED_POINT},   
+    {GL_RGBA16_SNORM  ,"GL_RGBA16_SNORM","  ",GL_RGBA,4,{16,16,16,16,},true ,false,true ,BasicInternalFormatElement::FIXED_POINT}, 
+    {GL_SRGB8         ,"GL_SRGB8","         ",GL_RGB ,3,{8 ,8 ,8 ,0 ,},true ,false,true ,BasicInternalFormatElement::UNSIGNED_FIXED_POINT}, 
+    {GL_SRGB8_ALPHA8  ,"GL_SRGB8_ALPHA8","  ",GL_RGBA,4,{8 ,8 ,8 ,8 ,},true ,true ,true ,BasicInternalFormatElement::UNSIGNED_FIXED_POINT}, 
+    {GL_R16F          ,"GL_R16F","          ",GL_RED ,1,{16,0 ,0 ,0 ,},true ,true ,true ,BasicInternalFormatElement::FLOAT               }, 
+    {GL_RG16F         ,"GL_RG16F","         ",GL_RG  ,2,{16,16,0 ,0 ,},true ,true ,true ,BasicInternalFormatElement::FLOAT               }, 
+    {GL_RGB16F        ,"GL_RGB16F","        ",GL_RGB ,3,{16,16,16,0 ,},true ,false,true ,BasicInternalFormatElement::FLOAT               }, 
+    {GL_RGBA16F       ,"GL_RGBA16F","       ",GL_RGBA,4,{16,16,16,16,},true ,true ,true ,BasicInternalFormatElement::FLOAT               }, 
+    {GL_R32F          ,"GL_R32F","          ",GL_RED ,1,{32,0 ,0 ,0 ,},true ,true ,true ,BasicInternalFormatElement::FLOAT               }, 
+    {GL_RG32F         ,"GL_RG32F","         ",GL_RG  ,2,{32,32,0 ,0 ,},true ,true ,true ,BasicInternalFormatElement::FLOAT               }, 
+    {GL_RGB32F        ,"GL_RGB32F","        ",GL_RGB ,3,{32,32,32,0 ,},true ,false,true ,BasicInternalFormatElement::FLOAT               }, 
+    {GL_RGBA32F       ,"GL_RGBA32F","       ",GL_RGBA,4,{32,32,32,32,},true ,true ,true ,BasicInternalFormatElement::FLOAT               }, 
+    {GL_R11F_G11F_B10F,"GL_R11F_G11F_B10F","",GL_RGB ,3,{11,11,10,0 ,},true ,true ,true ,BasicInternalFormatElement::FLOAT               },
+    {GL_RGB9_E5       ,"GL_RGB9_E5","       ",GL_RGB ,4,{9 ,9 ,9 ,5 ,},false,false,true ,BasicInternalFormatElement::UNSIGNED_FIXED_POINT}, 
+    {GL_R8I           ,"GL_R8I","           ",GL_RED ,1,{8 ,0 ,0 ,0 ,},true ,true ,true ,BasicInternalFormatElement::INT                 }, 
+    {GL_R8UI          ,"GL_R8UI","          ",GL_RED ,1,{8 ,0 ,0 ,0 ,},true ,true ,true ,BasicInternalFormatElement::UNSIGNED_INT        }, 
+    {GL_R16I          ,"GL_R16I","          ",GL_RED ,1,{16,0 ,0 ,0 ,},true ,true ,true ,BasicInternalFormatElement::INT                 }, 
+    {GL_R16UI         ,"GL_R16UI","         ",GL_RED ,1,{16,0 ,0 ,0 ,},true ,true ,true ,BasicInternalFormatElement::UNSIGNED_INT        }, 
+    {GL_R32I          ,"GL_R32I","          ",GL_RED ,1,{32,0 ,0 ,0 ,},true ,true ,true ,BasicInternalFormatElement::INT                 }, 
+    {GL_R32UI         ,"GL_R32UI","         ",GL_RED ,1,{32,0 ,0 ,0 ,},true ,true ,true ,BasicInternalFormatElement::UNSIGNED_INT        }, 
+    {GL_RG8I          ,"GL_RG8I","          ",GL_RG  ,2,{8 ,8 ,0 ,0 ,},true ,true ,true ,BasicInternalFormatElement::INT                 }, 
+    {GL_RG8UI         ,"GL_RG8UI","         ",GL_RG  ,2,{8 ,8 ,0 ,0 ,},true ,true ,true ,BasicInternalFormatElement::UNSIGNED_INT        }, 
+    {GL_RG16I         ,"GL_RG16I","         ",GL_RG  ,2,{16,16,0 ,0 ,},true ,true ,true ,BasicInternalFormatElement::INT                 }, 
+    {GL_RG16UI        ,"GL_RG16UI","        ",GL_RG  ,2,{16,16,0 ,0 ,},true ,true ,true ,BasicInternalFormatElement::UNSIGNED_INT        }, 
+    {GL_RG32I         ,"GL_RG32I","         ",GL_RG  ,2,{32,32,0 ,0 ,},true ,true ,true ,BasicInternalFormatElement::INT                 }, 
+    {GL_RG32UI        ,"GL_RG32UI","        ",GL_RG  ,2,{32,32,0 ,0 ,},true ,true ,true ,BasicInternalFormatElement::UNSIGNED_INT        }, 
+    {GL_RGB8I         ,"GL_RGB8I","         ",GL_RGB ,3,{8 ,8 ,8 ,0 ,},true ,false,true ,BasicInternalFormatElement::INT                 }, 
+    {GL_RGB8UI        ,"GL_RGB8UI","        ",GL_RGB ,3,{8 ,8 ,8 ,0 ,},true ,false,true ,BasicInternalFormatElement::UNSIGNED_INT        }, 
+    
+    {GL_RGB16I        ,"GL_RGB16I","        ",GL_RGB ,3,{16,16,16,0 ,},true ,false,true ,BasicInternalFormatElement::INT                 },
+    {GL_RGB16UI       ,"GL_RGB16UI","       ",GL_RGB ,3,{16,16,16,0 ,},true ,false,true ,BasicInternalFormatElement::UNSIGNED_INT        },
+    {GL_RGB32I        ,"GL_RGB32I","        ",GL_RGB ,3,{32,32,32,0 ,},true ,false,true ,BasicInternalFormatElement::INT                 },
+    {GL_RGB32UI       ,"GL_RGB32UI","       ",GL_RGB ,3,{32,32,32,0 ,},true ,false,true ,BasicInternalFormatElement::UNSIGNED_INT        },
+    {GL_RGBA8I        ,"GL_RGBA8I","        ",GL_RGBA,4,{8 ,8 ,8 ,8 ,},true ,true ,true ,BasicInternalFormatElement::INT                 },
+    {GL_RGBA8UI       ,"GL_RGBA8UI","       ",GL_RGBA,4,{8 ,8 ,8 ,8 ,},true ,true ,true ,BasicInternalFormatElement::UNSIGNED_INT        },
+    {GL_RGBA16I       ,"GL_RGBA16I","       ",GL_RGBA,4,{16,16,16,16,},true ,true ,true ,BasicInternalFormatElement::INT                 },
+    {GL_RGBA16UI      ,"GL_RGBA16UI","      ",GL_RGBA,4,{16,16,16,16,},true ,true ,true ,BasicInternalFormatElement::UNSIGNED_INT        },
+    {GL_RGBA32I       ,"GL_RGBA32I","       ",GL_RGBA,4,{32,32,32,32,},true ,true ,true ,BasicInternalFormatElement::INT                 },
+    {GL_RGBA32UI      ,"GL_RGBA32UI","      ",GL_RGBA,4,{32,32,32,32,},true ,true ,true ,BasicInternalFormatElement::UNSIGNED_INT        },
+  };
+  for(auto const&i:elements)
+    if(i.format == internalFormat){
+      info = i;
+      return true;
+    }
+  return false;
 }
 
-bool ge::gl::internalFormatFloatingPoint  (GLenum internalFormat){
-  return internalFormatTable<INTERNAL_FORMAT_FLOAT>(internalFormat);
+bool ge::gl::isInternalFormatBasic(GLenum internalFormat){
+  BasicInternalFormatElement info;
+  return basicInternalFormatTable(info,internalFormat);
 }
 
-bool ge::gl::internalFormatSigned         (GLenum internalFormat){
-  return internalFormatTable<INTERNAL_FORMAT_SIGNED>(internalFormat);
+BasicInternalFormatElement ge::gl::getBasicInternalFormatInformation(GLenum internalFormat){
+  BasicInternalFormatElement info;
+  basicInternalFormatTable(info,internalFormat);
+  return info;
 }
 
-bool ge::gl::internalFormatFixedPoint     (GLenum internalFormat){
-  return internalFormatTable<INTERNAL_FORMAT_FIXED_POINT>(internalFormat);
-}

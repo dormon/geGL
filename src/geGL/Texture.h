@@ -3,6 +3,7 @@
 #include<geGL/OpenGLObject.h>
 #include<iostream>
 #include<set>
+#include<vector>
 
 class ge::gl::Texture: public OpenGLObject{
   friend class Framebuffer;
@@ -96,6 +97,8 @@ class ge::gl::Texture: public OpenGLObject{
       GLsizei      depth     = 0               ,
       GLint        rowLength = 0               ,
       GLint        imgHeight = 0               )const;
+  GEGL_EXPORT void getCompressedData(void*data,GLsizei bufSize,GLint level);
+  GEGL_EXPORT void getCompressedData(std::vector<uint8_t>&data,GLint level);
 
 
   GEGL_EXPORT void    generateMipmap()const;

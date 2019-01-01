@@ -279,6 +279,16 @@ void Texture::setData3D(
   this->getContext().glPixelStorei(GL_UNPACK_IMAGE_HEIGHT,0);
 }
 
+void Texture::getCompressedData(void*data,GLsizei bufSize,GLint level){
+  getContext().glGetCompressedTextureImage(getId(),level,bufSize,data);
+}
+
+void Texture::getCompressedData(std::vector<uint8_t>&data,GLint level){
+  auto const bufSize = getCompressedImageSize(level);
+  data.resize(bufSize);
+  getCompressedData(data.data(),bufSize,level);
+}
+
 void Texture::generateMipmap()const{
   assert(this!=nullptr);
   this->getContext().glGenerateTextureMipmap(this->getId());
