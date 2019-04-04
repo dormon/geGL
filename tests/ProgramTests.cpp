@@ -50,28 +50,6 @@ TEST_CASE("Program buffer interface"){
 
         {
           GLenum const props[] = {
-            GL_BUFFER_BINDING      ,
-            GL_BUFFER_DATA_SIZE    ,
-            GL_NUM_ACTIVE_VARIABLES,
-            GL_ACTIVE_VARIABLES    ,
-          };
-          std::string const propNames[] = {
-            "GL_BUFFER_BINDING      ",
-            "GL_BUFFER_DATA_SIZE    ",
-            "GL_NUM_ACTIVE_VARIABLES",
-            "GL_ACTIVE_VARIABLES    ",
-          };
-          GLsizei const nprops = sizeof(props)/sizeof(props[0]);
-          GLint propVal[nprops];
-          glGetProgramResourceiv(id,GL_SHADER_STORAGE_BLOCK,i,nprops,props,nprops,nullptr,propVal);
-
-          for(size_t i=0;i<nprops;++i)
-            std::cerr << "  " << propNames[i] <<": " << propVal[i] << std::endl;
-
-        }
-
-        {
-          GLenum const props[] = {
             GL_BLOCK_INDEX  ,
             GL_ARRAY_STRIDE ,
             GL_OFFSET       ,
@@ -131,37 +109,15 @@ TEST_CASE("Program buffer interface"){
 
         }
 
-        {
-          GLenum const props[] = {
-            GL_BLOCK_INDEX  ,
-            GL_ARRAY_STRIDE ,
-            GL_OFFSET       ,
-            GL_MATRIX_STRIDE,
-            GL_IS_ROW_MAJOR ,
-          };
-          std::string const propNames[] = {
-            "GL_BLOCK_INDEX  ",
-            "GL_ARRAY_STRIDE ",
-            "GL_OFFSET       ",
-            "GL_MATRIX_STRIDE",
-            "GL_IS_ROW_MAJOR ",
-          };
-          GLsizei const nprops = sizeof(props)/sizeof(props[0]);
-          GLint propVal[nprops];
-          glGetProgramResourceiv(id,GL_BUFFER_VARIABLE,i,nprops,props,nprops,nullptr,propVal);
-
-          for(size_t i=0;i<nprops;++i)
-            std::cerr << "  " << propNames[i] <<": " << propVal[i] << std::endl;
-        }
       }
     }
 
 
 
-    REQUIRE(prg->getBufferBinding("data0") == 3);
-    REQUIRE(prg->getBufferBinding("data1") == 5);
-    REQUIRE(prg->getBufferBinding("data2") == 6);
-    REQUIRE(prg->getBufferBinding("data3") == 7);
+    REQUIRE(prg->getBufferBinding("Data0") == 3);
+    REQUIRE(prg->getBufferBinding("Data1") == 5);
+    REQUIRE(prg->getBufferBinding("Data2") == 6);
+    REQUIRE(prg->getBufferBinding("Data3") == 7);
   }
   win.endFrame();
 }
@@ -187,9 +143,9 @@ TEST_CASE("Program buffer binding"){
     }
     ).");
     auto prg = std::make_shared<ge::gl::Program>(cs);
-    REQUIRE(prg->getBufferBinding("data0") == 3);
-    REQUIRE(prg->getBufferBinding("data1") == 5);
-    REQUIRE(prg->getBufferBinding("data2") == 7);
+    REQUIRE(prg->getBufferBinding("Data0") == 3);
+    REQUIRE(prg->getBufferBinding("Data1") == 5);
+    REQUIRE(prg->getBufferBinding("Data2") == 7);
   }
   win.endFrame();
 }
