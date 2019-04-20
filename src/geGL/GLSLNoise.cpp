@@ -21,11 +21,24 @@ std::string ge::gl::getNoiseSource(){
 #define UVEC3 uvec3
 #define UVEC4 uvec4
 
-#define VECXI(x,m,i) JOIN(x,JOIN(VECI,m(i)))
-#define VECI1(i) 
-#define VECI2(i) [i]
-#define VECI3(i) [i]
-#define VECI4(i) [i]
+//#define VECXI(x,m,i) JOIN(x,JOIN(VECI,m(i)))
+//#define VECI1(i) 
+//#define VECI2(i) [i]
+//#define VECI3(i) [i]
+//#define VECI4(i) [i]
+
+uint  getElem(uint  x,uint i){return x   ;}
+uint  getElem(uvec2 x,uint i){return x[i];}
+uint  getElem(uvec3 x,uint i){return x[i];}
+uint  getElem(uvec4 x,uint i){return x[i];}
+float getElem(float x,uint i){return x   ;}
+float getElem(vec2  x,uint i){return x[i];}
+float getElem(vec3  x,uint i){return x[i];}
+float getElem(vec4  x,uint i){return x[i];}
+
+
+#define VECXI(x,m,i) getElem(x,i)
+
 
 const uint UINT_0       = 0u         ;
 const uint UINT_1       = 1u         ;
@@ -47,13 +60,13 @@ uint poly(in uint x,in uint c){
 #define BASE(DIMENSION)                                     \
 float baseIntegerNoise(in JOIN(UVEC,DIMENSION) x){          \
   uint last = 10u;                                          \
-  for(uint i = 0u; i < DIMENSION##u; ++i)                   \
+  for(uint i = 0u; i < uint(DIMENSION); ++i)                \
     last = poly( VECXI(x,DIMENSION,i) + (20024u << i),last);\
   return -1. + float(last)/float(UINT_MAXDIV2);             \
 }                                                           \
 uint baseIntegerNoiseU(in JOIN(UVEC,DIMENSION) x){          \
   uint last = 10u;                                          \
-  for(uint i = 0u; i < DIMENSION##u; ++i)                   \
+  for(uint i = 0u; i < uint(DIMENSION); ++i)                \
     last = poly( VECXI(x,DIMENSION,i) + (20024u << i),last);\
   return last;                                              \
 }
@@ -64,16 +77,16 @@ float smoothNoise(in uint d,in JOIN(UVEC,DIMENSION) x){                         
   if(d == 0u)return baseIntegerNoise(x);                                           \
   uint dd = 1u << d;                                                               \
   JOIN(UVEC,DIMENSION) xx = x >> d;                                                \
-  JOIN(VEC,DIMENSION) t = JOIN(VEC,DIMENSION)(x&(dd-1u)) / JOIN(VEC,DIMENSION)(dd);\
+  JOIN(VEC,DIMENSION) t = JOIN(VEC,DIMENSION)(x&uint(dd-1u)) / JOIN(VEC,DIMENSION)(dd);\
   float ret = 0.f;                                                                 \
   for(uint i = 0u; i < (1u << DIMENSION); ++i){                                    \
     float coef = 1.f;                                                              \
-    JOIN(UVEC,DIMENSION) o;                                                        \
-    for(uint j = 0u; j < DIMENSION##u; ++j){                                       \
+    JOIN(UVEC,DIMENSION) o = JOIN(UVEC,DIMENSION)(0);                              \
+    for(uint j = 0u; j < uint(DIMENSION); ++j){                                    \
       VECXI(o,DIMENSION,j) = (i >> j) & 1u;                                        \
-      coef *= smoothstep(0.f,1.f,float(1u - ((i >> j)&1u))*(1. - 2.*VECXI(t,DIMENSION,j)) + VECXI(t,DIMENSION,j));\
+      coef *= smoothstep(0.f,1.f,float(1u - (uint(i >> j)&1u))*(1.f - 2.f*VECXI(t,DIMENSION,j)) + VECXI(t,DIMENSION,j));\
     }                                                                              \
-    ret += baseIntegerNoise((xx + o<<d)&(0xffffffff>>d)) * coef;                   \
+    ret += baseIntegerNoise((xx + (o<<d))&uint(0xffffffffu>>d)) * coef;                   \
   }                                                                                \
   return ret;                                                                      \
 }
@@ -141,7 +154,7 @@ float smoothSimplexNoise(in uint controlPointDistanceExponent,in uvec2 x){
   if(controlPointDistanceExponent == 0u)return baseIntegerNoise(x);
   uint controlPointDistance = 1u << controlPointDistanceExponent;
   uvec2 smallestControlPoint = x >> controlPointDistanceExponent;
-  vec2  delta       = vec2(x&(controlPointDistance-1u)) / vec2(controlPointDistance);
+  vec2  delta       = vec2(x&uint(controlPointDistance-1u)) / vec2(controlPointDistance);
   float result = 0.f;
   uint simplexId = uint(delta.y > delta.x);
   // dx <= dy
@@ -154,9 +167,9 @@ float smoothSimplexNoise(in uint controlPointDistanceExponent,in uvec2 x){
   // 3: x
   //
   //
-  result += baseIntegerNoise((smallestControlPoint+uvec2(0          ,0        )<<controlPointDistanceExponent)&(0xffffffff>>controlPointDistanceExponent)) * (1-delta.y*simplexId-delta.x*(1-simplexId));
-  result += baseIntegerNoise((smallestControlPoint+uvec2(1          ,1        )<<controlPointDistanceExponent)&(0xffffffff>>controlPointDistanceExponent)) * (delta.x*simplexId + delta.y*(1-simplexId));
-  result += baseIntegerNoise((smallestControlPoint+uvec2(1-simplexId,simplexId)<<controlPointDistanceExponent)&(0xffffffff>>controlPointDistanceExponent)) * abs(delta.y-delta.x);//*(-1+2*simplexId);
+  result += baseIntegerNoise((smallestControlPoint+uvec2(0          ,0        )<<controlPointDistanceExponent)&uint(0xffffffff>>controlPointDistanceExponent)) * (1-delta.y*simplexId-delta.x*(1-simplexId));
+  result += baseIntegerNoise((smallestControlPoint+uvec2(1          ,1        )<<controlPointDistanceExponent)&uint(0xffffffff>>controlPointDistanceExponent)) * (delta.x*simplexId + delta.y*(1-simplexId));
+  result += baseIntegerNoise((smallestControlPoint+uvec2(1-simplexId,simplexId)<<controlPointDistanceExponent)&uint(0xffffffff>>controlPointDistanceExponent)) * abs(delta.y-delta.x);//*(-1+2*simplexId);
   return result;
 }
 
@@ -197,7 +210,7 @@ uint smoothNoiseU(in uint d,in uvec2 x){
 
   uint dd = 1u << d;
   uvec2 xx = x >> d;
-  uvec2  delta       = uvec2(x&(dd-1u));
+  uvec2  delta       = uvec2(x&uint(dd-1u));
   uint result0 = 0u;
   uint result1 = 0u;
 
@@ -225,14 +238,14 @@ float noiseU(in uvec2 x){
     res += smoothNoiseU(k,x)>>(m-k) ;
 
   res = 0;
-  res += uint((smoothNoiseU(7,x)&0x80000000)>0)<<31;
-  res += uint((smoothNoiseU(6,x)&0xB0000000)>0)<<30;
-  res += uint((smoothNoiseU(5,x)&0xE0000000)>0)<<29;
-  res += uint((smoothNoiseU(4,x)&0xF0000000)>0)<<28;
-  res += uint((smoothNoiseU(3,x)&0xF8000000)>0)<<27;
-  res += uint((smoothNoiseU(2,x)&0xFB000000)>0)<<26;
-  res += uint((smoothNoiseU(1,x)&0xFE000000)>0)<<25;
-  res += uint((smoothNoiseU(0,x)&0xFF000000)>0)<<24;
+  res += uint((smoothNoiseU(7,x)&0x80000000u)>0)<<31;
+  res += uint((smoothNoiseU(6,x)&0xB0000000u)>0)<<30;
+  res += uint((smoothNoiseU(5,x)&0xE0000000u)>0)<<29;
+  res += uint((smoothNoiseU(4,x)&0xF0000000u)>0)<<28;
+  res += uint((smoothNoiseU(3,x)&0xF8000000u)>0)<<27;
+  res += uint((smoothNoiseU(2,x)&0xFB000000u)>0)<<26;
+  res += uint((smoothNoiseU(1,x)&0xFE000000u)>0)<<25;
+  res += uint((smoothNoiseU(0,x)&0xFF000000u)>0)<<24;
 
   res = (smoothNoiseU(8,x)>>1)+(smoothNoiseU(7,x)>>2)+(smoothNoiseU(6,x)>>3)+(smoothNoiseU(5,x)>>4)+(smoothNoiseU(4,x)>>5)+(smoothNoiseU(3,x)>>6)+(smoothNoiseU(2,x)>>7)+(smoothNoiseU(1,x)>>7);
   res = smoothNoiseU(6,x);
