@@ -2,6 +2,7 @@
 
 std::string ge::gl::getNoiseSource(){
   return R".(
+#line 5
 #define JOIN1(x,y) x##y
 #define JOIN0(x,y) JOIN1(x,y)
 #define JOIN(x,y)  JOIN0(x,y)
@@ -35,9 +36,13 @@ float getElem(float x,uint i){return x   ;}
 float getElem(vec2  x,uint i){return x[i];}
 float getElem(vec3  x,uint i){return x[i];}
 float getElem(vec4  x,uint i){return x[i];}
-
-
 #define VECXI(x,m,i) getElem(x,i)
+
+float convert(uint  x){return float(float(x  )                                 );}
+vec2  convert(uvec2 x){return vec2 (float(x.x),float(x.y)                      );}
+vec3  convert(uvec3 x){return vec3 (float(x.x),float(x.y),float(x.z)           );}
+vec4  convert(uvec4 x){return vec4 (float(x.x),float(x.y),float(x.z),float(x.w));}
+
 
 
 const uint UINT_0       = 0u         ;
@@ -77,20 +82,19 @@ float smoothNoise(in uint d,in JOIN(UVEC,DIMENSION) x){                         
   if(d == 0u)return baseIntegerNoise(x);                                           \
   uint dd = 1u << d;                                                               \
   JOIN(UVEC,DIMENSION) xx = x >> d;                                                \
-  JOIN(VEC,DIMENSION) t = JOIN(VEC,DIMENSION)(x&uint(dd-1u)) / JOIN(VEC,DIMENSION)(dd);\
+  JOIN(VEC,DIMENSION) t = convert(x&uint(dd-1u)) / convert(dd);                    \
   float ret = 0.f;                                                                 \
   for(uint i = 0u; i < (1u << DIMENSION); ++i){                                    \
     float coef = 1.f;                                                              \
     JOIN(UVEC,DIMENSION) o = JOIN(UVEC,DIMENSION)(0);                              \
     for(uint j = 0u; j < uint(DIMENSION); ++j){                                    \
       VECXI(o,DIMENSION,j) = (i >> j) & 1u;                                        \
-      coef *= smoothstep(0.f,1.f,float(1u - (uint(i >> j)&1u))*(1.f - 2.f*VECXI(t,DIMENSION,j)) + VECXI(t,DIMENSION,j));\
+      coef *= float(1u - (uint(i >> j)&1u))*(1.f - 2.f*VECXI(t,DIMENSION,j)) + VECXI(t,DIMENSION,j);\
     }                                                                              \
-    ret += baseIntegerNoise((xx + (o<<d))&uint(0xffffffffu>>d)) * coef;                   \
+    ret += baseIntegerNoise(xx + o) * coef;                   \
   }                                                                                \
   return ret;                                                                      \
 }
-
 
 #define OCTAVE(DIMENSION)                                          \
 float noise(in JOIN(UVEC,DIMENSION) x,in uint M,in uint N,float p){\
@@ -120,15 +124,123 @@ float noise(in JOIN(IVEC,DIMENSION) x,in uint M,in uint N,float p){\
   return noise(JOIN(UVEC,DIMENSION)(x),M,N,p);                     \
 }
 
-BASE(1)
-BASE(2)
-BASE(3)
-BASE(4)
+//BASE(1)
+//BASE(2)
+//BASE(3)
+//BASE(4)
 
-SMOOTH(1)
-SMOOTH(2)
-SMOOTH(3)
-SMOOTH(4)
+//SMOOTH(1)
+//SMOOTH(2)
+//SMOOTH(3)
+//SMOOTH(4)
+
+uint baseIntegerNoiseU(in uint x){          
+  uint last = 10u;                                          
+  last = poly( x + (20024u    ),last);
+  return last;                                              
+}
+float baseIntegerNoise(in uint x){          
+  return -1. + float(baseIntegerNoiseU(x))/float(UINT_MAXDIV2);             
+}                                                           
+
+uint baseIntegerNoiseU(in uvec2 x){          
+  uint last = 10u;                                          
+  last = poly( x[0] + (20024u    ),last);
+  last = poly( x[1] + (20024u<<1u),last);
+  return last;                                              
+}
+float baseIntegerNoise(in uvec2 x){          
+  return -1. + float(baseIntegerNoiseU(x))/float(UINT_MAXDIV2);             
+}                                                           
+
+uint baseIntegerNoiseU(in uvec3 x){          
+  uint last = 10u;                                          
+  last = poly( x[0] + (20024u    ),last);
+  last = poly( x[1] + (20024u<<1u),last);
+  last = poly( x[2] + (20024u<<2u),last);
+  return last;                                              
+}
+float baseIntegerNoise(in uvec3 x){          
+  return -1. + float(baseIntegerNoiseU(x))/float(UINT_MAXDIV2);             
+}                                                           
+
+uint baseIntegerNoiseU(in uvec4 x){          
+  uint last = 10u;                                          
+  last = poly( x[0] + (20024u    ),last);
+  last = poly( x[1] + (20024u<<1u),last);
+  last = poly( x[2] + (20024u<<2u),last);
+  last = poly( x[3] + (20024u<<3u),last);
+  return last;                                              
+}
+float baseIntegerNoise(in uvec4 x){          
+  return -1. + float(baseIntegerNoiseU(x))/float(UINT_MAXDIV2);             
+}                                                           
+
+float smoothNoise(in uint d,in uint x){
+  if(d == 0u)return baseIntegerNoise(x);
+  uint dd = 1u << d;
+  uint xx = x >> d;
+  float t = float(x&uint(dd-1u)) / float(dd);
+  float ret = 0.f;
+  ret += baseIntegerNoise(xx+0u) * (1.f-t);
+  ret += baseIntegerNoise(xx+1u) * (    t);
+  return ret;
+}
+
+float smoothNoise(in uint d,in uvec2 x){
+  if(d == 0u)return baseIntegerNoise(x);
+  uint dd = 1u << d;
+  uvec2 xx = x >> d;
+  vec2 t = vec2(x&uvec2(dd-1u)) / vec2(dd);
+  float ret = 0.f;
+  ret += baseIntegerNoise(xx+uvec2(0u,0u)) * (1.f-t[0u])*(1.f-t[1u]);
+  ret += baseIntegerNoise(xx+uvec2(1u,0u)) * (    t[0u])*(1.f-t[1u]);
+  ret += baseIntegerNoise(xx+uvec2(0u,1u)) * (1.f-t[0u])*(    t[1u]);
+  ret += baseIntegerNoise(xx+uvec2(1u,1u)) * (    t[0u])*(    t[1u]);
+  return ret;
+}
+
+float smoothNoise(in uint d,in uvec3 x){
+  if(d == 0u)return baseIntegerNoise(x);
+  uint dd = 1u << d;
+  uvec3 xx = x >> d;
+  vec3 t = vec3(x&uvec3(dd-1u)) / vec3(dd);
+  float ret = 0.f;
+  ret += baseIntegerNoise(xx+uvec3(0u,0u,0u)) * (1.f-t[0u])*(1.f-t[1u])*(1.f-t[2u]);
+  ret += baseIntegerNoise(xx+uvec3(1u,0u,0u)) * (    t[0u])*(1.f-t[1u])*(1.f-t[2u]);
+  ret += baseIntegerNoise(xx+uvec3(0u,1u,0u)) * (1.f-t[0u])*(    t[1u])*(1.f-t[2u]);
+  ret += baseIntegerNoise(xx+uvec3(1u,1u,0u)) * (    t[0u])*(    t[1u])*(1.f-t[2u]);
+  ret += baseIntegerNoise(xx+uvec3(0u,0u,1u)) * (1.f-t[0u])*(1.f-t[1u])*(    t[2u]);
+  ret += baseIntegerNoise(xx+uvec3(1u,0u,1u)) * (    t[0u])*(1.f-t[1u])*(    t[2u]);
+  ret += baseIntegerNoise(xx+uvec3(0u,1u,1u)) * (1.f-t[0u])*(    t[1u])*(    t[2u]);
+  ret += baseIntegerNoise(xx+uvec3(1u,1u,1u)) * (    t[0u])*(    t[1u])*(    t[2u]);
+  return ret;
+}
+
+float smoothNoise(in uint d,in uvec4 x){
+  if(d == 0u)return baseIntegerNoise(x);
+  uint dd = 1u << d;
+  uvec4 xx = x >> d;
+  vec4 t = vec4(x&uvec4(dd-1u)) / vec4(dd);
+  float ret = 0.f;
+  ret += baseIntegerNoise(xx+uvec4(0u,0u,0u,0u)) * (1.f-t[0u])*(1.f-t[1u])*(1.f-t[2u])*(1.f-t[3u]);
+  ret += baseIntegerNoise(xx+uvec4(1u,0u,0u,0u)) * (    t[0u])*(1.f-t[1u])*(1.f-t[2u])*(1.f-t[3u]);
+  ret += baseIntegerNoise(xx+uvec4(0u,1u,0u,0u)) * (1.f-t[0u])*(    t[1u])*(1.f-t[2u])*(1.f-t[3u]);
+  ret += baseIntegerNoise(xx+uvec4(1u,1u,0u,0u)) * (    t[0u])*(    t[1u])*(1.f-t[2u])*(1.f-t[3u]);
+  ret += baseIntegerNoise(xx+uvec4(0u,0u,1u,0u)) * (1.f-t[0u])*(1.f-t[1u])*(    t[2u])*(1.f-t[3u]);
+  ret += baseIntegerNoise(xx+uvec4(1u,0u,1u,0u)) * (    t[0u])*(1.f-t[1u])*(    t[2u])*(1.f-t[3u]);
+  ret += baseIntegerNoise(xx+uvec4(0u,1u,1u,0u)) * (1.f-t[0u])*(    t[1u])*(    t[2u])*(1.f-t[3u]);
+  ret += baseIntegerNoise(xx+uvec4(1u,1u,1u,0u)) * (    t[0u])*(    t[1u])*(    t[2u])*(1.f-t[3u]);
+  ret += baseIntegerNoise(xx+uvec4(0u,0u,0u,1u)) * (1.f-t[0u])*(1.f-t[1u])*(1.f-t[2u])*(    t[3u]);
+  ret += baseIntegerNoise(xx+uvec4(1u,0u,0u,1u)) * (    t[0u])*(1.f-t[1u])*(1.f-t[2u])*(    t[3u]);
+  ret += baseIntegerNoise(xx+uvec4(0u,1u,0u,1u)) * (1.f-t[0u])*(    t[1u])*(1.f-t[2u])*(    t[3u]);
+  ret += baseIntegerNoise(xx+uvec4(1u,1u,0u,1u)) * (    t[0u])*(    t[1u])*(1.f-t[2u])*(    t[3u]);
+  ret += baseIntegerNoise(xx+uvec4(0u,0u,1u,1u)) * (1.f-t[0u])*(1.f-t[1u])*(    t[2u])*(    t[3u]);
+  ret += baseIntegerNoise(xx+uvec4(1u,0u,1u,1u)) * (    t[0u])*(1.f-t[1u])*(    t[2u])*(    t[3u]);
+  ret += baseIntegerNoise(xx+uvec4(0u,1u,1u,1u)) * (1.f-t[0u])*(    t[1u])*(    t[2u])*(    t[3u]);
+  ret += baseIntegerNoise(xx+uvec4(1u,1u,1u,1u)) * (    t[0u])*(    t[1u])*(    t[2u])*(    t[3u]);
+  return ret;
+}
 
 OCTAVE(1)
 OCTAVE(2)
