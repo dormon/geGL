@@ -54,9 +54,9 @@ const uint UINT_MAX     = 0xffffffffu;
 uint poly(in uint x,in uint c){
   //return x;
   //return x*(x+c);
-  //return x*(x*(x+c)+c);
+  return x*(x*(x+c)+c);
   //return x*(x*(x*(x+c)+c)+c);
-  return x*(x*(x*(x*(x+c)+c)+c)+c);
+  //return x*(x*(x*(x*(x+c)+c)+c)+c);
   //return x*(x*(x*(x*(x*(x+c)+c)+c)+c)+c);
   //return x*(x*(x*(x*(x*(x*(x+c)+c)+c)+c)+c)+c);
   //return x*(x*(x*(x*(x*(x*(x*(x+c)+c)+c)+c)+c)+c)+c);
@@ -89,7 +89,7 @@ float smoothNoise(in uint d,in JOIN(UVEC,DIMENSION) x){                         
     JOIN(UVEC,DIMENSION) o = JOIN(UVEC,DIMENSION)(0);                              \
     for(uint j = 0u; j < uint(DIMENSION); ++j){                                    \
       VECXI(o,DIMENSION,j) = (i >> j) & 1u;                                        \
-      coef *= float(1u - (uint(i >> j)&1u))*(1.f - 2.f*VECXI(t,DIMENSION,j)) + VECXI(t,DIMENSION,j);\
+      coef *= smoothStep(0.f,1.f,float(1u - (uint(i >> j)&1u))*(1.f - 2.f*VECXI(t,DIMENSION,j)) + VECXI(t,DIMENSION,j));\
     }                                                                              \
     ret += baseIntegerNoise(xx + o) * coef;                   \
   }                                                                                \
@@ -107,7 +107,7 @@ float noise(in JOIN(UVEC,DIMENSION) x,in uint M,in uint N,float p){\
     ret += smoothNoise(M-k,x);                                     \
   }                                                                \
   return ret/sum;                                                  \
-}
+}                                                                  
 
 #define OCTAVE_SIMPLIFIED(DIMENSION)             \
 float noise(in JOIN(UVEC,DIMENSION) x,in uint M){\
@@ -144,9 +144,9 @@ float baseIntegerNoise(in uint x){
 }                                                           
 
 uint baseIntegerNoiseU(in uvec2 x){          
-  uint last = 10u;                                          
+  uint last = 103232u;                                          
   last = poly( x[0] + (20024u    ),last);
-  last = poly( x[1] + (20024u<<1u),last);
+  last = poly( x[1] + (2330024u<<1u),last);
   return last;                                              
 }
 float baseIntegerNoise(in uvec2 x){          
@@ -181,6 +181,7 @@ float smoothNoise(in uint d,in uint x){
   uint dd = 1u << d;
   uint xx = x >> d;
   float t = float(x&uint(dd-1u)) / float(dd);
+  t = smoothstep(0,1,t);
   float ret = 0.f;
   ret += baseIntegerNoise(xx+0u) * (1.f-t);
   ret += baseIntegerNoise(xx+1u) * (    t);
@@ -192,6 +193,8 @@ float smoothNoise(in uint d,in uvec2 x){
   uint dd = 1u << d;
   uvec2 xx = x >> d;
   vec2 t = vec2(x&uvec2(dd-1u)) / vec2(dd);
+  t.x = smoothstep(0,1,t.x);
+  t.y = smoothstep(0,1,t.y);
   float ret = 0.f;
   ret += baseIntegerNoise(xx+uvec2(0u,0u)) * (1.f-t[0u])*(1.f-t[1u]);
   ret += baseIntegerNoise(xx+uvec2(1u,0u)) * (    t[0u])*(1.f-t[1u]);
@@ -205,6 +208,9 @@ float smoothNoise(in uint d,in uvec3 x){
   uint dd = 1u << d;
   uvec3 xx = x >> d;
   vec3 t = vec3(x&uvec3(dd-1u)) / vec3(dd);
+  t.x = smoothstep(0,1,t.x);
+  t.y = smoothstep(0,1,t.y);
+  t.z = smoothstep(0,1,t.z);
   float ret = 0.f;
   ret += baseIntegerNoise(xx+uvec3(0u,0u,0u)) * (1.f-t[0u])*(1.f-t[1u])*(1.f-t[2u]);
   ret += baseIntegerNoise(xx+uvec3(1u,0u,0u)) * (    t[0u])*(1.f-t[1u])*(1.f-t[2u]);
@@ -222,6 +228,10 @@ float smoothNoise(in uint d,in uvec4 x){
   uint dd = 1u << d;
   uvec4 xx = x >> d;
   vec4 t = vec4(x&uvec4(dd-1u)) / vec4(dd);
+  t.x = smoothstep(0,1,t.x);
+  t.y = smoothstep(0,1,t.y);
+  t.z = smoothstep(0,1,t.z);
+  t.w = smoothstep(0,1,t.w);
   float ret = 0.f;
   ret += baseIntegerNoise(xx+uvec4(0u,0u,0u,0u)) * (1.f-t[0u])*(1.f-t[1u])*(1.f-t[2u])*(1.f-t[3u]);
   ret += baseIntegerNoise(xx+uvec4(1u,0u,0u,0u)) * (    t[0u])*(1.f-t[1u])*(1.f-t[2u])*(1.f-t[3u]);
