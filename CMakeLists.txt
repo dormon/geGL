@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10.1)
 
 project(
   geGL
-  VERSION 1.0.6
+  VERSION 1.0.7
   )
 
 SET(CMAKE_CXX_STANDARD 14)
@@ -83,6 +83,15 @@ set(GENERATED_INCLUDES
   src/${PROJECT_NAME}/Generated/TrapImplementation.h
   )
 
+set(PRIVATE_SOURCES
+  src/${PROJECT_NAME}/linux_OpenGLFunctionLoader.h
+  src/${PROJECT_NAME}/linux_OpenGLFunctionLoader.cpp
+  src/${PROJECT_NAME}/windows_OpenGLFunctionLoader.h
+  src/${PROJECT_NAME}/windows_OpenGLFunctionLoader.cpp
+  src/${PROJECT_NAME}/mac_OpenGLFunctionLoader.h
+  src/${PROJECT_NAME}/mac_OpenGLFunctionLoader.cpp
+  )
+
 source_group("Header Files\\Generated" FILES ${GENERATED_INCLUDES})
 
 option(BUILD_SHARED_LIBS "build this library as shared")
@@ -92,7 +101,7 @@ SET(CMAKE_RELEASE_POSTFIX "" CACHE STRING "add a postfix, usually empty on windo
 SET(CMAKE_RELWITHDEBINFO_POSTFIX "rd" CACHE STRING "add a postfix, usually empty on windows")
 SET(CMAKE_MINSIZEREL_POSTFIX "s" CACHE STRING "add a postfix, usually empty on windows")
 
-add_library(${PROJECT_NAME} ${SOURCES} ${INCLUDES} ${GENERATED_INCLUDES})
+add_library(${PROJECT_NAME} ${SOURCES} ${INCLUDES} ${GENERATED_INCLUDES} ${PRIVATE_SOURCES})
 add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 
 include(GNUInstallDirs)
