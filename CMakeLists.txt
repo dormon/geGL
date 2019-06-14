@@ -90,6 +90,8 @@ set(PRIVATE_SOURCES
   src/${PROJECT_NAME}/private/windows_OpenGLFunctionLoader.cpp
   src/${PROJECT_NAME}/private/mac_OpenGLFunctionLoader.h
   src/${PROJECT_NAME}/private/mac_OpenGLFunctionLoader.cpp
+  src/${PROJECT_NAME}/private/global.h
+  src/${PROJECT_NAME}/private/global.cpp
   )
 
 source_group("Header Files\\Generated" FILES ${GENERATED_INCLUDES})
