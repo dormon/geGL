@@ -1,6 +1,6 @@
 #ifdef _MSC_VER
 
-#include <geGL/windows_OpenGLFunctionLoader.h>
+#include <geGL/private/windows_OpenGLFunctionLoader.h>
 
 using namespace std;
 

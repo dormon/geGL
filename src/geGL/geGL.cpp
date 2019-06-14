@@ -4,9 +4,9 @@
 #include<cassert>
 #include<string>
 
-#include <geGL/linux_OpenGLFunctionLoader.h>
-#include <geGL/windows_OpenGLFunctionLoader.h>
-#include <geGL/mac_OpenGLFunctionLoader.h>
+#include <geGL/private/linux_OpenGLFunctionLoader.h>
+#include <geGL/private/windows_OpenGLFunctionLoader.h>
+#include <geGL/private/mac_OpenGLFunctionLoader.h>
 
 void ge::gl::init(std::shared_ptr<FunctionLoaderInterface>const&loader){
   auto table = ge::gl::createTable(loader);

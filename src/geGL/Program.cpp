@@ -1,8 +1,8 @@
 #include<geGL/Program.h>
-#include<geGL/ShaderImpl.h>
+#include<geGL/private/ShaderImpl.h>
+#include<geGL/private/ProgramImpl.h>
 #include<geGL/OpenGLUtil.h>
 #include<geGL/Buffer.h>
-#include<geGL/ProgramImpl.h>
 #include<iostream>
 #include<string>
 #include<limits>

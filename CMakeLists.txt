@@ -9,9 +9,7 @@ SET(CMAKE_CXX_STANDARD 14)
 
 set(SOURCES
   src/${PROJECT_NAME}/Buffer.cpp
-  src/${PROJECT_NAME}/BufferImpl.cpp
   src/${PROJECT_NAME}/VertexArray.cpp
-  src/${PROJECT_NAME}/VertexArrayImpl.cpp
   src/${PROJECT_NAME}/Framebuffer.cpp
   src/${PROJECT_NAME}/Texture.cpp
   src/${PROJECT_NAME}/Sampler.cpp
@@ -34,17 +32,13 @@ set(INCLUDES
   src/${PROJECT_NAME}/Fwd.h
   src/${PROJECT_NAME}/Definitions.h
   src/${PROJECT_NAME}/Buffer.h
-  src/${PROJECT_NAME}/BufferImpl.h
   src/${PROJECT_NAME}/VertexArray.h
-  src/${PROJECT_NAME}/VertexArrayImpl.h
   src/${PROJECT_NAME}/Framebuffer.h
   src/${PROJECT_NAME}/Texture.h
   src/${PROJECT_NAME}/Sampler.h
   src/${PROJECT_NAME}/ProgramPipeline.h
   src/${PROJECT_NAME}/Shader.h
-  src/${PROJECT_NAME}/ShaderImpl.h
   src/${PROJECT_NAME}/Program.h
-  src/${PROJECT_NAME}/ProgramImpl.h
   src/${PROJECT_NAME}/ProgramInfo.h
   src/${PROJECT_NAME}/Renderbuffer.h
   src/${PROJECT_NAME}/OpenGL.h
@@ -84,12 +78,18 @@ set(GENERATED_INCLUDES
   )
 
 set(PRIVATE_SOURCES
-  src/${PROJECT_NAME}/linux_OpenGLFunctionLoader.h
-  src/${PROJECT_NAME}/linux_OpenGLFunctionLoader.cpp
-  src/${PROJECT_NAME}/windows_OpenGLFunctionLoader.h
-  src/${PROJECT_NAME}/windows_OpenGLFunctionLoader.cpp
-  src/${PROJECT_NAME}/mac_OpenGLFunctionLoader.h
-  src/${PROJECT_NAME}/mac_OpenGLFunctionLoader.cpp
+  src/${PROJECT_NAME}/private/BufferImpl.cpp
+  src/${PROJECT_NAME}/private/VertexArrayImpl.cpp
+  src/${PROJECT_NAME}/private/BufferImpl.h
+  src/${PROJECT_NAME}/private/VertexArrayImpl.h
+  src/${PROJECT_NAME}/private/ProgramImpl.h
+  src/${PROJECT_NAME}/private/ShaderImpl.h
+  src/${PROJECT_NAME}/private/linux_OpenGLFunctionLoader.h
+  src/${PROJECT_NAME}/private/linux_OpenGLFunctionLoader.cpp
+  src/${PROJECT_NAME}/private/windows_OpenGLFunctionLoader.h
+  src/${PROJECT_NAME}/private/windows_OpenGLFunctionLoader.cpp
+  src/${PROJECT_NAME}/private/mac_OpenGLFunctionLoader.h
+  src/${PROJECT_NAME}/private/mac_OpenGLFunctionLoader.cpp
   )
 
 source_group("Header Files\\Generated" FILES ${GENERATED_INCLUDES})

@@ -1,6 +1,6 @@
 #ifdef __linux__
 
-#include <geGL/linux_OpenGLFunctionLoader.h>
+#include <geGL/private/linux_OpenGLFunctionLoader.h>
 
 using namespace std;
 
