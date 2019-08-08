@@ -7,6 +7,39 @@
 using namespace ge::gl;
 using namespace std;
 
+TEST_CASE("Program context 3.3 test"){
+  auto win = SDLWin(1,1,330);
+  win.beginFrame();
+  ge::gl::init();
+  {
+    auto vs = make_shared<Shader>(GL_VERTEX_SHADER,R".(
+    #version 330
+
+    uniform vec4 pos;
+
+    void main(){
+      gl_Position = vec4(pos);
+    }
+
+    ).");
+    auto fs = make_shared<Shader>(GL_FRAGMENT_SHADER,R".(
+    #version 330
+
+    layout(location=0)out vec4 fColor;
+
+    void main(){
+      fColor = vec4(1);
+    }
+
+    ).");
+    std::cerr << "#######################################" << std::endl;
+    auto prg = make_shared<Program>(vs,fs);
+    prg->getUniformLocation("pos");
+
+  }
+  win.endFrame();
+}
+
 TEST_CASE("Program buffer interface"){
   SDLWin win;
   win.beginFrame();
