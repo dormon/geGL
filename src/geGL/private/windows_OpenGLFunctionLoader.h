@@ -3,6 +3,7 @@
 #ifdef _MSC_VER
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
+#include <geGL/gegl_export.h>
 
 namespace ge{
   namespace gl{
