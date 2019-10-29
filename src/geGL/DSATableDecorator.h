@@ -568,7 +568,7 @@ namespace ge{
           }
 
           void m_glDeleteTextures_dsa(GLsizei n,const GLuint*ids){
-            this->glDeleteTextures(n,ids);
+            this->m_glDeleteTextures(n,ids);
             for(GLsizei i=0;i<n;++i)
               this->m_texture2Target.erase(ids[i]);
           }
