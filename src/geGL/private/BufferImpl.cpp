@@ -137,6 +137,6 @@ void BufferImpl::removeReferences(){
       vao->removeElementBuffer();
     for(size_t i=0;i<vao->impl->buffers.size();++i)
       if(vao->impl->buffers.at(i) == buffer)
-        vao->removeAttrib(i);
+        vao->removeAttrib((GLuint)i);
   }
 }
