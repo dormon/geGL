@@ -60,6 +60,14 @@ GLint BufferImpl::getBufferParameter(GLenum pname) const
   return param;
 }
 
+GLint64 BufferImpl::getBufferParameter64(GLenum pname) const
+{
+  GLint64       param;
+  auto const &gl = buffer->getContext();
+  gl.glGetNamedBufferParameteri64v(buffer->getId(), pname, &param);
+  return param;
+}
+
 GLvoid *BufferImpl::getBufferPointer(GLenum pname) const
 {
   GLvoid *    param;
