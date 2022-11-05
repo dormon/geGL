@@ -83,6 +83,12 @@ void Program::create(){
  */
 Program::~Program(){
   assert(this!=nullptr);
+
+  GLint currentProgram;
+  getContext().glGetIntegerv(GL_CURRENT_PROGRAM,&currentProgram);
+  if(currentProgram == getId())
+    getContext().glUseProgram(0);
+
   std::vector<ShaderPointer>forDeletion;
   for(auto const&x:impl->shaders)forDeletion.push_back(x);
   detachShaders(forDeletion);

@@ -2,10 +2,12 @@ cmake_minimum_required(VERSION 3.10.1)
 
 project(
   geGL
-  VERSION 1.0.801
+  VERSION 1.0.802
   )
 
 SET(CMAKE_CXX_STANDARD 14)
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS 1 ) 
 
 set(SOURCES
   src/${PROJECT_NAME}/Buffer.cpp

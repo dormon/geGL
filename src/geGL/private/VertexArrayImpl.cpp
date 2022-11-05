@@ -9,6 +9,12 @@ VertexArrayImpl::VertexArrayImpl(VertexArray*v):vao(v){
 }
 
 VertexArrayImpl::~VertexArrayImpl(){
+
+  GLint currentVAO;
+  vao->getContext().glGetIntegerv(GL_VERTEX_ARRAY_BINDING,&currentVAO);
+  if(currentVAO == vao->getId())
+    vao->getContext().glBindVertexArray(0);
+
   vao->getContext().glDeleteVertexArrays(1,&vao->getId());
   removeReferencesFromBuffers();
   removeReferenceFromElementBuffer();
