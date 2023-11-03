@@ -2,6 +2,8 @@
 
 #ifdef __APPLE__
 
+#include<geGL/Fwd.h>
+
 class ge::gl::OpenGLFunctionLoader {
  public:
   void* operator()(char const* name);

@@ -26,5 +26,6 @@ namespace ge{
     class ProgramPipeline;
     class Sampler;
     class Renderbuffer;
+    class OpenGLFunctionLoader;
   }
 }

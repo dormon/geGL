@@ -10,6 +10,7 @@ namespace ge{
 
 #include <dlfcn.h>
 #include <cstdlib>
+#include <cstdint>
 #include <iostream>
 #include <geGL/gegl_export.h>
 

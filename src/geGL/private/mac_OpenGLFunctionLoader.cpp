@@ -2,6 +2,7 @@
 
 #include <dlfcn.h>
 #include <geGL/private/mac_OpenGLFunctionLoader.h>
+#include <string>
 
 /* About macOS frameworks:
  Some dynamic libraries are packed into frameworks in macOS. Function dlopen()

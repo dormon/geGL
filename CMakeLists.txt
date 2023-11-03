@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10.1)
 
 project(
   geGL
-  VERSION 1.0.802
+  VERSION 1.0.803
   )
 
 SET(CMAKE_CXX_STANDARD 14)
