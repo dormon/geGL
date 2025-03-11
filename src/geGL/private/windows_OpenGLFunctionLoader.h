@@ -1,8 +1,8 @@
 #pragma once
 
-#ifdef _MSC_VER
+#if defined(_MSC_VER) || defined(__MINGW64__)
 #define WIN32_LEAN_AND_MEAN
-#include <Windows.h>
+#include <windows.h>
 #include <geGL/gegl_export.h>
 
 namespace ge{
